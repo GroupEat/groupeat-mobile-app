@@ -1,0 +1,49 @@
+@import "../../node_modules/ionic-sdk/scss/ionic.scss";
+
+@import "base/variables";
+@import "base/fonts";
+@import "base/typography";
+
+@import "fonts/icons";
+
+/**
+ * HELPERS
+ */
+
+@import "helpers/utils";
+@import "helpers/fixes";
+
+/**
+ * VENDORS
+ */
+
+ @import "vendors/accordion";
+ @import "vendors/card-flip";
+ @import "vendors/keyframes";
+
+/**
+ * COMPONENTS
+ */
+@import "components/animations";
+@import "components/backgrounds";
+@import "components/buttons";
+@import "components/create-order-footer";
+@import "components/intro-slides";
+@import "components/message-backdrop";
+@import "components/order-card";
+@import "components/receipt";
+@import "components/restaurant-card";
+@import "components/spinner";
+@import "components/summup-order";
+@import "components/titles";
+@import "components/popup";
+
+/**
+ * PAGES
+ */
+
+ @import "pages/group-orders";
+ @import "pages/restaurant-menu";
+ @import "pages/cart";
+ @import "pages/authentication";
+ @import "pages/settings";

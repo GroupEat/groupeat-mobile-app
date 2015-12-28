@@ -1,0 +1,97 @@
+<ion-view hide-nav-bar="true">
+
+	<ion-slide-box id="intro-slides" on-slide-changed="slideHasChanged($index)" show-pager="true" class="full-height">
+		<ion-slide>
+			<div class="titles">
+				<h3>{{ 'createAnOrder' | translate }}</h3>
+				<p>{{ 'createAnOrderDetails' | translate }}</p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="titles">
+				<h3>{{ 'joinAnOrder' | translate }}</h3>
+				<p>{{ 'joinAnOrderDetails' | translate }}.<br /> {{ 'groupEatSpirit' | translate }} !</p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="titles">
+				<h3>{{ 'setTheFoodRush' | translate }}</h3>
+				<p>{{ 'setTheFoodRushDetails' | translate }} !</p>
+			</div>
+		</ion-slide>
+		<ion-slide id="auth">
+			<div class="content">
+				<div class="logo">
+					<img src="images/logo-groupeat.png" alt="">
+					<h4 class="baseline">{{ 'groupPriceAtHome' | translate }} !</h4>
+				</div>
+				<div class="row">
+					<div class="col">
+						<form name="form" ng-submit="submitForm(form, registering);" ng-submit-force="true" novalidate>
+							<div class="group-input group-two">
+								<div class="input">
+									<input name="email" type="email" placeholder="{{ 'email' | translate }}" ng-model="user.email" required ge-campus-email>
+								</div>
+								<div class="input">
+									<input name="password" type="password" placeholder="{{ 'password' | translate }}" ng-model="user.password" required ng-minlength="6">
+								</div>
+							</div>
+							<div class="flip-container" ng-class="{'is-flipped' : !registering}">
+								<div class="flip">
+									<div class="front">
+										<button type="input" class="btn btn-bloc btn-lg btn-green mg-top-20" ng-disabled="isProcessingRequest">
+											{{ 'createMyAccount' | translate }} !
+										</button>
+									</div>
+									<div class="back">
+										<button type="input" class="btn btn-bloc btn-lg btn-red mg-top-20" ng-disabled="isProcessingRequest">
+											{{ 'login' | translate }} !
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<p class="mute-link mg-top-20 hide-on-keyboard-open" on-tap="registering = !registering">
+							<span ng-show="registering">
+								{{ 'alreadyHaveAccount' | translate }}.
+								<b class="color-red">{{ 'login' | translate }} !</b>
+							</span>
+							<span ng-show="!registering">
+								{{ 'noAccount' | translate }}.
+								<b class="color-green">{{ 'createMyAccount' | translate }} !</b>
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</ion-slide>
+	</ion-slide-box>
+
+	<div id="intro-animations">
+		<div class="canvas" ng-class="{'is-slide2' : slideIndex === 1, 'is-slide3' : slideIndex === 2 || slideIndex === 3, 'is-hidden' : slideIndex === 3}">
+			<div class="pizzeria">
+				<ul class="smoke">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			<div class="clock"></div>
+			<div class="scooter">
+				<div class="flag"></div>
+				<ul class="pizzas">
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				<ul class="speed">
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</ion-view>

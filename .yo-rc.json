@@ -1,0 +1,13 @@
+{
+  "generator-mcfly": {
+    "filenameCase": "snake",
+    "filenameSuffix": false,
+    "appname": "groupeatMobileApp",
+    "clientFolder": "client",
+    "ionic": true,
+    "ngCordova": true,
+    "fontawesome": false,
+    "bootstrap": false,
+    "material": false
+  }
+}
