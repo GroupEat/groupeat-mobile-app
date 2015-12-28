@@ -29,10 +29,10 @@ module.exports = function(namespace) {
   ]);
   app.namespace = app.namespace || {};
 
-  require('./config')(app);
   // inject:folders start
   require('./services')(app);
   // inject:folders end
+  require('./config')(app);
 
   var configRoutesDeps = ['$stateProvider', '$urlRouterProvider'];
   var configRoutes = function($stateProvider, $urlRouterProvider) {

@@ -4,6 +4,7 @@ require('angular-ui-router');
 require('angular-sanitize');
 require('angular-animate');
 require('angular-local-storage');
+require('angular-permission');
 require('angular-resource');
 require('ionic');
 require('ionic-angular');
@@ -23,14 +24,16 @@ module.exports = function(namespace) {
     'LocalStorageModule',
     'ngCordova',
     'ngResource',
+    'permission'
   ]);
   app.namespace = app.namespace || {};
   app.namespace.common = common.name;
 
-  require('./config')(app);
   // inject:folders start
   require('./services')(app);
   // inject:folders end
+  require('./config')(app);
+  require('./run')(app);
 
   return app;
 };
