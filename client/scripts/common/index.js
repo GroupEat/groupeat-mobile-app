@@ -1,14 +1,16 @@
 'use strict';
 var angular = require('angular');
-require('angular-cookies');
-require('angular-ui-router');
-require('angular-sanitize');
 require('angular-animate');
+require('angular-auto-validate');
+require('angular-cookies');
+require('angular-sanitize');
 require('angular-sprintf');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-translate-storage-cookie');
 require('angular-translate-storage-local');
+require('angular-ui-router');
+require('angular-validation-match');
 require('ionic');
 require('ionic-angular');
 require('ng-cordova');
@@ -22,10 +24,12 @@ module.exports = function(namespace) {
   var app = angular.module(fullname, [
     'ui.router',
     'ionic',
+    'jcs-autoValidate',
     'ngCordova',
     'ngCookies',
     'pascalprecht.translate',
-    'sprintf'
+    'sprintf',
+    'validation.match'
   ]);
   app.namespace = app.namespace || {};
 
@@ -33,6 +37,7 @@ module.exports = function(namespace) {
   require('./services')(app);
   // inject:folders end
   require('./config')(app);
+  require('./run')(app);
 
   var configRoutesDeps = ['$stateProvider', '$urlRouterProvider'];
   var configRoutes = function($stateProvider, $urlRouterProvider) {

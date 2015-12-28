@@ -16,6 +16,7 @@
   "dependencies": {
     "angular": "^1.4.6",
     "angular-animate": "^1.4.6",
+    "angular-auto-validate": "^1.19.0",
     "angular-cookies": "^1.4.8",
     "angular-local-storage": "^0.2.2",
     "angular-mocks": "^1.4.6",
@@ -27,6 +28,7 @@
     "angular-translate-storage-cookie": "^2.8.1",
     "angular-translate-storage-local": "^2.8.1",
     "angular-ui-router": "^0.2.15",
+    "angular-validation-match": "^1.7.1",
     "ionic-sdk": "^1.1.0",
     "ng-cordova": "^0.1.23-alpha",
     "sprintf-js": "^1.0.3"
