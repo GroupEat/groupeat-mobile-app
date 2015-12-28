@@ -26,6 +26,8 @@ module.exports = function(app) {
     $scope.isProcessingRequest = false;
     $scope.registering = true;
 
+    $rootScope.$broadcast('logoutSuccess');
+
     $scope.slideHasChanged = function(index) {
       $scope.slideIndex = index;
     };

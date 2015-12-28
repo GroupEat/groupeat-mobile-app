@@ -47,7 +47,8 @@ module.exports = function(namespace) {
           template: require('./views/customer-authentication.html'),
           controller: app.name + '.CustomerAuthenticationCtrl'
         }
-      }
+      },
+      data: { permissions: { except: [] } }
     });
   };
   configRoutes.$inject = configRoutesDeps;
