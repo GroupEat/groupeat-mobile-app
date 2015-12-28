@@ -98,7 +98,7 @@ module.exports = function() {
       dest: 'scripts'
     },
     webpack: {
-      src: './main.js'
+      src: './groupeat.js'
     },
     exorcist: {
       dest: 'srcmaps',

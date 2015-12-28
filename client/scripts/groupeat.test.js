@@ -1,7 +1,7 @@
 'use strict';
 var angular = require('angular');
 require('angular-mocks');
-var app = require('./main.js');
+var app = require('./groupeat.js');
 
 describe('app', function() {
 
