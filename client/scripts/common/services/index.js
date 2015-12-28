@@ -9,6 +9,7 @@ module.exports = function(app) {
     require('./error-message-resolver')(app);
     require('./geolocation')(app);
     require('./lodash')(app);
+    require('./message-backdrop')(app);
     require('./network')(app);
     require('./popup')(app);
     // inject:end
