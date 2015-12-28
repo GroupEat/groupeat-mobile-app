@@ -46,7 +46,7 @@ module.exports = function(namespace) {
       data: {
         permissions: {
           only: ['customer'],
-          redirectTo: 'app.authentication'
+          redirectTo: 'app.customer-authentication'
         }
       }
     });
