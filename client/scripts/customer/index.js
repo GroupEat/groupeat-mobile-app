@@ -31,8 +31,7 @@ module.exports = function(namespace) {
 
   // inject:folders start
   require('./controllers')(app);
-  require('./run')(app);
-  require('./services')(app);
+require('./services')(app);
   // inject:folders end
 
   var configRoutesDeps = ['$stateProvider'];

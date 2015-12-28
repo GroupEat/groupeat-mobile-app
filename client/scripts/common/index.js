@@ -29,7 +29,6 @@ module.exports = function(namespace) {
   ]);
   app.namespace = app.namespace || {};
   // inject:folders start
-  require('./config')(app);
   require('./services')(app);
   // inject:folders end
 

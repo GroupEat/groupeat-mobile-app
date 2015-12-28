@@ -11,23 +11,41 @@ var modulename = 'orders';
 
 module.exports = function(namespace) {
 
-    var fullname = namespace + '.' + modulename;
+  var common = require('../common')(namespace);
+  var customer = require('../customer')(namespace);
 
-    var app = angular.module(fullname, ['ui.router', 'ionic', 'ngCordova']);
-    // inject:folders start
-    // inject:folders end
-    app.namespace = app.namespace || {};
+  var fullname = namespace + '.' + modulename;
 
-    var configRoutesDeps = ['$stateProvider', '$urlRouterProvider'];
-    var configRoutes = function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/');
-        $stateProvider.state('home', {
-            url: '/',
-            template: require('./views/home.html')
-        });
-    };
-    configRoutes.$inject = configRoutesDeps;
-    app.config(configRoutes);
+  var app = angular.module(fullname, [
+    'ui.router',
+    'ionic',
+    'ngCordova',
+    'ngResource',
+  ]);
+  app.namespace = app.namespace || {};
+  app.namespace.common = common.name;
+  app.namespace.customer = customer.name;
 
-    return app;
+  // inject:folders start
+  require('./controllers')(app);
+require('./services')(app);
+  // inject:folders end
+  app.namespace = app.namespace || {};
+
+  var configRoutesDeps = ['$stateProvider'];
+  var configRoutes = function($stateProvider) {
+    $stateProvider.state('app.group-orders', {
+      url: '',
+      views: {
+        app: {
+          template: require('./views/group-orders.html'),
+          controller: app.name + '.GroupOrdersCtrl'
+        }
+      }
+    });
+  };
+  configRoutes.$inject = configRoutesDeps;
+  app.config(configRoutes);
+
+  return app;
 };
