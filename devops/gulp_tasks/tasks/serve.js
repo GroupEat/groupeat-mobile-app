@@ -58,6 +58,6 @@ gulp.task('browsersyncstart', false, function(done) {
 
 gulp.task('browsersync', function(done) {
   runSequence('clean',
-  ['ionic:platform-web-client', 'webpack:watch', 'bower:copy', 'style', 'image', 'copy', 'envs', 'cordova:config', 'angular:i18n'],
-  ['browsersyncstart', 'style:watch', 'image:watch', 'copy:watch'], done);
+  ['ionic:platform-web-client', 'webpack:watch', 'bower:copy', 'style', 'image', 'translations', 'copy', 'envs', 'cordova:config', 'angular:i18n'],
+  ['browsersyncstart', 'style:watch', 'image:watch', 'translations:watch', 'copy:watch'], done);
 });

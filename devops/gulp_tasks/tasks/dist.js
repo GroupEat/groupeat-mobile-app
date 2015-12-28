@@ -96,6 +96,10 @@ gulp.task('image:watch', false, function(done) {
   gulp.watch(gmux.sanitizeWatchFolders(constants.images.src), ['image']);
 });
 
+gulp.task('translations:watch', false, function(done) {
+  gulp.watch(gmux.sanitizeWatchFolders(constants.translations.src), ['translations']);
+})
+
 gulp.task('image', false, function(done) {
   var dest = constants.distFolders[args.env] + '/www';
   gulp.src(constants.images.src, {
@@ -106,7 +110,16 @@ gulp.task('image', false, function(done) {
   .on('end', done);
 });
 
-gulp.task('dist', ['clean', 'bower:copy', 'ionic:config', 'ionic:platform-web-client', 'copy', 'envs', 'cordova:config', 'image', 'angular:i18n', 'webpack:run', 'style']);
+gulp.task('translations', false, function(done) {
+  var dest = constants.distFolders[args.env] + '/www';
+  gulp.src(constants.translations.src, {
+    base: constants.clientFolder
+  })
+  .pipe(gulp.dest(dest))
+  .on('end', done);
+});
+
+gulp.task('dist', ['clean', 'bower:copy', 'ionic:config', 'ionic:platform-web-client', 'copy', 'envs', 'cordova:config', 'image', 'translations', 'angular:i18n', 'webpack:run', 'style']);
 
 gulp.task('cordova:all', 'Build a binary for android (.apk) and ios (.ipa)', function(done) {
     return runSequence('dist', 'cordova:all:platform', 'deploy:prepare', 'wait', done);

@@ -1,9 +1,14 @@
 'use strict';
 var angular = require('angular');
+require('angular-cookies');
 require('angular-ui-router');
 require('angular-sanitize');
 require('angular-animate');
 require('angular-sprintf');
+require('angular-translate');
+require('angular-translate-loader-static-files');
+require('angular-translate-storage-cookie');
+require('angular-translate-storage-local');
 require('ionic');
 require('ionic-angular');
 require('ng-cordova');
@@ -18,10 +23,13 @@ module.exports = function(namespace) {
     'ui.router',
     'ionic',
     'ngCordova',
+    'ngCookies',
+    'pascalprecht.translate',
     'sprintf'
   ]);
   app.namespace = app.namespace || {};
   // inject:folders start
+  require('./config')(app);
   require('./services')(app);
   // inject:folders end
 
