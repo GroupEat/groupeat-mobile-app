@@ -9,7 +9,10 @@ module.exports = function(app) {
   ];
 
   function service($filter, $q) {
+
     var $translate = $filter('translate');
+    var vsprintf = $filter('vsprintf');
+
     var isInteger = function (data) {
       var n = ~~Number(data);
       return String(n) === data && n >= 0;
