@@ -4,15 +4,17 @@ module.exports = function(app) {
 
   var dependencies = [
     '$rootScope',
+    app.name + '.Address',
     app.namespace.authentication + '.Credentials',
     app.name + '.Customer',
     app.name + '.CustomerSettings',
     app.name + '.CustomerStorage',
     app.namespace.authentication + '.DeviceAssistant',
-    app.name + '.IonicUser'
+    app.name + '.IonicUser',
+    app.namespace.common + '.Popup'
   ];
 
-  function run($rootScope, Credentials, Customer, CustomerSettings, CustomerStorage, DeviceAssistant, IonicUser) {
+  function run($rootScope, Address, Credentials, Customer, CustomerSettings, CustomerStorage, DeviceAssistant, IonicUser, Popup) {
     $rootScope.$on('loginSuccess', function(event, credentials, email) {
       var customerId = credentials.id;
       IonicUser.set({
