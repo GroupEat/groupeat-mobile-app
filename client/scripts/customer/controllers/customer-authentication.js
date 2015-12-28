@@ -13,12 +13,14 @@ module.exports = function(app) {
     '$state',
     '$stateParams',
     '$timeout',
+    app.namespace.authentication + '.Authentication',
+    app.name + '.Customer',
     app.namespace.common + '.ElementModifier',
     app.namespace.common + '.Network',
     app.namespace.common + '.Popup',
   ];
 
-  function controller(_, $ionicSlideBoxDelegate, $rootScope, $scope, $state, $stateParams, $timeout, ElementModifier, Network, Popup) {
+  function controller(_, $ionicSlideBoxDelegate, $rootScope, $scope, $state, $stateParams, $timeout, Authentication, Customer, ElementModifier, Network, Popup) {
     $scope.slideIndex = 0;
     $scope.user = {};
     $scope.isProcessingRequest = false;

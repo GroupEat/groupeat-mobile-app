@@ -28,6 +28,8 @@ module.exports = function(namespace) {
     'sprintf'
   ]);
   app.namespace = app.namespace || {};
+
+  require('./config')(app);
   // inject:folders start
   require('./services')(app);
   // inject:folders end
