@@ -12,9 +12,8 @@ module.exports = function(app) {
     app.name + '.IonicUser'
   ];
 
-  function run($rootScope, Credentials, Customer, CustomerSettings, CustomerStorage, IonicUser) {
+  function run($rootScope, Credentials, Customer, CustomerSettings, CustomerStorage, DeviceAssistant, IonicUser) {
     $rootScope.$on('loginSuccess', function(event, credentials, email) {
-      console.log(credentials);
       var customerId = credentials.id;
       IonicUser.set({
         id: credentials.id,
