@@ -57,7 +57,7 @@ module.exports = function(app) {
       redirect = redirect !== false;
       if (!localStorageService.get('id') || !localStorageService.get('token')) {
         if (redirect) {
-          $state.go('app.authentication');
+          $state.go('app.customer-authentication');
         }
         return undefined;
       }

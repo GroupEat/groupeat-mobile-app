@@ -27,6 +27,7 @@ module.exports = function(namespace) {
   app.namespace = app.namespace || {};
   app.namespace.common = common.name;
 
+  require('./config')(app);
   // inject:folders start
   require('./services')(app);
   // inject:folders end

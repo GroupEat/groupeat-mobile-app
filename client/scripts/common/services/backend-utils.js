@@ -56,7 +56,7 @@ module.exports = function(app) {
       } else if (_.has(responseData, 'errorKey')) {
         // Those errorKey require a redirection to the authentication view
         if (errorKeysRequiringAuthentication.indexOf(responseData.errorKey) > -1) {
-          $state.go('app.authentication');
+          $state.go('app.customer-authentication');
         }
         return { errorKey: responseData.errorKey };
       }

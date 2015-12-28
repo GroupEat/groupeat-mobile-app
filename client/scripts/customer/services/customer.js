@@ -45,7 +45,7 @@ module.exports = function(app) {
       })
       .catch(function(errorResponse) {
         if (errorResponse.status === 404) {
-          $state.go('app.authentication');
+          $state.go('app.customer-authentication');
         }
         defer.reject();
       });
