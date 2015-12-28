@@ -1,18 +1,18 @@
 {
   "local": {
     "ionicDeployChannel": "",
-    "apiEndpoint": "http://groupeat.dev"
+    "apiEndpoint": "http://groupeat.dev/api"
   },
   "dev": {
     "ionicDeployChannel": "",
-    "apiEndpoint": "https://staging.groupeat.fr"
+    "apiEndpoint": "https://staging.groupeat.fr/api"
   },
   "staging": {
     "ionicDeployChannel": "staging",
-    "apiEndpoint": "https://staging.groupeat.fr"
+    "apiEndpoint": "https://staging.groupeat.fr/api"
   },
   "prod": {
     "ionicDeployChannel": "prod",
-    "apiEndpoint": "https://groupeat.fr"
+    "apiEndpoint": "https://groupeat.fr/api"
   }
 }
