@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var gmux = require('gulp-mux');
 var constants = require('../common/constants')();
 
-var CORE_FILE_MIN = './bower_components/ionic-platform-web-client/dist/ionic.io.bundle.min.js';
+var CORE_FILE_MIN = './bower_components/ionic-platform-web-client/dist/ionic.io.bundle.js';
 var CONFIG_BACKUP = './.io-config.json';
 
 var SETTINGS_REPLACE_START = "\\\"IONIC_SETTINGS_STRING_START\\\";";
