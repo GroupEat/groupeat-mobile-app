@@ -7,6 +7,7 @@ module.exports = function(app) {
   ];
 
   function config($translateProvider) {
+    $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useStaticFilesLoader({
       prefix: 'translations/',
       suffix: '.json'
