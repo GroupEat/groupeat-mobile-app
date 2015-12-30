@@ -11,10 +11,25 @@ var modulename = 'settings';
 
 module.exports = function(namespace) {
 
+  var authentication = require('../authentication')(namespace);
+  var common = require('../common')(namespace);
+  var customer = require('../customer')(namespace);
+
   var fullname = namespace + '.' + modulename;
 
-  var app = angular.module(fullname, ['ui.router', 'ionic', 'ngCordova']);
+  var app = angular.module(fullname, [
+    'ui.router',
+    'ionic',
+    'ngCordova',
+    'ngResource',
+  ]);
+  app.namespace = app.namespace || {};
+  app.namespace.authentication = authentication.name;
+  app.namespace.common = common.name;
+  app.namespace.customer = customer.name;
+
   // inject:folders start
+  require('./controllers')(app);
   // inject:folders end
   app.namespace = app.namespace || {};
 
@@ -25,7 +40,7 @@ module.exports = function(namespace) {
       views: {
         app: {
           template: require('./views/settings.html'),
-          controller: 'SettingsCtrl'
+          controller: app.name + '.SettingsCtrl'
         }
       }
     });
