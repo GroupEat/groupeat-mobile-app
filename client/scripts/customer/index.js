@@ -37,7 +37,8 @@ module.exports = function(namespace) {
 
   var configRoutesDeps = ['$stateProvider'];
   var configRoutes = function($stateProvider) {
-    $stateProvider.state('app.customer-authentication', {
+    $stateProvider
+    .state('app.customer-authentication', {
       url: '/customer-authentication',
       params: {
         slideIndex: 0
@@ -46,6 +47,19 @@ module.exports = function(namespace) {
         app: {
           template: require('./views/customer-authentication.html'),
           controller: app.name + '.CustomerAuthenticationCtrl'
+        }
+      },
+      data: { permissions: { except: [] } }
+    })
+    .state('app.signup', {
+      url: '/signup',
+      params: {
+        slideIndex: 0
+      },
+      views: {
+        app: {
+          template: require('./views/signup.html'),
+          controller: app.name + '.SignupCtrl'
         }
       },
       data: { permissions: { except: [] } }
