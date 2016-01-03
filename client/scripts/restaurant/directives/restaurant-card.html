@@ -1,0 +1,15 @@
+<div class="restaurant-card" ng-style="{'background-image' : 'url('+data.pictureUrl+')'}">
+	<div class="content">
+		<div class="max-discount discount-50">
+			<span>{{ 'upTo' | translate }}</span>
+			<b>-{{data.maximumDiscountRate}}<small>%</small></b>
+		</div>
+		<h3>{{data.name}}</h3>
+		<p class="small-title">{{ 'pizzeria' | translate }}</p>
+		<div class="icon-rating centered">
+			<ul class="rating">
+				<i ng-class="starClass($index)" ng-repeat="i in setArrayFromInt(5) track by $index"></i>
+	    </ul>
+		</div>
+	</div>
+</div>
