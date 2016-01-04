@@ -8,6 +8,7 @@ if (window.location.toString().indexOf('localhost:5555') > 0) {
 var angular = require('angular');
 require('angular-ui-router');
 require('angular-animate');
+require('angular-messages');
 require('angular-translate');
 require('angular-sanitize');
 require('ionic');

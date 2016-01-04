@@ -22,6 +22,7 @@ module.exports = function(namespace) {
     'ionic',
     'ngCordova',
     'ngResource',
+    'ngMessages'
   ]);
   app.namespace = app.namespace || {};
   app.namespace.authentication = authentication.name;
