@@ -1,6 +1,9 @@
 'use strict';
 var controllername = 'SettingsCtrl';
 
+require('../views/settings-profile.html');
+require('../views/settings-notifications.html');
+
 module.exports = function(app) {
   var fullname = app.name + '.' + controllername;
   /*jshint validthis: true */
@@ -43,12 +46,12 @@ module.exports = function(app) {
       {
         id: 0,
         title: 'editProfile',
-        url: 'templates/settings/settings-profile.html'
+        url: 'settings-profile.html'
       },
       {
         id: 1,
         title: 'pushSettings',
-        url: 'templates/settings/settings-notifications.html'
+        url: 'settings-notifications.html'
       }
     ];
 
