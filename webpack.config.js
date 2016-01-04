@@ -92,6 +92,10 @@ module.exports = {
     }]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      humanizeDuration: "humanize-duration",
+      moment: "moment"
+    }),
     new webpack.ResolverPlugin([
       new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('package.json', ['browser', 'main']),
       new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('bower.json', ['main'])
