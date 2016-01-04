@@ -119,12 +119,9 @@ module.exports = function(app) {
       return group.isShown;
     };
 
-    $ionicModal.fromTemplateUrl('templates/modals/cart.html', {
+    $scope.modal = $ionicModal.fromTemplate(require('../../orders/views/cart.html'), {
       scope: $scope,
       animation: 'slide-in-up'
-    })
-    .then(function(modal) {
-      $scope.modal = modal;
     });
 
     $scope.openCart = function() {

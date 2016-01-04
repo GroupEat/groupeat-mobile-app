@@ -5,5 +5,6 @@ module.exports = function(app) {
     require('./cart')(app);
     require('./group-order')(app);
     require('./order')(app);
+    require('./predefined-addresses')(app);
     // inject:end
 };
