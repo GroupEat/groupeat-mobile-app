@@ -1,0 +1,143 @@
+<ion-view ng-init="initCtrl()" nav-bar-class="bar-transparent">
+
+  <ge-message-backdrop
+    icon="messageBackdrop.icon"
+    title="messageBackdrop.title"
+    details="messageBackdrop.details"
+    button-sref="messageBackdrop.buttonSref"
+    button-text="messageBackdrop.buttonText"
+    status="messageBackdrop.status"
+  >
+  </ge-message-backdrop>
+
+  <!-- - - - - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - - - - -->
+  <ion-nav-bar class="bar-blue">
+  <ion-nav-title>
+    <div class="title has-sub-title">
+      {{ restaurant.name }}
+      <small>{{currentOrder.remainingCapacity - cart.getTotalQuantity()}} {{'pizzasLeft' | translate }}</small>
+    </div>
+  </ion-nav-title>
+    <ion-nav-buttons side="primary">
+      <button class="button button-clear" on-tap="onLeaveRestaurant()">
+        <i class="ion-arrow-left-c"></i>{{ 'back' | translate }}
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+      <button class="button button-clear button-timer" ng-if="currentOrder.endingAt">
+        <i class="ion-ios-timer"></i>
+        <timer end-time="currentOrder.endingAt" interval="1000" finish-callback="callbackTimer()"> {{mminutes}}:{{sseconds}}</timer>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <!-- - - - - - - - - - - - - - - - - - - SUB HEADER BAR - - - - - - - - - - - - - - - - - -->
+  <ion-content delegate-handle="restaurantMenu" header-shrink="#discount-placeholder" class="no-header has-footer-summup full-height bg-blue">
+
+    <div id="discount-placeholder">
+      <div class="background" ng-style="{'background-image' : 'url('+ restaurant.pictureUrl +')'}">
+        <div class="content" id="discount-placeholder-content">
+          <div class="discount" ng-hide="isNewOrder.value">
+            <h4>-{{ currentOrder.currentDiscount | number : 0 }}<small>%</small></h4>
+            <p class="small-title">Discount sur toutes les Pizzas</p>
+          </div>
+          <div class="food-rush" ng-show="isNewOrder.value">
+            <h3 class="time-value">{{foodRushTime.value}}:00</h3>
+            <h5>{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
+            <div class="item range range-assertive">
+              5mn
+              <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5" name="volume">
+              {{ currentOrder.foodRushMax }}mn
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ion-list id="product-list">
+      <div ng-repeat="product in products">
+        <ion-item id="product-{{product.id}}" class="products" ng-click="toggleGroup(product)" ng-class="{'is-active': product.isShown}">
+          <div class="clearfix">
+            <div class="pull-left">
+              <h4>{{product.name}}</h4>
+            </div>
+            <div class="pull-left">
+              <ul class="info-icons">
+                <li ng-repeat="tag in product.tags.data">
+                  <span class="gp-icon gp-{{tag.label}}"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-95">
+            <p ng-show="product.isShown">{{product.description}}</p>
+          </div>
+
+        </ion-item>
+        <ion-item class="item-accordion" ng-repeat="format in product.formats.data" ng-class="{'is-active': product.isShown}">
+          <div class="content">
+            <div class="row">
+              <div class="col-50">
+                <div class="format-info">
+                  <div class="clearfix">
+                    <div class="pull-left">
+                      <h5>{{ format.name }}</h5>
+                    </div>
+                    <div class="pull-right">
+                      <div class="format-price">
+                        <span ng-if="!currentOrder.currentDiscount">
+                          <b>{{ format.price | number : 2 }}</b> €
+                        </span>
+                        <span ng-if="currentOrder.currentDiscount">
+                          <strike>{{ format.price | number : 2 }}€</strike> <b>{{ format.price*(100-currentOrder.currentDiscount)/100 | number : 2}}</b> €
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-50">
+                <div class="add-to-cart">
+                  <div class="clearfix">
+                    <a class="action-btn" ng-disabled="!cart.getProductQuantity(product, format)" ng-class="{'is-active' : cart.getProductQuantity(product, format) > 0}" ng-click="onDeleteProduct(product, format)">
+                      <i class="ion-ios-minus-empty"></i>
+                    </a>
+                    <a class="total">{{ cart.getProductQuantity(product, format) }}</a>
+                    <a class="action-btn is-active" on-tap="onAddProduct(product, format)">
+                      <i class="ion-ios-plus-empty"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+
+  <div class="bar bar-white bar-footer bar-transparent bar-no-padding" id="summup-order">
+    <div class="row row-no-padding">
+      <div class="col">
+        <div class="summup">
+          <div class="clearfix">
+            <div class="pull-left">
+              <b>{{cart.getTotalQuantity()}}</b>
+              <ng-pluralize count="cart.getTotalQuantity()" when="{'0': 'Pizza', '1': 'Pizza', 'other': 'Pizzas'}" ></ng-pluralize>
+            </div>
+            <div class="pull-right">
+              <strike ng-show="isDiscountToShow()" class="color-red">{{ cart.getTotalPrice() | number : 2 }}€</strike> <b>{{ cart.getTotalPrice()*(100 - currentOrder.currentDiscount)/100 | number : 2}}</b>€
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <button ng-click="openCart()" class="btn btn-bloc btn-green btn-xlg btn-square" ng-disabled="cart.getTotalQuantity() == 0">
+          {{ 'toOrder' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</ion-view>

@@ -47,7 +47,16 @@ module.exports = function(namespace) {
           controller: app.name + '.RestaurantsCtrl'
         }
       }
-    });
+    })
+    .state('app.restaurant-menu', {
+    url: '/restaurant/:restaurantId/menu',
+    views: {
+      app: {
+        template: require('./views/restaurant-menu.html'),
+        controller: app.name + '.RestaurantMenuCtrl'
+      }
+    }
+  })
   };
   configRoutes.$inject = configRoutesDeps;
   app.config(configRoutes);

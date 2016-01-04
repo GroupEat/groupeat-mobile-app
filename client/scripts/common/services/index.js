@@ -12,5 +12,6 @@ module.exports = function(app) {
     require('./message-backdrop')(app);
     require('./network')(app);
     require('./popup')(app);
+    require('./scroller')(app);
     // inject:end
 };
