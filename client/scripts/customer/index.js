@@ -40,7 +40,7 @@ module.exports = function(namespace) {
   var configRoutes = function($stateProvider) {
     $stateProvider
     .state('app.customer-authentication', {
-      url: '/customer-authentication',
+      url: '/authentication',
       params: {
         slideIndex: 0
       },
