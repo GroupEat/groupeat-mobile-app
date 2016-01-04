@@ -7,6 +7,9 @@ require('ionic');
 require('ionic-angular');
 require('ng-cordova');
 
+require('moment');
+require('angular-moment');
+
 var modulename = 'orders';
 
 module.exports = function(namespace) {
@@ -19,6 +22,7 @@ module.exports = function(namespace) {
 
   var app = angular.module(fullname, [
     'ui.router',
+    'angularMoment',
     'ionic',
     'ngCordova',
     'ngResource',
@@ -30,6 +34,7 @@ module.exports = function(namespace) {
 
   // inject:folders start
   require('./controllers')(app);
+  require('./directives')(app);
   require('./services')(app);
   // inject:folders end
   app.namespace = app.namespace || {};

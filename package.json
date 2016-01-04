@@ -20,6 +20,7 @@
     "angular-cookies": "^1.4.8",
     "angular-local-storage": "^0.2.2",
     "angular-mocks": "^1.4.6",
+    "angular-moment": "^1.0.0-beta.3",
     "angular-permission": "^1.1.1",
     "angular-resource": "^1.4.6",
     "angular-sanitize": "^1.4.6",
@@ -30,6 +31,7 @@
     "angular-ui-router": "^0.2.15",
     "angular-validation-match": "^1.7.1",
     "ionic-sdk": "^1.1.0",
+    "moment": "^2.10.6",
     "ng-cordova": "^0.1.23-alpha",
     "sprintf-js": "^1.0.3"
   },

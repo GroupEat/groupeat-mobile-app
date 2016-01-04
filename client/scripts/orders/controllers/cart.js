@@ -115,6 +115,5 @@ module.exports = function(app) {
   }
 
   controller.$inject = deps;
-  console.log(fullname);
   app.controller(fullname, controller);
 };
