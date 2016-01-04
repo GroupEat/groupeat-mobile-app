@@ -1,6 +1,8 @@
 'use strict';
 var servicename = 'BackendUtils';
 
+var vsprintf = require('sprintf-js').vsprintf;
+
 module.exports = function(app) {
 
   var dependencies = [
@@ -12,7 +14,6 @@ module.exports = function(app) {
   function service(_, $filter, $state) {
 
     var $translate = $filter('translate');
-    var vsprintf = $filter('vsprintf');
     var errorKeysRequiringAuthentication = [
       'noUserForAuthenticationToken',
       'userMustAuthenticate'

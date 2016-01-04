@@ -14,13 +14,14 @@ module.exports = function(app) {
     '$stateParams',
     '$timeout',
     app.namespace.authentication + '.Authentication',
+    app.namespace.authentication + '.Credentials',
     app.name + '.Customer',
     app.namespace.common + '.ElementModifier',
     app.namespace.common + '.Network',
     app.namespace.common + '.Popup',
   ];
 
-  function controller(_, $ionicSlideBoxDelegate, $rootScope, $scope, $state, $stateParams, $timeout, Authentication, Customer, ElementModifier, Network, Popup) {
+  function controller(_, $ionicSlideBoxDelegate, $rootScope, $scope, $state, $stateParams, $timeout, Authentication, Credentials, Customer, ElementModifier, Network, Popup) {
     $scope.slideIndex = 0;
     $scope.user = {};
     $scope.isProcessingRequest = false;
@@ -61,6 +62,7 @@ module.exports = function(app) {
         return Authentication.authenticate($scope.user);
       })
       .then(function (credentials) {
+        Credentials.set(credentials.id, credentials.token);
         $state.go('app.group-orders');
         $rootScope.$broadcast('loginSuccess', credentials, $scope.user.email);
       })
@@ -79,11 +81,11 @@ module.exports = function(app) {
         return ElementModifier.validate(form);
       })
       .then(function() {
-        // TODO : Fetch proper locale
         var requestBody = _.merge($scope.user, { 'locale': 'fr' });
         return Customer.save(requestBody);
       })
       .then(function(credentials) {
+        Credentials.set(credentials.id, credentials.token);
         $state.go('app.signup');
         $rootScope.$broadcast('registerSuccess', credentials, $scope.user.email);
       })

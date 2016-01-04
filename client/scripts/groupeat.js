@@ -14,15 +14,21 @@ require('angular-sanitize');
 require('ionic');
 require('ionic-angular');
 
+require('angular-moment');
+require('angular-timer');
+
 var app = angular.module(namespace, [
+  'angularMoment',
   'ionic',
   'ngConstants',
   'pascalprecht.translate',
+  'timer',
   // inject:modules start
   require('./authentication')(namespace).name,
   require('./common')(namespace).name,
   require('./customer')(namespace).name,
   require('./orders')(namespace).name,
+  require('./push')(namespace).name,
   require('./restaurant')(namespace).name,
   require('./settings')(namespace).name
   // inject:modules end

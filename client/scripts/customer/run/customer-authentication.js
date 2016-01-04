@@ -9,19 +9,17 @@ module.exports = function(app) {
     app.name + '.Customer',
     app.name + '.CustomerSettings',
     app.name + '.CustomerStorage',
-    app.namespace.authentication + '.DeviceAssistant',
     app.name + '.IonicUser',
     app.namespace.common + '.Popup'
   ];
 
-  function run($rootScope, Address, Credentials, Customer, CustomerSettings, CustomerStorage, DeviceAssistant, IonicUser, Popup) {
+  function run($rootScope, Address, Credentials, Customer, CustomerSettings, CustomerStorage, IonicUser, Popup) {
     $rootScope.$on('loginSuccess', function(event, credentials, email) {
       var customerId = credentials.id;
       IonicUser.set({
         id: credentials.id,
         email: email
       });
-      Credentials.set(customerId, credentials.token);
       Customer.get(customerId)
       .then(function(customer) {
         CustomerStorage.setIdentity(customer);
@@ -34,7 +32,7 @@ module.exports = function(app) {
       })
       .then(function(customerSettings) {
         CustomerStorage.setSettings(customerSettings);
-        return DeviceAssistant.register();
+        $rootScope.$broadcast('deviceRegisterStart');
       })
       .catch(function(errorMessage) {
         return Popup.error(errorMessage);
@@ -47,7 +45,6 @@ module.exports = function(app) {
         email: email
       });
       CustomerStorage.setDefaultSettings();
-      Credentials.set(credentials.id, credentials.token);
     });
 
     $rootScope.$on('logoutSuccess', function(event) {
