@@ -1,6 +1,8 @@
 'use strict';
 var servicename = 'ErrorMessageResolver';
 
+var vsprintf = require('sprintf-js').vsprintf;
+
 module.exports = function(app) {
 
   var dependencies = [
@@ -11,7 +13,6 @@ module.exports = function(app) {
   function service($filter, $q) {
 
     var $translate = $filter('translate');
-    var vsprintf = $filter('vsprintf');
 
     var isInteger = function (data) {
       var n = ~~Number(data);
