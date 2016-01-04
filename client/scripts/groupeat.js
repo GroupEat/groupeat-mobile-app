@@ -27,6 +27,7 @@ var app = angular.module(namespace, [
   require('./common')(namespace).name,
   require('./customer')(namespace).name,
   require('./orders')(namespace).name,
+  require('./push')(namespace).name,
   require('./restaurant')(namespace).name,
   require('./settings')(namespace).name
   // inject:modules end

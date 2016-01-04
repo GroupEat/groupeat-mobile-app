@@ -8,19 +8,19 @@ module.exports = function(app) {
   var deps = [
     app.namespace.common + '.Lodash',
     '$ionicSlideBoxDelegate',
+    '$rootScope',
     '$scope',
     '$state',
     app.name + '.Address',
     app.namespace.authentication + '.Credentials',
     app.name + '.Customer',
     app.name + '.CustomerStorage',
-    app.namespace.authentication + '.DeviceAssistant',
     app.name + '.IonicUser',
     app.namespace.common + '.Network',
     app.namespace.common + '.Popup'
   ];
 
-  function controller(_, $ionicSlideBoxDelegate, $scope, $state, Address, Credentials, Customer, CustomerStorage, DeviceAssistant, IonicUser, Network, Popup) {
+  function controller(_, $ionicSlideBoxDelegate, $rootScope, $scope, $state, Address, Credentials, Customer, CustomerStorage, IonicUser, Network, Popup) {
     $scope.slideIndex = 0;
     $scope.user = {};
     $scope.residencies = Address.getResidencies();
@@ -56,9 +56,7 @@ module.exports = function(app) {
     $scope.hasSignedUp = function() {
       Popup.alert('welcome', 'welcomeDetails')
       .then(function(){
-        return DeviceAssistant.register();
-      })
-      .then(function(){
+        $rootScope.$broadcast('deviceRegisterStart');
         $state.go('app.group-orders');
       })
       .catch(function(errorMessage){
