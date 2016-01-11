@@ -119,7 +119,7 @@ gulp.task('translations', false, function(done) {
   .on('end', done);
 });
 
-gulp.task('dist', ['clean', 'bower:copy', 'ionic:config', 'ionic:platform-web-client', 'copy', 'envs', 'cordova:config', 'image', 'translations', 'angular:i18n', 'webpack:run', 'style']);
+gulp.task('dist', ['clean', 'bower:copy', 'ionic:config', 'ionic:platform-web-client', 'copy', 'envs', 'cordova:config', 'image', 'fonts', 'translations', 'angular:i18n', 'webpack:run', 'style']);
 
 gulp.task('cordova:all', 'Build a binary for android (.apk) and ios (.ipa)', function(done) {
     return runSequence('dist', 'cordova:all:platform', 'deploy:prepare', 'wait', done);

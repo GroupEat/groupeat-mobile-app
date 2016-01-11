@@ -77,6 +77,8 @@
     "gulp-exec": "2.1.2",
     "gulp-git": "1.6.0",
     "gulp-help": "1.6.1",
+    "gulp-iconfont": "^5.0.1",
+    "gulp-iconfont-css": "^2.0.0",
     "gulp-if": "2.0.0",
     "gulp-imagemin": "2.4.0",
     "gulp-istanbul": "0.10.2",
