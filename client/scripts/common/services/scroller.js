@@ -22,9 +22,7 @@ module.exports = function(app) {
     */
     var scrollTo = function (handle, elementId) {
       var delegateHandle = $ionicScrollDelegate.$getByHandle(handle);
-      var delegateInstance = _.first(delegateHandle._instances, function(instance) {
-        return instance.$$delegateHandle === handle;
-      });
+      var delegateInstance = _.find(delegateHandle._instances, '$$delegateHandle', handle);
       delegateHandle.resize()
       .then(function() {
         var navBarHeight = document.getElementsByTagName('ion-header-bar')[0].clientHeight;
