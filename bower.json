@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "marked": "0.3.3",
-    "ionic-platform-web-client": "~0.2.1"
+    "ionic-platform-web-client": "~0.2.1",
+    "angular-slick": "~0.2.1"
   }
 }

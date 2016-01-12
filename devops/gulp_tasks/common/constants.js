@@ -84,7 +84,8 @@ module.exports = function() {
       destName: 'main.css',
       css: {
         src: [
-          './bower_components/ng-walkthrough/css/ng-walkthrough.css'
+          './bower_components/slick-carousel/slick/slick.css',
+          './bower_components/slick-carousel/slick/slick-theme.css'
         ]
       },
       sass: {

@@ -34,6 +34,7 @@
     "angular-validation-match": "^1.7.1",
     "humanize-duration": "^3.4.0",
     "ionic-sdk": "^1.2.4",
+    "jquery": "^2.2.0",
     "moment": "^2.10.6",
     "ng-cordova": "^0.1.23-alpha",
     "sprintf-js": "^1.0.3"
@@ -164,7 +165,9 @@
     "ionic": "ionic-sdk/release/js/ionic.js",
     "ionic-angular": "ionic-sdk/release/js/ionic-angular.js",
     "ionic-platform-web-client": "./bower_components/ionic-platform-web-client/dist/ionic.io.bundle.js",
-    "angular-sprintf": "sprintf-js/src/angular-sprintf.js"
+    "angular-slick": "./bower_components/angular-slick/dist/slick.js",
+    "angular-sprintf": "sprintf-js/src/angular-sprintf.js",
+    "slick-carousel": "./bower_components/slick-carousel/slick/slick.js"
   },
   "browserify": {
     "transform": [
