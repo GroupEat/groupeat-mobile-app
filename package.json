@@ -30,6 +30,7 @@
     "angular-translate-loader-static-files": "^2.8.1",
     "angular-translate-storage-cookie": "^2.8.1",
     "angular-translate-storage-local": "^2.8.1",
+    "angular-ui-mask": "^1.6.7",
     "angular-ui-router": "^0.2.15",
     "angular-validation-match": "^1.7.1",
     "humanize-duration": "^3.4.0",
