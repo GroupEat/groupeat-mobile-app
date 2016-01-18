@@ -11,6 +11,7 @@ require('angular-animate');
 require('angular-messages');
 require('angular-translate');
 require('angular-sanitize');
+require('angular-ui-mask');
 require('ionic');
 require('ionic-angular');
 
@@ -23,6 +24,7 @@ var app = angular.module(namespace, [
   'ngConstants',
   'pascalprecht.translate',
   'timer',
+  'ui.mask',
   // inject:modules start
   require('./authentication')(namespace).name,
   require('./common')(namespace).name,
