@@ -66,7 +66,7 @@ gulp.task('deploy:check', false, function(done) {
 
 gulp.task('deploy:download', false, ['deploy:check'], function(done) {
   function getDownloadCLI(id) {
-    return '../../../node_modules/.bin/ionic package download ' + id + ' -d deploy';
+    return '../../../node_modules/.bin/ionic package download ' + id + ' -d ../../../deploy';
   }
   exec(_.map(args.id, getDownloadCLI).join(' && '), {
       cwd: distFolder,
