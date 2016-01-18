@@ -194,5 +194,22 @@
         "angular-resource"
       ]
     }
-  }
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-statusbar",
+    "cordova-plugin-console",
+    "cordova-plugin-globalization",
+    "cordova-plugin-device",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-transport-security",
+    "cordova-plugin-network-information",
+    "phonegap-plugin-push",
+    "ionic-plugin-keyboard"
+  ],
+  "cordovaPlatforms": [
+    "ios",
+    "android"
+  ]
 }
