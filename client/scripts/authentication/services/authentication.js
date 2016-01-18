@@ -8,10 +8,11 @@ module.exports = function(app) {
     '$q',
     '$resource',
     app.namespace.common + '.BackendUtils',
+    app.name + '.Credentials',
     'apiEndpoint'
   ];
 
-  function service($filter, $q, $resource, BackendUtils, apiEndpoint) {
+  function service($filter, $q, $resource, BackendUtils, Credentials, apiEndpoint) {
     var authenticationResource = $resource(apiEndpoint + '/auth/token', null, {
       'authenticate': { method: 'PUT' }
     }),
@@ -97,7 +98,9 @@ module.exports = function(app) {
         deferred.reject($translate('oldPasswordNotProvided'));
       } else {
         passwordResource.update(null, authenticationParams).$promise
-        .then(function () {
+        .then(function (response) {
+          var credentials = response.data;
+          Credentials.set(credentials.id, credentials.token);
           deferred.resolve();
         })
         .catch(function (errorResponse) {
