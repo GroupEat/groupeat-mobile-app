@@ -142,6 +142,14 @@ module.exports = function() {
       staging: './dist/app/prod',
       prod: './dist/app/prod'
     },
+    appIds: {
+      staging: 'fr.groupeat.app.staging',
+      prod: 'fr.groupeat.app'
+    },
+    appNames: {
+      staging: 'GroupEat S',
+      prod: 'GroupEat'
+    },
     bundleName: 'bundle.js',
     moduleManager: 'webpack'
   };

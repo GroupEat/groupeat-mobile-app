@@ -93,5 +93,5 @@ gulp.task('deploy:update', false, function(done) {
   });
 });
 
-gulp.task('deploy', ['deploy:prepare', 'deploy:download', 'deploy:update', 'deploy:upload']);
-gulp.task('deploy:local', ['deploy:prepare', 'deploy:local:prepare', 'deploy:update', 'deploy:upload']);
+gulp.task('deploy', ['deploy:prepare', 'deploy:download', 'deploy:update']);
+gulp.task('deploy:local', ['deploy:prepare', 'deploy:local:prepare', 'deploy:update']);
