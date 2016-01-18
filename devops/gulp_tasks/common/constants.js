@@ -143,7 +143,7 @@ module.exports = function() {
       prod: './dist/app/prod'
     },
     appIds: {
-      staging: 'fr.groupeat.app.staging',
+      staging: 'fr.groupeat.staging.app',
       prod: 'fr.groupeat.app'
     },
     appNames: {
