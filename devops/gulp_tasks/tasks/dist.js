@@ -74,7 +74,9 @@ gulp.task('cordova:config', false, function(done) {
     ext: '.xml',
     data: {
       version: version,
-      env: args.env
+      env: args.env,
+      appId: constants.appIds[args.env],
+      appName: constants.appNames[args.env]
     }
   }))
   .pipe(gulp.dest(constants.distFolders[args.env]))
