@@ -11,10 +11,9 @@ module.exports = function(app) {
   var directive = function($document) {
     return {
       restrict: 'EA',
-      template: require('./order-card.html'),
       link: function(scope, element) {
         var top = element[0].querySelector('.top');
-        top.style.height = $document.height() - 380 + 'px';
+        top.style.height = $(document).height() - 380 + 'px';
       }
     };
   };

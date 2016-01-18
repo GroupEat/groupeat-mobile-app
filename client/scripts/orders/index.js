@@ -3,6 +3,8 @@ var angular = require('angular');
 require('angular-ui-router');
 require('angular-sanitize');
 require('angular-animate');
+require('slick-carousel');
+require('angular-slick');
 require('ionic');
 require('ionic-angular');
 require('ng-cordova');
@@ -22,6 +24,7 @@ module.exports = function(namespace) {
     'ionic',
     'ngCordova',
     'ngResource',
+    'slick'
   ]);
   app.namespace = app.namespace || {};
   app.namespace.authentication = authentication.name;

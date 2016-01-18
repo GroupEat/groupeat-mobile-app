@@ -23,7 +23,7 @@ describe(app.name, function() {
             }));
 
             it('should succeed', function() {
-                var element = unitHelper.compileDirective.call(this, directivename, '<ge-message-backdrop></ge-message-backdrop>');
+                var element = unitHelper.compileDirective.call(this, directivename, '<ge-timer></ge-timer>');
                 expect(element.html().trim()).toBeDefined();
             });
 

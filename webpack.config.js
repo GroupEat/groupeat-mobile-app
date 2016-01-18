@@ -93,8 +93,9 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      humanizeDuration: "humanize-duration",
-      moment: "moment"
+      humanizeDuration: 'humanize-duration',
+      moment: 'moment',
+      $: 'jquery'
     }),
     new webpack.ResolverPlugin([
       new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('package.json', ['browser', 'main']),
