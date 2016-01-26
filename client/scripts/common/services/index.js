@@ -3,6 +3,7 @@
 module.exports = function(app) {
     // inject:start
     require('./accept-header-interceptor')(app);
+    require('./application-updater')(app);
     require('./backend-utils')(app);
     require('./controller-promise-handler')(app);
     require('./element-modifier')(app);
