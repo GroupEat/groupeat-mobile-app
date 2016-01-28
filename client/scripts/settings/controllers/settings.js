@@ -85,7 +85,7 @@ module.exports = function(app) {
         .then(function() {
           var authenticationParams = _.pick($scope.customerIdentity, ['email', 'oldPassword', 'newPassword']);
           var promises = [
-            Customer.update(customerId, $scope.customerIdentity),
+            Customer.update(customerId, _.clone($scope.customerIdentity)),
             Authentication.updatePassword(authenticationParams),
             CustomerSettings.update(customerId, $scope.customerSettings)
           ];
