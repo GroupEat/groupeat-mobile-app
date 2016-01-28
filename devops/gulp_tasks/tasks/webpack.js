@@ -12,7 +12,11 @@ var _ = require('lodash');
 var path = require('path');
 var exorcist = require('exorcist');
 var webpackConfig = require(path.join(__dirname, '../../../webpack.config.js'));
-var args = require('yargs').array('id').default('env', 'dev').argv;
+var args = require('yargs')
+.array('id')
+.default('env', 'dev')
+.default('mode', 'prod')
+.argv;
 
 var webpackShare = function(shouldWatch, constants, done) {
     var version = helper.readJsonFile('./package.json').version;
@@ -20,7 +24,7 @@ var webpackShare = function(shouldWatch, constants, done) {
     dest = dest + '/www/' + constants.script.dest;
     var debug = args.env === 'dev';
     var target = constants.targetName;
-    var bundleName = constants.bundleName || 'bundle.js';
+    var bundleName = constants.bundleName || 'webpack-bundle.js';
     var releaseName = target + '-v' + version;
     var sourceMap = releaseName + constants.exorcist.mapExtension;
 
@@ -101,10 +105,7 @@ var taskWebpackWatch = function(constants) {
 gulp.task('webpack:run', 'Generates a bundle javascript file with webpack run.', function(done) {
     var taskname = 'webpack:run';
     gmux.targets.setClientFolder(constants.clientFolder);
-    if (global.options === null) {
-        global.options = gmux.targets.askForMultipleTargets(taskname);
-    }
-    return gmux.createAndRunTasks(gulp, taskWebpackRun, taskname, global.options.target, global.options.mode, constants, done);
+    return gmux.createAndRunTasks(gulp, taskWebpackRun, taskname, 'app', 'prod', constants, done);
 
 });
 

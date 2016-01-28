@@ -57,6 +57,8 @@ gulp.task('copy', false, function(done) {
   gulp.src('./' + constants.clientFolder + '/apple-touch-icon' + constants.targetSuffix + '.png')
       .pipe(rename('apple-touch-icon.png'))
       .pipe(gulp.dest(dest)),
+  gulp.src('./package.json')
+      .pipe(gulp.dest(constants.distFolders[args.env])),
   gulp.src(constants.cordova.src + '/hooks/**/*.*')
       .pipe(gulp.dest(constants.distFolders[args.env] + '/hooks')),
   gulp.src([constants.cordova.src + '/package-hooks/*.{sh,js}'])

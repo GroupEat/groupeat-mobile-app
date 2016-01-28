@@ -7,7 +7,6 @@ var browserSync = require('browser-sync');
 var runSequence = require('run-sequence');
 var gutil = require('gulp-util');
 var chalk = require('chalk');
-var gmux = require('gulp-mux');
 var exec = require('child_process').exec;
 var constants = require('../common/constants')();
 var helper = require('../common/helper');

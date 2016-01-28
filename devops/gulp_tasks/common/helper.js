@@ -164,7 +164,7 @@ var getEnvifyVars = function(constants) {
     dest = isMobile(constants) ? dest + '/www/' + constants.script.dest : dest + '/' + constants.script.dest;
     var mode = constants.mode;
     var target = constants.targetName;
-    var bundleName = constants.bundleName || 'bundle.js';
+    var bundleName = constants.bundleName || 'webpack-bundle.js';
     var releaseName = target + '-v' + version;
     var envifyVars = {
         APP_VERSION: version,

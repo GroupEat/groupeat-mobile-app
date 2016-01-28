@@ -13,7 +13,6 @@ var minifycss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var constants = require('../common/constants')();
 var helper = require('../common/helper');
-var gmux = require('gulp-mux');
 var gutil = $.util;
 var args = require('yargs').array('id').default('env', 'dev').argv;
 

@@ -1,6 +1,5 @@
 var fs = require('fs');
 var gulp = require('gulp');
-var gmux = require('gulp-mux');
 var constants = require('../common/constants')();
 
 var CORE_FILE_MIN = './bower_components/ionic-platform-web-client/dist/ionic.io.bundle.js';

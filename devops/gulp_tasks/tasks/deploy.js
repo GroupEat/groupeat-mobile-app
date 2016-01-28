@@ -1,11 +1,10 @@
 var gulp = require('gulp');
 var exec = require('child_process').exec;
-var gmux = require('gulp-mux');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var constants = require('../common/constants')();
 var helper = require('../common/helper');
-var args = require('yargs').array('id').default('env', 'integration').argv;
+var args = require('yargs').array('id').default('env', 'staging').argv;
 var _ = require('lodash');
 var swig = require('gulp-swig');
 var es = require('event-stream');
@@ -77,7 +76,7 @@ gulp.task('deploy:download', false, ['deploy:check'], function(done) {
   });
 });
 
-gulp.task('soft-deploy', "Updates the app using ionic deploy only, usefull for testing", ['dist', 'compile:copy-package-json'], function(done) {
+gulp.task('soft-deploy', "Updates the app using ionic deploy only", ['dist'], function(done) {
   var task = exec('../../../node_modules/.bin/ionic upload --deploy='+args.env, {
       cwd: distFolder
   }, function(err, stdout, stderr) {

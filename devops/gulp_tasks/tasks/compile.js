@@ -5,7 +5,7 @@ var helper = require('../common/helper');
 var args = require('yargs').array('id').default('env', 'dev').array("platform").default("platform", ["android", "ios"]).argv;
 var _ = require('lodash');
 
-gulp.task('compile', "Builds and compiles the app using ionic package", ['dist', 'compile:copy-package-json'], function(done) {
+gulp.task('compile', "Builds and compiles the app using ionic package", ['dist'], function(done) {
   function generateCmd(platform){
     cmd = '../../../node_modules/.bin/ionic package build ' + platform + ' --profile ' + args.env;
     if (args.env === 'prod') {
@@ -31,9 +31,4 @@ gulp.task('resources', 'generates icon and splashscreens', ['dist'], function(do
     helper.execHandler(err, stdout, stderr);
     done();
   });
-});
-
-gulp.task('compile:copy-package-json', false, ['dist'], function(done) {
-  gulp.src("package.json").pipe(gulp.dest(constants.distFolders[args.env]))
-  .on('end', done);
 });
