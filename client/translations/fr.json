@@ -215,5 +215,7 @@
   "nextStep": "Étape suivante",
   "helloYou": "Allo {{firstName}}",
   "helloYouDetails": "Le livreur pourra te contacter à ce numéro",
-  "noSpamNoCommercials": "Jamais de spams, jamais de pubs"
+  "noSpamNoCommercials": "Jamais de spams, jamais de pubs",
+
+  "updateSuccesful": "Tu viens de récupérer une mise à jour ! Redémarre l'appli pour bénéficier de nos dernières nouveautés !"
 }

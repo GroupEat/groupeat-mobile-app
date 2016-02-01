@@ -16,18 +16,20 @@ module.exports = function(app) {
       if (ionicDeployChannel) {
         var deploy = new Ionic.Deploy();
         deploy.setChannel(ionicDeployChannel);
-        deploy().check().then(function(isDeployAvailable) {
-          deploy.download().then(function() {
-            deploy.extract().then(function() {
-              $translate('updateSuccesful').then(function (updateSuccesful) {
-                $cordovaToast.showShortTop(updateSuccesful);
+        deploy.check().then(function(isDeployAvailable) {
+          if (isDeployAvailable) {
+            deploy.download().then(function() {
+              deploy.extract().then(function() {
+                $translate('updateSuccesful').then(function (updateSuccesful) {
+                  $cordovaToast.showShortTop(updateSuccesful);
+                });
+              }, function(deployExtractError) {
+                console.error('deploy extract error : ' + deployExtractError);
               });
-            }, function(deployExtractError) {
-              console.error('deploy extract error : ' + deployExtractError);
+            }, function(deployDownloadError) {
+              console.error('deploy download error : ' + deployDownloadError);
             });
-          }, function(deployDownloadError) {
-            console.error('deploy download error : ' + deployDownloadError);
-          });
+          }
         }, function(deployCheckError) {
           console.error('deploy check error : ' + deployCheckError);
         });
