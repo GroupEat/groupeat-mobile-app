@@ -10,6 +10,7 @@ var _ = require('lodash');
 var swig = require('gulp-swig');
 var es = require('event-stream');
 var chalk = require('chalk');
+var mkdirp = require('mkdirp');
 
 var distFolder = './dist/app/prod';
 
@@ -68,13 +69,19 @@ gulp.task('deploy:download', false, ['deploy:check'], function(done) {
   function getDownloadCLI(id) {
     return '../../../node_modules/.bin/ionic package download ' + id + ' -d ../../../deploy';
   }
-  var cmd = _.map(args.id, getDownloadCLI).join(' && ');
-  exec(_.map(args.id, getDownloadCLI).join(' && '), {
-      cwd: distFolder,
-      maxBuffer: constants.maxBuffer
-  }, function(err, stdout, stderr) {
-    helper.debug(stdout);
-    done();
+  mkdirp('./deploy', function(err){
+    if(err) {
+      console.log(err);
+      return;
+    }
+    var cmd = _.map(args.id, getDownloadCLI).join(' && ');
+    exec(_.map(args.id, getDownloadCLI).join(' && '), {
+        cwd: distFolder,
+        maxBuffer: constants.maxBuffer
+    }, function(err, stdout, stderr) {
+      helper.debug(stdout);
+      done();
+    });
   });
 });
 
