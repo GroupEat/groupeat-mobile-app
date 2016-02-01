@@ -14,6 +14,7 @@ require('angular-validation-match');
 require('ionic');
 require('ionic-platform-web-client');
 require('ionic-service-core');
+require('ionic-service-deploy');
 require('ionic-angular');
 require('ng-cordova');
 
@@ -26,6 +27,8 @@ module.exports = function(namespace) {
   var app = angular.module(fullname, [
     'ui.router',
     'ionic',
+    'ionic.service.core',
+    'ionic.service.deploy',
     'ionic.service.analytics',
     'jcs-autoValidate',
     'ngCordova',

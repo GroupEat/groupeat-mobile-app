@@ -3,11 +3,12 @@
 module.exports = function(app) {
 
   var dependencies = [
+    '$ionicPlatform',
     app.name + '.ApplicationUpdater'
   ];
 
-  function run(ApplicationUpdater) {
-    ApplicationUpdater.update();
+  function run($ionicPlatform, ApplicationUpdater) {
+    $ionicPlatform.ready(ApplicationUpdater.update);
   }
 
   run.$inject = dependencies;

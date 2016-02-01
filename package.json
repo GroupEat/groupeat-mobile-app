@@ -212,6 +212,7 @@
     "cordova-plugin-network-information",
     "phonegap-plugin-push",
     "ionic-plugin-keyboard",
+    "ionic-plugin-deploy",
     "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git"
   ],
   "cordovaPlatforms": [
