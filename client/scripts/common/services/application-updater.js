@@ -5,11 +5,12 @@ module.exports = function(app) {
 
   var dependencies = [
     app.name + '.Lodash',
+    '$cordovaToast',
     '$translate',
     'ionicDeployChannel',
   ];
 
-  function service(_, $translate, ionicDeployChannel) {
+  function service(_, $cordovaToast, $translate, ionicDeployChannel) {
 
     var update = function () {
       if (ionicDeployChannel) {
@@ -18,9 +19,8 @@ module.exports = function(app) {
         deploy().check().then(function(isDeployAvailable) {
           deploy.download().then(function() {
             deploy.extract().then(function() {
-              if (_.has(window, 'plugins.toast')) {
                 $translate('updateSuccesful').then(function (updateSuccesful) {
-                  window.plugins.toast.showShortTop(updateSuccesful);
+                  $cordovaToast.showShortTop(updateSuccesful);
                 });
               }
             }, function(deployExtractError) {
