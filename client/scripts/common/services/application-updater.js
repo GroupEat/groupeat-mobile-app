@@ -19,10 +19,9 @@ module.exports = function(app) {
         deploy().check().then(function(isDeployAvailable) {
           deploy.download().then(function() {
             deploy.extract().then(function() {
-                $translate('updateSuccesful').then(function (updateSuccesful) {
-                  $cordovaToast.showShortTop(updateSuccesful);
-                });
-              }
+              $translate('updateSuccesful').then(function (updateSuccesful) {
+                $cordovaToast.showShortTop(updateSuccesful);
+              });
             }, function(deployExtractError) {
               console.error('deploy extract error : ' + deployExtractError);
             });
