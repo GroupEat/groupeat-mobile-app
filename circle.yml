@@ -1,0 +1,9 @@
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - npm run deploy:staging
+  prod:
+    branch: prod
+    commands:
+      - npm run deploy:prod
