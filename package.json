@@ -211,7 +211,8 @@
     "cordova-plugin-transport-security",
     "cordova-plugin-network-information",
     "phonegap-plugin-push",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git"
   ],
   "cordovaPlatforms": [
     "ios",

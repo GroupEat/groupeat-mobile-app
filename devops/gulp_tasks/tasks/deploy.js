@@ -68,6 +68,7 @@ gulp.task('deploy:download', false, ['deploy:check'], function(done) {
   function getDownloadCLI(id) {
     return '../../../node_modules/.bin/ionic package download ' + id + ' -d ../../../deploy';
   }
+  var cmd = _.map(args.id, getDownloadCLI).join(' && ');
   exec(_.map(args.id, getDownloadCLI).join(' && '), {
       cwd: distFolder,
       maxBuffer: constants.maxBuffer
