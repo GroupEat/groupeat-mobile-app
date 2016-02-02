@@ -3,7 +3,7 @@ var angular = require('angular');
 require('angular-mocks');
 var app = require('./groupeat.js');
 
-describe('app', function() {
+describe('groupeat', function() {
 
     beforeEach(function() {
         angular.mock.module(app.name);

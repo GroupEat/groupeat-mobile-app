@@ -2,8 +2,8 @@
 /*eslint consistent-this:[0] */
 var angular = require('angular');
 require('angular-mocks');
-var app = require('../')('app');
-var servicename = 'customer';
+var app = require('../')('groupeat');
+var servicename = 'Customer';
 describe(app.name, function() {
 
     describe('Services', function() {

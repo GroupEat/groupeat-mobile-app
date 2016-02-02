@@ -20,7 +20,7 @@ describe('Main', function() {
     });
 
     it('should have a title', function() {
-        expect(mainView.getCurrentPageTitle()).toEqual('Sample app');
+        expect(mainView.getCurrentPageTitle()).toEqual('GroupEat');
     });
 
 });

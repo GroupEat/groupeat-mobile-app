@@ -2,8 +2,8 @@
 /*eslint consistent-this:[0] */
 var angular = require('angular');
 require('angular-mocks');
-var app = require('../')('app');
-var directivename = 'geMessageBackdrop';
+var app = require('../')('groupeat');
+var directivename = 'timer';
 var unitHelper = require('unitHelper');
 
 describe(app.name, function() {
@@ -20,6 +20,7 @@ describe(app.name, function() {
                 this.$templateCache = $injector.get('$templateCache');
                 this.$compile = $injector.get('$compile');
                 this.$scope = $injector.get('$rootScope').$new();
+                $injector.get('$httpBackend').whenGET(/translations/).respond(200);
             }));
 
             it('should succeed', function() {

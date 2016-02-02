@@ -2,7 +2,7 @@
 /*eslint consistent-this:[0] */
 var angular = require('angular');
 require('angular-mocks');
-var app = require('../')('app');
+var app = require('../')('groupeat');
 var servicename = 'GroupOrder';
 describe(app.name, function() {
 

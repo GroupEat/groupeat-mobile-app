@@ -24,6 +24,8 @@ module.exports = function(namespace) {
     'LocalStorageModule',
     'ngCordova',
     'ngResource',
+    authentication.name,
+    common.name
   ]);
   app.namespace = app.namespace || {};
   app.namespace.authentication = authentication.name;
