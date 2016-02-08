@@ -29,6 +29,7 @@ module.exports = function(namespace) {
   app.namespace.authentication = authentication.name;
   app.namespace.common = common.name;
   // inject:folders start
+  require('./constants')(app);
   require('./services')(app);
   // inject:folders end
   require('./run')(app);
