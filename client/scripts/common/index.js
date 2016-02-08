@@ -12,9 +12,6 @@ require('angular-translate-storage-local');
 require('angular-ui-router');
 require('angular-validation-match');
 require('ionic');
-require('ionic-platform-web-client');
-require('ionic-service-core');
-require('ionic-service-deploy');
 require('ionic-angular');
 require('ng-cordova');
 
@@ -27,10 +24,8 @@ module.exports = function(namespace) {
   var app = angular.module(fullname, [
     'ui.router',
     'ionic',
-    'ionic.service.core',
-    'ionic.service.deploy',
-    'ionic.service.analytics',
     'jcs-autoValidate',
+    'ngConstants',
     'ngCordova',
     'ngCookies',
     'pascalprecht.translate',
@@ -52,7 +47,7 @@ module.exports = function(namespace) {
       var $state = $injector.get('$state');
       $state.go('app.group-orders');
     });
-    $stateProvider.state('app', {
+    $stateProvider.state('groupeat', {
       url: '',
       abstract: true,
       template: require('./views/app.html'),

@@ -1,0 +1,12 @@
+machine:
+  node:
+    version: 4.2.6
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - npm run deploy:staging
+  prod:
+    branch: prod
+    commands:
+      - npm run deploy:prod

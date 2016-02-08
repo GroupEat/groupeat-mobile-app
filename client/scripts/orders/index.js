@@ -1,13 +1,14 @@
 'use strict';
 var angular = require('angular');
-require('angular-ui-router');
-require('angular-sanitize');
 require('angular-animate');
-require('slick-carousel');
+require('angular-moment');
+require('angular-sanitize');
 require('angular-slick');
+require('angular-ui-router');
 require('ionic');
 require('ionic-angular');
 require('ng-cordova');
+require('slick-carousel');
 
 var modulename = 'orders';
 
@@ -20,11 +21,14 @@ module.exports = function(namespace) {
   var fullname = namespace + '.' + modulename;
 
   var app = angular.module(fullname, [
+    'angularMoment',
     'ui.router',
     'ionic',
     'ngCordova',
     'ngResource',
-    'slick'
+    'slick',
+    common.name,
+    customer.name
   ]);
   app.namespace = app.namespace || {};
   app.namespace.authentication = authentication.name;

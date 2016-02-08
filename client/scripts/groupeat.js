@@ -14,6 +14,9 @@ require('angular-sanitize');
 require('angular-ui-mask');
 require('ionic');
 require('ionic-angular');
+require('ionic-platform-web-client');
+require('ionic-service-core');
+require('ionic-service-deploy');
 
 require('angular-moment');
 require('angular-timer');
@@ -21,6 +24,9 @@ require('angular-timer');
 var app = angular.module(namespace, [
   'angularMoment',
   'ionic',
+  'ionic.service.core',
+  'ionic.service.deploy',
+  'ionic.service.analytics',
   'ngConstants',
   'pascalprecht.translate',
   'timer',
@@ -45,9 +51,13 @@ if (process.env.SENTRY_MODE === 'prod') {
   app.config(configCompile);
 }
 
-var runDeps = ['$ionicPlatform', '$window'];
-var run = function($ionicPlatform, $window) {
+var runDeps = ['$ionicPlatform', '$window', 'ionicDeployChannel'];
+var run = function($ionicPlatform, $window, ionicDeployChannel) {
   $ionicPlatform.ready(function() {
+
+    if (ionicDeployChannel === 'prod') {
+      $ionicAnalytics.register();
+    }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if ($window.cordova && $window.cordova.plugins.Keyboard) {
