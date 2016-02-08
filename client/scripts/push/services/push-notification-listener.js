@@ -8,10 +8,11 @@ module.exports = function(app) {
     '$ionicPlatform',
     '$log',
     '$q',
+    app.name + '.pushConfig',
     app.name + '.DeviceAssistant'
   ];
 
-  function service(_, $ionicPlatform, $log, $q, DeviceAssistant) {
+  function service(_, $ionicPlatform, $log, $q, pushConfig, DeviceAssistant) {
     var subscribe = function() {
       var defer = $q.defer();
 
