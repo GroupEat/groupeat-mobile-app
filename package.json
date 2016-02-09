@@ -6,8 +6,8 @@
   "scripts": {
     "test": "gulp test",
     "postinstall": "./node_modules/.bin/bower install",
-    "deploy:staging": "./node_module/.bin/ionic login && ./node_modules/.bin/gulp soft-deploy --env=staging",
-    "deploy:prod": "./node_module/.bin/ionic login && ./node_modules/.bin/gulp soft-deploy --env=prod",
+    "deploy:staging": "./node_modules/.bin/ionic login && ./node_modules/.bin/gulp soft-deploy --env=staging",
+    "deploy:prod": "./node_modules/.bin/ionic login && ./node_modules/.bin/gulp soft-deploy --env=prod",
     "jsbeautify": "js-beautify client/**/*.js client/*.js -r",
     "protractor_debug_1": "./node_modules/protractor/bin/webdriver-manager start",
     "protractor_debug_2": "./node_modules/protractor/bin/elementexplorer.js http://localhost:5000"
