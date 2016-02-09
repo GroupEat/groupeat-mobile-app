@@ -29,6 +29,7 @@ module.exports = function(app) {
         push.on('registration', function(data) {
           $log.log('notifications registered', data);
           DeviceAssistant.setNotificationToken(data.registrationId);
+          DeviceAssistant.update();
           defer.resolve();
         });
 
