@@ -47,7 +47,7 @@ module.exports = function(namespace) {
       var $state = $injector.get('$state');
       $state.go('app.group-orders');
     });
-    $stateProvider.state('groupeat', {
+    $stateProvider.state('app', {
       url: '',
       abstract: true,
       template: require('./views/app.html'),
