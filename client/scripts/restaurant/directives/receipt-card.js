@@ -24,9 +24,9 @@ module.exports = function(app) {
           return new Array(num);
         };
         scope.date = new Date();
-        scope.$watch('discount', function() {
-          if (_.has(scope, 'orders.getTotalPrice()')) {
-            scope.realPrice = scope.orders.getTotalPrice() * ( (100 - scope.discount ) / 100 );
+        scope.$watch('discount', function(discount) {
+          if (_.has(scope, 'orders.getTotalPrice')) {
+            scope.realPrice = scope.orders.getTotalPrice() * ( (100 - discount ) / 100 );
           }
         });
       }
