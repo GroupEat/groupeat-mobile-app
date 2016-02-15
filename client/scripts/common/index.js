@@ -25,6 +25,7 @@ module.exports = function(namespace) {
     'ui.router',
     'ionic',
     'jcs-autoValidate',
+    'LocalStorageModule',
     'ngConstants',
     'ngCordova',
     'ngCookies',
