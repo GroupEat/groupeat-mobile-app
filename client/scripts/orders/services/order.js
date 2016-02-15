@@ -21,7 +21,6 @@ module.exports = function(app) {
       'endingAt': null,
       'currentDiscount': null,
       'groupOrderDiscount': null,
-      'remainingCapacity': null,
       'discountPolicy': null,
       'groupOrderTotalPrice': 0,
       'foodRushMax': 60,
@@ -169,7 +168,6 @@ module.exports = function(app) {
         'groupOrderId': null,
         'endingAt': null,
         'currentDiscount': null,
-        'remainingCapacity': null,
         'foodRushMax': 60
       };
       requestBody = {
@@ -186,13 +184,12 @@ module.exports = function(app) {
       };
     },
 
-    setCurrentOrder = function(id, date, discount, capacity, discountPolicy, groupOrderTotalPrice, closingHour) {
+    setCurrentOrder = function(id, date, discount, discountPolicy, groupOrderTotalPrice, closingHour) {
       requestBody.id = id;
       currentOrder.groupOrderId = id;
       currentOrder.endingAt = date;
       currentOrder.groupOrderDiscount = discount;
       currentOrder.currentDiscount = discount;
-      currentOrder.remainingCapacity = capacity;
       currentOrder.discountPolicy = discountPolicy;
       currentOrder.groupOrderTotalPrice = groupOrderTotalPrice/100;
       currentOrder.foodRushMax = parseInt(getTimeDiff(closingHour)/60) - parseInt(getTimeDiff(closingHour)/60) % 5; // seconds
