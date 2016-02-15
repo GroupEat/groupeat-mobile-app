@@ -174,8 +174,7 @@
     "ionic-angular": "ionic-sdk/release/js/ionic-angular.js",
     "ionic-platform-web-client": "./bower_components/ionic-platform-web-client/dist/ionic.io.bundle.js",
     "angular-slick": "./bower_components/angular-slick/dist/slick.js",
-    "angular-sprintf": "sprintf-js/src/angular-sprintf.js",
-    "slick-carousel": "./bower_components/slick-carousel/slick/slick.js"
+    "angular-sprintf": "sprintf-js/src/angular-sprintf.js"
   },
   "browserify": {
     "transform": [
