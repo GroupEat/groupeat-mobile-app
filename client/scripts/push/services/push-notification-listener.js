@@ -35,7 +35,12 @@ module.exports = function(app) {
 
         push.on('notification', function(data) {
           $log.log('notification received', data);
-          DeviceAssistant.update(data.additionalData.notificationId);
+          DeviceAssistant.update(data.additionalData.notificationId)
+          .finally(function() {
+            push.finish(function() {
+              $log.log('notification finished');
+            });
+          });
         });
 
         push.on('error', function (error) {
