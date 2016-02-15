@@ -37,6 +37,7 @@
     "angular-ui-router": "^0.2.15",
     "angular-validation-match": "^1.7.1",
     "humanize-duration": "^3.4.0",
+    "ionic-process-spinner": "0.0.1",
     "ionic-sdk": "^1.2.4",
     "jquery": "^2.2.0",
     "moment": "^2.10.6",
