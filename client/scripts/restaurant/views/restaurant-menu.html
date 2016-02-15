@@ -56,7 +56,7 @@
 
     <ion-list id="product-list">
       <div ng-repeat="product in products">
-        <ion-item id="product-{{product.id}}" class="products" ng-click="toggleGroup(product)" ng-class="{'is-active': product.isShown}">
+        <ion-item id="product-{{product.id}}" class="products" ng-click="toggleGroup(product)" ng-class="{'is-active': product === shownGroup}">
           <div class="clearfix">
             <div class="pull-left">
               <h4>{{product.name}}</h4>
@@ -73,11 +73,11 @@
             </div>
           </div>
           <div class="col-95">
-            <p ng-show="product.isShown">{{product.description}}</p>
+            <p ng-show="product === shownGroup">{{product.description}}</p>
           </div>
 
         </ion-item>
-        <ion-item class="item-accordion" ng-repeat="format in product.formats.data" ng-class="{'is-active': product.isShown}">
+        <ion-item class="item-accordion" ng-repeat="format in product.formats.data" ng-class="{'is-active': product === shownGroup}">
           <div class="content">
             <div class="row">
               <div class="col-50">

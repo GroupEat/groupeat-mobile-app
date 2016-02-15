@@ -24,7 +24,7 @@ module.exports = function(app) {
   ];
 
   function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller) {
-    $scope.groups = [];
+    $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
     };
@@ -107,16 +107,18 @@ module.exports = function(app) {
     };
 
     $scope.toggleGroup = function(group) {
-      group.isShown = !$scope.isGroupShown(group);
-      $timeout(function() {
-        if (group.isShown) {
-          Scroller.scrollTo('restaurantMenu', 'product-' + group.id);
-        }
-      }, 300);
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+        $timeout(function() {
+          Scroller.scrollTo('restaurantMenu', 'product-' + $scope.shownGroup.id);
+        }, 300);
+      }
     };
 
     $scope.isGroupShown = function(group) {
-      return group.isShown;
+      return group === $scope.shownGroup;
     };
 
     $scope.modal = $ionicModal.fromTemplate(require('../../orders/views/cart.html'), {
