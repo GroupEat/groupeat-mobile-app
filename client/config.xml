@@ -26,4 +26,5 @@
   <hook type="after_prepare" src="package-hooks/add_platform_class.js" />
   <hook type="after_prepare" src="package-hooks/ios9_allow_http.sh" />
   <hook type="after_prepare" src="package-hooks/android_ignore_translation_errors.js" />
+  <hook type="after_prepare" src="package-hooks/ios_disable_bitcode.js" />
 </widget>
