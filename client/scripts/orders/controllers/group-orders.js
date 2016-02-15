@@ -67,7 +67,9 @@ module.exports = function(app) {
 
     var deregister = $ionicPlatform.on('resume', function() {
       $scope.initialState = $state.current.name;
-      $scope.onReload();
+      if ($scope.initialState === 'app.group-orders') {
+        $scope.onReload();
+      }
     });
 
     $scope.$on('$destroy', deregister);
