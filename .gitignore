@@ -56,4 +56,4 @@ plugins/
 # Changelog
 CHANGELOG.md
 
-deploy/
+/deploy
