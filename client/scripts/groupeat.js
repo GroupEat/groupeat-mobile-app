@@ -51,8 +51,8 @@ if (process.env.SENTRY_MODE === 'prod') {
   app.config(configCompile);
 }
 
-var runDeps = ['$ionicPlatform', '$window', 'ionicDeployChannel'];
-var run = function($ionicPlatform, $window, ionicDeployChannel) {
+var runDeps = ['$ionicAnalytics', '$ionicPlatform', '$window', 'ionicDeployChannel'];
+var run = function($ionicAnalytics, $ionicPlatform, $window, ionicDeployChannel) {
   $ionicPlatform.ready(function() {
 
     if (ionicDeployChannel === 'prod') {
