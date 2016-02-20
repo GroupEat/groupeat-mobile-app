@@ -6,3 +6,7 @@ deployment:
     branch: staging
     commands:
       - npm run deploy:staging
+test:
+  post:
+      - npm install -g codeclimate-test-reporter
+      - codeclimate-test-reporter < coverage/lcov/lcov.info
