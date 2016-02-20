@@ -35,6 +35,7 @@ gulp.task('ionic:config', false, function(done) {
 
 gulp.task('copy', false, function(done) {
   var dest = constants.distFolders[args.env] + '/www';
+  console.log(constants.cordova.src + '/package-hooks/*.{sh,js}');
 
   es.concat(
   gulp.src(constants.html.src)
