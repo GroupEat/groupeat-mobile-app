@@ -51,7 +51,7 @@
                   {{ 'remainingCapacity' | translate }} <b>{{groupOrder.remainingCapacity}}</b>
                 </h4>
                 <div class="clearfix">
-                  <ul>
+                  <ul ng-if="groupOrder.restaurant.data.deliveryCapacity <= 10">
                     <li ng-repeat="i in setArrayFromInt(groupOrder.remainingCapacity) track by $index">
                       <span class="gp-icon gp-pizza filled"></span>
                     </li>

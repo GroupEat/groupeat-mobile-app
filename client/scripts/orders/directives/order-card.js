@@ -13,7 +13,9 @@ module.exports = function(app) {
       restrict: 'EA',
       link: function(scope, element) {
         var top = element[0].querySelector('.top');
-        top.style.height = $(document).height() - 380 + 'px';
+        if (top) {
+          top.style.height = $(document).height() - 380 + 'px';
+        }
       }
     };
   };

@@ -22,11 +22,14 @@ module.exports = function(namespace) {
     'LocalStorageModule',
     'ngCordova',
     'ngResource',
+    authentication.name,
+    common.name
   ]);
   app.namespace = app.namespace || {};
   app.namespace.authentication = authentication.name;
   app.namespace.common = common.name;
   // inject:folders start
+  require('./constants')(app);
   require('./services')(app);
   // inject:folders end
   require('./run')(app);

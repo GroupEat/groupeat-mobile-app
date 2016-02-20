@@ -4,9 +4,11 @@ var directivename = 'geReceiptCard';
 
 module.exports = function(app) {
 
-  var directiveDeps = [];
+  var directiveDeps = [
+    app.namespace.common + '.Lodash'
+  ];
 
-  var directive = function() {
+  var directive = function(_) {
     return {
       restrict: 'EA',
       template: require('./receipt-card.html'),
@@ -22,8 +24,10 @@ module.exports = function(app) {
           return new Array(num);
         };
         scope.date = new Date();
-        scope.$watch('discount', function() {
-          scope.realPrice = scope.orders.getTotalPrice() * ( (100 - scope.discount ) / 100 );
+        scope.$watch('discount', function(discount) {
+          if (_.has(scope, 'orders.getTotalPrice')) {
+            scope.realPrice = scope.orders.getTotalPrice() * ( (100 - discount ) / 100 );
+          }
         });
       }
     };

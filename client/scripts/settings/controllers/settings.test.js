@@ -2,7 +2,7 @@
 /*eslint consistent-this:[0] */
 var angular = require('angular');
 require('angular-mocks');
-var app = require('../')('app');
+var app = require('../')('groupeat');
 var controllername = 'SettingsCtrl';
 describe(app.name, function() {
 
@@ -24,10 +24,6 @@ describe(app.name, function() {
 
             it('should be defined', function() {
                 expect(this.controller).toBeDefined();
-            });
-
-            it('should expose controllername', function() {
-                expect(this.controller.controllername).toBe(app.name + '.' + controllername);
             });
 
         });

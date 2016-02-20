@@ -4,15 +4,16 @@ var servicename = 'Geolocation';
 module.exports = function(app) {
 
   var dependencies = [
-    '$q',
     '$cordovaGeolocation',
-    'ionicDeployChannel'
+    '$q',
+    'ionicDeployChannel',
+    'localStorageService'
   ];
 
-  function service($q, $cordovaGeolocation, ionicDeployChannel) {
+  function service($cordovaGeolocation, $q, ionicDeployChannel, localStorageService) {
     var getGeolocation = function () {
       var defer = $q.defer();
-      if (ionicDeployChannel !== 'prod') {
+      if (ionicDeployChannel !== 'prod' || localStorageService.get('id') === "1") {
         var response = {
           'coords': {
             'latitude': 48.710734,

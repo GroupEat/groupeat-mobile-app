@@ -17,16 +17,16 @@ module.exports = function(app) {
         data: '='
       },
       link: function(scope) {
-        var rating = scope.data.rating;
+        var rating = scope.data ? scope.data.rating : null;
 
         scope.setArrayFromInt = function (num) {
           return new Array(num);
         };
 
         scope.starClass = function(index) {
-          if (index < Math.floor(rating / 2)) {
+          if (rating && index < Math.floor(rating / 2)) {
             return 'icon ion-ios-star';
-          } else if (index === Math.floor(rating / 2) && rating % 2 === 1){
+          } else if (rating && index === Math.floor(rating / 2) && rating % 2 === 1){
             return 'icon ion-ios-star-half';
           }
           return 'icon ion-ios-star-outline';

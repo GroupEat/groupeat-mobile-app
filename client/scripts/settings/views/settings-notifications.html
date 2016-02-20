@@ -28,7 +28,11 @@
           ng-pluralize
           ng-init="dayLabel='day'; daysLabel='days'"
           count="day"
-          when="{0: '{{day}} {{dayLabel | translate}}', 1: '{{day}} {{dayLabel | translate}}', other: '{{day}} {{ daysLabel | translate }}'}"
+          when="{0: '{} {{dayLabel | translate}}',
+                 1: '{} {{dayLabel | translate}}',
+                 other: '{} {{ daysLabel | translate }}'}"
+          value="{{day}}"
+          ng-selected="day==customerSettings.daysWithoutNotifying"
           >{{day}}</option>
         </select>
       </label>

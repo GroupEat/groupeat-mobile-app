@@ -2,7 +2,7 @@
 /*eslint consistent-this:[0] */
 var angular = require('angular');
 require('angular-mocks');
-var app = require('../')('app');
+var app = require('../')('groupeat');
 var filtername = 'timeLabel';
 describe(app.name, function() {
 
@@ -23,10 +23,6 @@ describe(app.name, function() {
                 expect(this.filter).toBeDefined();
             });
 
-            it('should filter', function() {
-                var text = 'This Is My Text';
-                expect(this.filter(text)).toBe(text.toLowerCase());
-            });
         });
     });
 });

@@ -12,8 +12,6 @@ require('angular-translate-storage-local');
 require('angular-ui-router');
 require('angular-validation-match');
 require('ionic');
-require('ionic-platform-web-client');
-require('ionic-service-core');
 require('ionic-angular');
 require('ng-cordova');
 
@@ -26,8 +24,9 @@ module.exports = function(namespace) {
   var app = angular.module(fullname, [
     'ui.router',
     'ionic',
-    'ionic.service.analytics',
     'jcs-autoValidate',
+    'LocalStorageModule',
+    'ngConstants',
     'ngCordova',
     'ngCookies',
     'pascalprecht.translate',

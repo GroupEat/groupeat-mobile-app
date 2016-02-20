@@ -8,10 +8,11 @@ module.exports = function(app) {
     '$ionicPlatform',
     '$log',
     '$q',
+    app.name + '.pushConfig',
     app.name + '.DeviceAssistant'
   ];
 
-  function service(_, $ionicPlatform, $log, $q, DeviceAssistant) {
+  function service(_, $ionicPlatform, $log, $q, pushConfig, DeviceAssistant) {
     var subscribe = function() {
       var defer = $q.defer();
 
@@ -28,12 +29,18 @@ module.exports = function(app) {
         push.on('registration', function(data) {
           $log.log('notifications registered', data);
           DeviceAssistant.setNotificationToken(data.registrationId);
+          DeviceAssistant.update();
           defer.resolve();
         });
 
         push.on('notification', function(data) {
           $log.log('notification received', data);
-          DeviceAssistant.update(data.additionalData.notificationId);
+          DeviceAssistant.update(data.additionalData.notificationId)
+          .finally(function() {
+            push.finish(function() {
+              $log.log('notification finished');
+            });
+          });
         });
 
         push.on('error', function (error) {

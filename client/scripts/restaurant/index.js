@@ -23,6 +23,10 @@ module.exports = function(namespace) {
     'ionic',
     'ngCordova',
     'ngResource',
+    authentication.name,
+    common.name,
+    customer.name,
+    orders.name
   ]);
   app.namespace = app.namespace || {};
   app.namespace.common = common.name;

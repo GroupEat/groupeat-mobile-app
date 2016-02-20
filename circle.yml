@@ -1,0 +1,8 @@
+machine:
+  node:
+    version: 4.2.6
+deployment:
+  staging:
+    branch: staging
+    commands:
+      - npm run deploy:staging
