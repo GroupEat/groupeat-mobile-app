@@ -15,12 +15,16 @@ module.exports = function(ctx) {
     'drawable-land-ldpi',
     'drawable-land-mdpi',
     'drawable-land-xhdpi',
+    'drawable-xxhdpi',
+    'drawable-xxxhdpi',
     'drawable-ldpi',
     'drawable-mdpi',
     'drawable-port-hdpi',
     'drawable-port-ldpi',
     'drawable-port-mdpi',
     'drawable-port-xhdpi',
+    'drawable-port-xxhdpi',
+    'drawable-port-xxxhdpi',
     'drawable-xhdpi'
   ]
 
@@ -32,19 +36,13 @@ module.exports = function(ctx) {
     filesToCopy.push(fileToCopy);
   }
 
-  console.log(filesToCopy);
-
   var deferral = ctx.requireCordovaModule('q').defer();
 
   var rootDir = ctx.opts.projectRoot;
 
   filesToCopy.forEach(function(obj) {
       Object.keys(obj).forEach(function(key) {
-        process.stdout.write(key);
-
           var val = obj[key];
-          process.stdout.write(val);
-
           var srcFile = path.join(rootDir, key);
           var destFile = path.join(rootDir, val);
           var destDir = path.dirname(destFile);
@@ -54,6 +52,8 @@ module.exports = function(ctx) {
           }
       });
   });
+
+  deferral.resolve();
 
   return deferral.promise;
 }

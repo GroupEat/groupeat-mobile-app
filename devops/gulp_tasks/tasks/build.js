@@ -16,8 +16,18 @@ gulp.task('state:reset', function(done) {
   });
 });
 
+gulp.task('resources', function(done) {
+  exec('../../../node_modules/.bin/ionic resources', {
+    cwd: constants.distFolders[args.env],
+    maxBuffer: constants.maxBuffer
+  }, function(err, stdout, stderr) {
+    helper.execHandler(err, stdout, stderr);
+    done();
+  });
+});
+
 gulp.task('build:ios', function(done) {
-  exec('../../../node_modules/.bin/ionic build ios', {
+  exec('../../../node_modules/.bin/ionic build ios --device --release', {
     cwd: constants.distFolders[args.env],
     maxBuffer: constants.maxBuffer
   }, function(err, stdout, stderr) {
@@ -33,7 +43,7 @@ gulp.task('build:prepare:android', function(done) {
 });
 
 gulp.task('build:android', ['build:prepare:android'], function(done) {
-  exec('cordova build android --device --release', {
+  exec('../../../node_modules/.bin/ionic build android --device --release', {
     cwd: constants.distFolders[args.env],
     maxBuffer: constants.maxBuffer
   }, function(err, stdout, stderr) {
@@ -45,6 +55,7 @@ gulp.task('build:android', ['build:prepare:android'], function(done) {
 gulp.task('build', function(done) {
   runSequence(['dist', 'compile:copy-package-json'],
   'state:reset',
+  'resources',
   ['build:android'],
   done);
 });
