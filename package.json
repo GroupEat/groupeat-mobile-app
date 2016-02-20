@@ -217,7 +217,7 @@
     "cordova-plugin-geolocation@2.1.0",
     "cordova-plugin-transport-security@0.1.1",
     "cordova-plugin-network-information@1.2.0",
-    "phonegap-plugin-push@1.5.3",
+    "phonegap-plugin-push@1.4.5",
     "ionic-plugin-keyboard@1.0.8",
     "ionic-plugin-deploy@0.4.1",
     "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git"
