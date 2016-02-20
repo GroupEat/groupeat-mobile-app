@@ -61,7 +61,7 @@ gulp.task('copy', false, function(done) {
       .pipe(gulp.dest(constants.distFolders[args.env] + '/hooks')),
   gulp.src([constants.cordova.src + '/package-hooks/*.{sh,js}'])
       .pipe(gulp.dest(constants.distFolders[args.env] + '/package-hooks')),
-  gulp.src(['./bin/resources/*'])
+  gulp.src(['./bin/resources/**/*'])
       .pipe(gulp.dest(constants.distFolders[args.env] + '/resources'))
   )
   .on('end', done);
