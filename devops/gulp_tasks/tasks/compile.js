@@ -23,16 +23,6 @@ gulp.task('compile', "Builds and compiles the app using ionic package", ['dist',
   });
 });
 
-gulp.task('resources', 'generates icon and splashscreens', ['dist'], function(done) {
-  exec('../../../node_modules/.bin/ionic resources', {
-    cwd: constants.distFolders[args.env],
-    maxBuffer: constants.maxBuffer
-  }, function(err, stdout, stderr) {
-    helper.execHandler(err, stdout, stderr);
-    done();
-  });
-});
-
 gulp.task('compile:copy-package-json', false, ['dist'], function(done) {
   gulp.src("package.json").pipe(gulp.dest(constants.distFolders[args.env]))
   .on('end', done);

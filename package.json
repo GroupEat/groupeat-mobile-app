@@ -1,7 +1,7 @@
 {
   "name": "groupeat_mobile_app",
   "description": "groupeat_mobile_app",
-  "version": "0.0.1",
+  "version": "1.1.1",
   "license": "UNLICENSED",
   "scripts": {
     "test": "gulp test",
@@ -162,6 +162,7 @@
     "watchify": "3.6.0",
     "webpack": "1.12.6",
     "webpack-dev-server": "1.12.1",
+    "xcode": "^0.8.3",
     "yargs": "3.30.0"
   },
   "engines": {
@@ -207,18 +208,18 @@
     }
   },
   "cordovaPlugins": [
-    "cordova-plugin-statusbar",
-    "cordova-plugin-console",
-    "cordova-plugin-globalization",
-    "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-geolocation",
-    "cordova-plugin-transport-security",
-    "cordova-plugin-network-information",
+    "cordova-plugin-statusbar@2.1.1",
+    "cordova-plugin-console@1.0.2",
+    "cordova-plugin-globalization@1.0.2",
+    "cordova-plugin-device@1.1.1",
+    "cordova-plugin-splashscreen@3.2.0",
+    "cordova-plugin-whitelist@1.0.0",
+    "cordova-plugin-geolocation@2.1.0",
+    "cordova-plugin-transport-security@0.1.1",
+    "cordova-plugin-network-information@1.2.0",
     "phonegap-plugin-push@1.4.5",
-    "ionic-plugin-keyboard",
-    "ionic-plugin-deploy",
+    "ionic-plugin-keyboard@1.0.8",
+    "ionic-plugin-deploy@0.4.1",
     "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git"
   ],
   "cordovaPlatforms": [
