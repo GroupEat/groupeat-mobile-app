@@ -59,10 +59,10 @@ module.exports = function(app) {
       })
       .then(function(existingGroupOrder) {
         if (existingGroupOrder) {
-          Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.remainingCapacity, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice);
+          Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice);
         }
         else {
-          Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt);
+          Order.setCurrentOrder(null, null, 0, restaurant.discountPolicy, 0, restaurant.closingAt);
         }
         $state.go('app.restaurant-menu', {restaurantId: restaurant.id});
       });

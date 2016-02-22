@@ -73,12 +73,8 @@ module.exports = function(app) {
     };
 
     $scope.onAddProduct = function(product, format) {
-      if ($scope.cart.getTotalQuantity() >= $scope.currentOrder.remainingCapacity) {
-        Popup.error('tooManyProducts');
-      } else {
-        Cart.addProduct(product, format);
-        Order.updateCurrentDiscount($scope.cart.getTotalPrice());
-      }
+      Cart.addProduct(product, format);
+      Order.updateCurrentDiscount($scope.cart.getTotalPrice());
     };
 
     $scope.onLeaveRestaurant = function() {

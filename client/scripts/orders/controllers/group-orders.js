@@ -51,7 +51,7 @@ module.exports = function(app) {
         return CustomerInformationChecker.check();
       })
       .then(function() {
-        Order.setCurrentOrder(groupOrder.id, groupOrder.endingAt, groupOrder.discountRate, groupOrder.remainingCapacity, groupOrder.restaurant.data.discountPolicy, groupOrder.totalRawPrice);
+        Order.setCurrentOrder(groupOrder.id, groupOrder.endingAt, groupOrder.discountRate, groupOrder.restaurant.data.discountPolicy, groupOrder.totalRawPrice);
         $state.go('app.restaurant-menu', {restaurantId: groupOrder.restaurant.data.id});
       });
     };

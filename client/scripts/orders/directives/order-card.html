@@ -13,21 +13,6 @@
       <i class="ion-ios-star" ng-repeat="i in setArrayFromInt(4) track by $index"></i>
       <i class="ion-ios-star-outline" ng-repeat="i in setArrayFromInt(1) track by $index"></i>
     </div>
-    <div class="capacity">
-      <h4 class="small-title">
-        {{ 'remainingCapacity' | translate }} <b>{{groupOrder.remainingCapacity}}</b>
-      </h4>
-      <div class="clearfix">
-        <ul>
-          <li ng-repeat="i in setArrayFromInt(groupOrder.restaurant.data.deliveryCapacity - groupOrder.remainingCapacity) track by $index">
-            <span class="gp-icon gp-pizza filled"></span>
-          </li>
-          <li ng-repeat="i in setArrayFromInt(groupOrder.remainingCapacity) track by $index">
-            <span class="gp-icon gp-pizza"></span>
-          </li>
-        </ul>
-      </div>
-    </div>
     <a on-tap="onJoinOrderTouch(order)" class="btn btn-bloc btn-green btn-lg">
       <i class="ion-plus-round"></i> {{ 'order' | translate }}
     </a>
