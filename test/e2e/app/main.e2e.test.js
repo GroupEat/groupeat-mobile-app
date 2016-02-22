@@ -23,4 +23,8 @@ describe('Main', function() {
         expect(mainView.getCurrentPageTitle()).toEqual('GroupEat');
     });
 
+    it('should include three titles for the three slides', function() {
+      expect(element.all(by.css('.titles')).count()).toEqual(3);
+    });
+
 });
