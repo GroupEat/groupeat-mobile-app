@@ -6,6 +6,7 @@ require('angular-sanitize');
 require('angular-ui-router');
 require('ionic');
 require('ionic-angular');
+require('ionic-process-spinner');
 require('ng-cordova');
 
 var modulename = 'settings';
@@ -24,6 +25,7 @@ module.exports = function(namespace) {
     'ngCordova',
     'ngResource',
     'ngMessages',
+    'ionicProcessSpinner',
     authentication.name,
     common.name,
     customer.name
