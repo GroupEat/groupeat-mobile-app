@@ -5,9 +5,7 @@ var constants = require('./devops/gulp_tasks/common/constants')();
 var resolutions = require('browserify-resolutions');
 var webpack = require('./webpack.config');
 var args = global.args || (process.env.ARGS ? JSON.parse(process.env.ARGS) : {});
-var moduleManager = args.bundler ? args.bundler : constants.moduleManager;
 var moduleEntry = args.module ? '/' + args.module : '';
-var isWebpack = moduleManager === 'webpack';
 
 module.exports = function(config) {
     var debug = false;
@@ -24,7 +22,6 @@ module.exports = function(config) {
 
     var reporters = ['mocha', 'coverage'];
 
-    var browserifyTestFiles = './client/scripts' + moduleEntry + '/**/*.test.js';
     var webpackTestFiles = './client/scripts' + moduleEntry + '/tests.webpack.js';
 
     var browserify = {
@@ -58,11 +55,7 @@ module.exports = function(config) {
     });
 
     var preprocessors = {};
-    if (isWebpack) {
-        preprocessors[webpackTestFiles] = ['webpack', 'sourcemap'];
-    } else {
-        preprocessors[browserifyTestFiles] = ['browserify'];
-    }
+    preprocessors[webpackTestFiles] = ['webpack', 'sourcemap'];
 
     if (debug === true) {
         delete browserify.transform;
@@ -77,12 +70,12 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: isWebpack ? ['jasmine'] : ['browserify', 'jasmine'],
+        frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
         files: [
             //'./client/scripts/**/*.html',
-            isWebpack ? webpackTestFiles : browserifyTestFiles
+            webpackTestFiles
         ],
 
         // list of files to exclude
@@ -128,16 +121,11 @@ module.exports = function(config) {
         coverageReporter: {
             dir : './coverage/unit',
             reporters: [{
-                type: 'json'
+                type: 'lcov',
+                subdir: 'lcov'
             }, {
-                type: 'text'
-            }, {
-                type: 'text-summary'
-            }, {
-                type: 'cobertura',
-                file: 'coverage.xml'
-            }, {
-                type: 'lcov'
+                type: 'html',
+                subdir: 'html'
             }]
         },
         webpack: webpack,
