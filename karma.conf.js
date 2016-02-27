@@ -2,60 +2,49 @@
 
 var args = require('yargs').argv;
 var constants = require('./devops/gulp_tasks/common/constants')();
-var resolutions = require('browserify-resolutions');
 var webpack = require('./webpack.config');
-var args = global.args || (process.env.ARGS ? JSON.parse(process.env.ARGS) : {});
-var moduleEntry = args.module ? '/' + args.module : '';
 
 module.exports = function(config) {
     var debug = false;
     try {
         debug = JSON.parse(args._[0]).debug;
-    } catch (err) {}
+    } catch(err) {}
     debug = debug || args.debug;
 
     var autowatch = true;
     try {
         autowatch = JSON.parse(args._[0]).autowatch;
-    } catch (err) {}
+    } catch(err) {}
     autowatch = autowatch || args.autowatch;
 
     var reporters = ['mocha', 'coverage'];
-
-    var webpackTestFiles = './client/scripts' + moduleEntry + '/tests.webpack.js';
-
     var browserify = {
         debug: true,
         transform: [
             ['browserify-istanbul', {
                 instrumenter: require('isparta'),
-                ignore: ['**/*.test.js', '**/*.html', '**/bower_components/**', '**/node_modules/**', '**/externals/**/*.js', '**/client/scripts/lbServices.js']
+                ignore: ['**/*.test.js', '**/*.html', '**/bower_components/**', '**/node_modules/**', '**/client/scripts/lbServices.js']
             }],
             ['babelify', {
                 'stage': 0,
                 'optional': ['es7.asyncFunctions'],
-                'ignore': ['./node_modules', './bower_components', './externals']
+                'ignore': ['./node_modules', './bower_components']
             }]
-        ],
-        configure: function(bundle) {
-            bundle.on('prebundle', function() {
-                bundle.plugin(resolutions, '*');
-            });
-        }
+        ]
     };
 
     webpack.cache = true;
-    webpack.devtool = 'eval'; //'inline-source-map';
+    webpack.devtool = 'inline-source-map';
     webpack.module.preLoaders = webpack.module.preLoaders || [];
     webpack.module.preLoaders.push({
         test: /\.js$/,
-        exclude: /(\.webpack\.js|\.test.js|node_modules|bower_components)/,
-        //exclude: /(tests.webpack.js|.test.js|node_modules|bower_components|test)/,
+        exclude: /(tests.webpack.js|.test.js|node_modules|bower_components)/,
         loader: 'istanbul-instrumenter'
     });
 
-    var preprocessors = {};
-    preprocessors[webpackTestFiles] = ['webpack', 'sourcemap'];
+    var preprocessors = {
+        './client/scripts/tests.webpack.js': ['webpack', 'sourcemap']
+    };
 
     if (debug === true) {
         delete browserify.transform;
@@ -63,25 +52,25 @@ module.exports = function(config) {
     }
 
     config.set({
-        browserNoActivityTimeout: 120000,
+        browserNoActivityTimeout: 60000,
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['mocha', 'sinon-chai'],
 
         // list of files / patterns to load in the browser
         files: [
             //'./client/scripts/**/*.html',
-            webpackTestFiles
+            './client/scripts/tests.webpack.js',
         ],
 
         // list of files to exclude
         exclude: [
             './client/scripts/bundle*.js',
-            './client/scripts/main*.js'
+            './client/scripts/groupeat*.js'
         ],
 
         // preprocess matching files before serving them to the browser
@@ -119,13 +108,12 @@ module.exports = function(config) {
         },
 
         coverageReporter: {
-            dir : './coverage/unit',
             reporters: [{
-                type: 'lcov',
-                subdir: 'lcov'
-            }, {
                 type: 'html',
                 subdir: 'html'
+            }, {
+                type: 'lcov',
+                subdir: 'lcov'
             }]
         },
         webpack: webpack,

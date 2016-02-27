@@ -25,7 +25,7 @@ describe(app.name, function() {
 
             it('should succeed', function() {
                 var element = unitHelper.compileDirective.call(this, directivename, '<ge-message-backdrop></ge-message-backdrop>');
-                expect(element.html().trim()).toBeDefined();
+                expect(element.html().trim()).to.be.defined;
             });
 
         });

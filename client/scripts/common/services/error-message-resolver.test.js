@@ -19,7 +19,7 @@ describe(app.name, function() {
             }));
 
             it('should be defined', function() {
-                expect(this.service).toBeDefined();
+                expect(this.service).to.be.defined;
             });
 
         });
