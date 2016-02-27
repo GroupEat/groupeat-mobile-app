@@ -4,7 +4,7 @@
   min-height: 300px;
   border-radius: 4px;
   .top {
-    height: 250px;
+    min-height: 180px;
     background-size:cover;
     background-position: center;
     border-radius: 4px 4px 0 0;
@@ -76,6 +76,7 @@
     }
     .stars {
       color : $font-grey;
+      margin-bottom: 10px;
       i {
         display: block;
         float: left;
