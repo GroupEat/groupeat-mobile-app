@@ -47,6 +47,7 @@ module.exports = function(namespace) {
     $stateProvider
     .state('app.group-orders', {
       url: '',
+      cache: false,
       views: {
         app: {
           template: require('./views/group-orders.html'),
