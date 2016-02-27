@@ -43,8 +43,7 @@ gulp.task('karma', 'Runs karma unit tests.', function(done) {
   global.args = args;
   new KarmaServer({
     configFile: path.resolve('karma.conf.js'),
-    action: args.watch ? 'watch' : 'run',
-    autowatch: !args.start
+    singleRun: !args.watch,
   }, done).start();
 });
 
