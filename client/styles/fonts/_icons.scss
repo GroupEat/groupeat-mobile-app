@@ -27,22 +27,24 @@
 	@if $filename == fish {
 		$char: "\E001";
 	}
-	@if $filename == meat {
+	@if $filename == groupeat {
 		$char: "\E002";
 	}
-	@if $filename == pepper {
+	@if $filename == meat {
 		$char: "\E003";
 	}
-	@if $filename == pizza {
+	@if $filename == pepper {
 		$char: "\E004";
 	}
-	@if $filename == pork {
+	@if $filename == pizza {
 		$char: "\E005";
 	}
-	@if $filename == vegie {
+	@if $filename == pork {
 		$char: "\E006";
 	}
-
+	@if $filename == vegie {
+		$char: "\E007";
+	}
 	@return $char;
 }
 
@@ -59,6 +61,9 @@
 
 .gp-fish {
 	@include gp(fish);
+}
+.gp-groupeat {
+	@include gp(groupeat);
 }
 .gp-meat {
 	@include gp(meat);
