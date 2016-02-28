@@ -10,7 +10,7 @@ describe('groupeat', function() {
     });
 
     it('should be defined', function() {
-        expect(app).toBeDefined();
+        expect(app).to.be.defined;
     });
 
 });

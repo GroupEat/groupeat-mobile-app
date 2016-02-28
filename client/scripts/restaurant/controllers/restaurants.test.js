@@ -23,7 +23,7 @@ describe(app.name, function() {
             }));
 
             it('should be defined', function() {
-                expect(this.controller).toBeDefined();
+                expect(this.controller).to.be.defined;
             });
 
         });

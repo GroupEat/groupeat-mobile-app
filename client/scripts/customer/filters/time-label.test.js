@@ -20,7 +20,7 @@ describe(app.name, function() {
             }));
 
             it('should be defined', function() {
-                expect(this.filter).toBeDefined();
+                expect(this.filter).to.be.defined;
             });
 
         });
