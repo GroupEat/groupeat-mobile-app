@@ -107,7 +107,7 @@ module.exports = function(app) {
     *
     */
     noGroupOrders = function() {
-      return backdrop('noGroupOrders', 'ion-pizza', 'newOrder', 'app.restaurants');
+      return backdrop('noGroupOrders', 'ion-fork', 'newOrder', 'app.restaurants');
     },
 
     /**
@@ -131,7 +131,7 @@ module.exports = function(app) {
     *
     */
     noOrders = function() {
-      return backdrop('noOrders', 'ion-pizza');
+      return backdrop('noOrders', 'ion-fork');
     },
 
     /**
@@ -143,7 +143,7 @@ module.exports = function(app) {
     *
     */
     emptyMenu = function() {
-      return backdrop('emptyMenu', 'ion-pizza');
+      return backdrop('emptyMenu', 'ion-fork');
     };
 
     return {
