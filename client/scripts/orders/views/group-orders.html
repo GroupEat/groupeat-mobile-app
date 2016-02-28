@@ -27,7 +27,7 @@
 
   <ion-content has-bouncing="false" class="bg-blue no-header full-height">
     <div style="height:44px"></div>
-    <div class="orders" ng-class="{'single-order' : groupOrders.length == 1}">
+    <div class="orders" ng-if="groupOrders" ng-class="{'single-order' : groupOrders.length == 1}">
       <slick data="groupOrders" ng-if="groupOrders.length" init-onload="true" arrows="false" slides-to-show="1" slides-to-scroll="1" center-mode="{{groupOrders.length == 1 ? false : true}}" center-padding="20px" >
         <div ng-repeat="groupOrder in groupOrders track by $index">
           <div class="order-card" ge-order-card on-tap="onJoinOrderTouch(groupOrder)" >
