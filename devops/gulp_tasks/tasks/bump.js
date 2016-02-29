@@ -26,7 +26,7 @@ gulp.task('commit-changes', function () {
 });
 
 gulp.task('push-changes', function (cb) {
-  git.push('origin', 'integration', cb);
+  git.push('origin', 'staging', cb);
 });
 
 gulp.task('create-new-tag', function (cb) {
