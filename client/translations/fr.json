@@ -58,7 +58,6 @@
   "joinThisOrder": "Rejoindre cette commande",
   "joinIt!": "La rejoindre !",
   "toOrder": "Commander",
-  "remainingCapacity": "Pizzas restantes :",
   "noGroupOrder": "Aucune commande en cours actuellement",
 
   "editProfile": "Mes Infos",
@@ -73,13 +72,14 @@
   "days": "jours",
 
   "whatWouldYouLikeToEat": "Que veux-tu manger ?",
-  "tooManyProducts": "Attention, ce restaurant ne peut pas livrer plus de pizzas...",
+  "tooManyProducts": "Attention, ce restaurant a atteint son maximum de commande pour cette livraison...",
 
   "chooseARestaurant": "Choisissez un restaurant",
-  "restaurantPlaceholderDescription": "Cette pizzeria n'a pas souhaité ajouter de description.",
+  "restaurantPlaceholderDescription": "Ce restaurant n'a pas souhaité ajouter de description.",
   "restaurantMenu": "Carte du restaurant",
   "alreadyAGroupOrder": "Rejoindre la commande en cours !",
   "pleaseChangeRestaurantOrJoinGroupOrder": "Il existe déjà une commande groupée dans ce restaurant, impossible d'en créer une nouvelle. Rejoins l'existante, et bénéficie de réductions alléchantes !",
+  "discountOnAllProduct": "Discount sur tous les produits",
   "yourCart": "Mon panier",
   "confirmOrder": "Valider ma Commande",
   "total": "Total",
@@ -204,8 +204,6 @@
   "noAccount": "Je ne possède pas de compte",
 
   "nothingInteresting": "Rien d'intéressant",
-
-  "pizzasLeft": "Pizzas restantes",
 
   "restaurants": "Restaurants",
   "aroundYou": "dans le coin",

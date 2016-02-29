@@ -1,60 +1,56 @@
 'use strict';
 
 var gulp = require('gulp');
-var args = require('yargs').argv;
-var $ = require('gulp-load-plugins')();
-var bump = $.bump;
-var tap = $.tap;
-var gulpif = $.if;
-var Q = require('q');
-var helper = require('../common/helper');
-var constants = require('../common/constants')();
+var runSequence = require('run-sequence');
+var bump = require('gulp-bump');
+var gutil = require('gulp-util');
+var git = require('gulp-git');
+var fs = require('fs');
+var args = require('yargs').default('type', 'patch').argv;
 
-/**
- * Bumps any version in the constants.versionFiles
- *
- * USAGE:
- * gulp bump --minor (or --major or --prerelease or --patch which is the default)
- * - or -
- * gulp bump --ver=1.2.3
- * @param {function} cb - The gulp callback
- * @returns {void}
- */
-gulp.task('bump', false, function(cb) {
-    var bumpType = 'patch';
-    // major.minor.patch
-    if (args.patch) {
-        bumpType = 'patch';
-    }
-    if (args.minor) {
-        bumpType = 'minor';
-    }
-    if (args.major) {
-        bumpType = 'major';
-    }
-    if (args.prerelease) {
-        bumpType = 'prerelease';
-    }
-    bumpType = process.env.BUMP || bumpType;
+function getPackageJsonVersion () {
+  return JSON.parse(fs.readFileSync('./package.json', 'utf8')).version;
+};
 
-    var version;
-    var srcjson = helper.filterFiles(constants.versionFiles, '.json');
+gulp.task('bump-version', function () {
+  return gulp.src(['./bower.json', './package.json'])
+    .pipe(bump({type: args.type}).on('error', gutil.log))
+    .pipe(gulp.dest('./'));
+});
 
-    // first we bump the json files
-    gulp.src(srcjson)
-        .pipe(gulpif(args.ver !== undefined, bump({
-            version: args.ver
-        }), bump({
-            type: bumpType
-        })))
-        .pipe(tap(function(file) {
-            if (!version) {
-                var json = JSON.parse(String(file.contents));
-                version = json.version;
-            }
-        }))
-        .pipe(gulp.dest('./'))
-        .on('end', function() {
-            cb()
-        });
+gulp.task('commit-changes', function () {
+  var version = getPackageJsonVersion();
+  return gulp.src('.')
+    .pipe(git.add())
+    .pipe(git.commit('[ci skip] Bumped to version ' + version));
+});
+
+gulp.task('push-changes', function (cb) {
+  git.push('origin', 'staging', cb);
+});
+
+gulp.task('create-new-tag', function (cb) {
+  var version = getPackageJsonVersion();
+  git.tag(version, '[ci skip] Created Tag for version: ' + version, function (error) {
+    if (error) {
+      return cb(error);
+    }
+    git.push('origin', 'staging', {args: '--tags'}, cb);
+  });
+});
+
+gulp.task('release', function (callback) {
+  runSequence(
+    'bump-version',
+    'commit-changes',
+    'push-changes',
+    'create-new-tag',
+    function (error) {
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('RELEASE FINISHED SUCCESSFULLY');
+      }
+      callback(error);
+    });
 });

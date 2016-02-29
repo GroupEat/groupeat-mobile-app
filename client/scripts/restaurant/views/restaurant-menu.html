@@ -13,9 +13,8 @@
   <!-- - - - - - - - - - - - - - - - - - - NAV BAR - - - - - - - - - - - - - - - - - -->
   <ion-nav-bar class="bar-blue">
   <ion-nav-title>
-    <div class="title has-sub-title">
+    <div class="title">
       {{ restaurant.name }}
-      <small>{{currentOrder.remainingCapacity - cart.getTotalQuantity()}} {{'pizzasLeft' | translate }}</small>
     </div>
   </ion-nav-title>
     <ion-nav-buttons side="primary">
@@ -39,7 +38,7 @@
         <div class="content" id="discount-placeholder-content">
           <div class="discount" ng-hide="isNewOrder.value">
             <h4>-{{ currentOrder.currentDiscount | number : 0 }}<small>%</small></h4>
-            <p class="small-title">Discount sur toutes les Pizzas</p>
+            <p class="small-title">{{ 'discountOnAllProduct' | translate }}</p>
           </div>
           <div class="food-rush" ng-show="isNewOrder.value">
             <h3 class="time-value">{{foodRushTime.value}}:00</h3>
@@ -56,7 +55,7 @@
 
     <ion-list id="product-list">
       <div ng-repeat="product in products">
-        <ion-item id="product-{{product.id}}" class="products" ng-click="toggleGroup(product)" ng-class="{'is-active': product.isShown}">
+        <ion-item id="product-{{product.id}}" class="products" ng-click="toggleGroup(product)" ng-class="{'is-active': product === shownGroup}">
           <div class="clearfix">
             <div class="pull-left">
               <h4>{{product.name}}</h4>
@@ -69,15 +68,15 @@
               </ul>
             </div>
             <div ng-if="isProductSelected(product)" class="pull-right">
-              <span class="gp-icon gp-pizza selected-product-icon"></span>
+              <span class="gp-icon gp-groupeat selected-product-icon"></span>
             </div>
           </div>
           <div class="col-95">
-            <p ng-show="product.isShown">{{product.description}}</p>
+            <p ng-show="product === shownGroup">{{product.description}}</p>
           </div>
 
         </ion-item>
-        <ion-item class="item-accordion" ng-repeat="format in product.formats.data" ng-class="{'is-active': product.isShown}">
+        <ion-item class="item-accordion" ng-repeat="format in product.formats.data" ng-class="{'is-active': product === shownGroup}">
           <div class="content">
             <div class="row">
               <div class="col-50">
@@ -125,11 +124,7 @@
       <div class="col">
         <div class="summup">
           <div class="clearfix">
-            <div class="pull-left">
-              <b>{{cart.getTotalQuantity()}}</b>
-              <ng-pluralize count="cart.getTotalQuantity()" when="{'0': 'Pizza', '1': 'Pizza', 'other': 'Pizzas'}" ></ng-pluralize>
-            </div>
-            <div class="pull-right">
+            <div>
               <strike ng-show="isDiscountToShow()" class="color-red">{{ cart.getTotalPrice() | number : 2 }}€</strike> <b>{{ cart.getTotalPrice()*(100 - currentOrder.currentDiscount)/100 | number : 2}}</b>€
             </div>
           </div>

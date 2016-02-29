@@ -5,4 +5,15 @@ deployment:
   staging:
     branch: staging
     commands:
-      - npm run deploy:staging
+      - ./node_modules/.bin/gulp release
+  release:
+    tag: /[0-9]+(\.[0-9]+)*/
+    commands:
+      - ./node_modules/.bin/ionic login
+      - ./node_modules/.bin/gulp soft-deploy --env=staging
+test:
+  post:
+    - git config user.name "GroupEatBot"
+    - git config user.email "dev@groupeat.fr"
+    - npm install -g codeclimate-test-reporter
+    - codeclimate-test-reporter < coverage/lcov/lcov.info

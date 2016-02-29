@@ -4,7 +4,7 @@
   min-height: 300px;
   border-radius: 4px;
   .top {
-    height: 250px;
+    min-height: 180px;
     background-size:cover;
     background-position: center;
     border-radius: 4px 4px 0 0;
@@ -76,31 +76,12 @@
     }
     .stars {
       color : $font-grey;
+      margin-bottom: 10px;
       i {
         display: block;
         float: left;
         font-size: 15px;
         margin-right: 3px;
-      }
-    }
-    .capacity {
-      margin: 15px 0 20px;
-      ul {
-        margin-top: 10px;
-        li {
-          display: inline-block;
-          text-align: center;
-          span {
-            font-size: 25px;
-            color: $border-light;
-            @media (max-width: 350px) {
-              font-size: 20px;
-            }
-            &.filled {
-              color: $red;
-            }
-          }
-        }
       }
     }
   }
