@@ -29,9 +29,9 @@ module.exports = function(app) {
       value: null
     };
     $scope.foodRushTime = {};
-
+    $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
+    
     $scope.onReload = function() {
-      $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
       $scope.currentOrder = Order.getCurrentOrder();
       $scope.foodRushTime.value = $scope.currentOrder.foodRushMax/2 + ($scope.currentOrder.foodRushMax%10)/2;
       $scope.detailedProduct = null;
