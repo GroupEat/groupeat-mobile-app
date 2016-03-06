@@ -24,7 +24,7 @@ module.exports = function(app) {
       'remainingCapacity': null,
       'discountPolicy': null,
       'groupOrderTotalPrice': 0,
-      'foodRushMax': 60,
+      'foodRushMax': 60
     },
 
     requestBody = {
