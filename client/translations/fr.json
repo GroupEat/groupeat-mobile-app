@@ -90,6 +90,7 @@
   "predefinedAddress": "Lieu commun",
   "emptyCart": "Le panier est vide.",
   "howLongFoodRush" : "Quelle durée souhaites-tu pour le",
+  "whenToOrder": "A quelle heure souhaites-tu passer ta commande ?",
   "min": "min",
   "comment": "Ajoute ici un commentaire sur ta commande !",
   "quantity" : "Quantité",

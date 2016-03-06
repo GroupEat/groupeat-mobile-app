@@ -25,6 +25,7 @@ module.exports = function(app) {
       'discountPolicy': null,
       'groupOrderTotalPrice': 0,
       'foodRushMax': 60,
+      'isRestaurantOpen': null
     },
 
     requestBody = {
@@ -170,7 +171,8 @@ module.exports = function(app) {
         'endingAt': null,
         'currentDiscount': null,
         'remainingCapacity': null,
-        'foodRushMax': 60
+        'foodRushMax': 60,
+        'isRestaurantOpen': null
       };
       requestBody = {
         'id': null,
@@ -186,7 +188,7 @@ module.exports = function(app) {
       };
     },
 
-    setCurrentOrder = function(id, date, discount, capacity, discountPolicy, groupOrderTotalPrice, closingHour) {
+    setCurrentOrder = function(id, date, discount, capacity, discountPolicy, groupOrderTotalPrice, closingHour, isRestaurantOpen) {
       requestBody.id = id;
       currentOrder.groupOrderId = id;
       currentOrder.endingAt = date;
@@ -200,6 +202,7 @@ module.exports = function(app) {
       {
         currentOrder.foodRushMax = 60;
       }
+      currentOrder.isRestaurantOpen = isRestaurantOpen;
     },
 
     save = function() {

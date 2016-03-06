@@ -52,27 +52,25 @@ module.exports = function(app) {
         var isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
           return openRestaurant.id == restaurant.id;
         }));
-        if(isOpen){
-          Customer.checkActivatedAccount()
-          .then(function() {
-            return CustomerInformationChecker.check();
-          })
-          .then(function () {
-            return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
-          })
-          .then(function (groupOrders) {
-            return Restaurant.checkGroupOrders(restaurant.id, groupOrders);
-          })
-          .then(function(existingGroupOrder) {
-            if (existingGroupOrder) {
-              Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.remainingCapacity, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice);
-            }
-            else {
-              Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt);
-            }
-            $state.go('app.restaurant-menu', {restaurantId: restaurant.id});
+        Customer.checkActivatedAccount()
+        .then(function() {
+          return CustomerInformationChecker.check();
+        })
+        .then(function () {
+          return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
+        })
+        .then(function (groupOrders) {
+          return Restaurant.checkGroupOrders(restaurant.id, groupOrders);
+        })
+        .then(function(existingGroupOrder) {
+          if (existingGroupOrder) {
+            Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.remainingCapacity, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice, isOpen);
+          }
+          else {
+            Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt, isOpen);
+          }
+          $state.go('app.restaurant-menu', {restaurantId: restaurant.id});
           });
-        }
       });
     };
 
