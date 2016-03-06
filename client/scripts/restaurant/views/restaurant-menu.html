@@ -42,8 +42,8 @@
           </div>
           <div class="food-rush" ng-show="isNewOrder.value">
             <h3 class="time-value">{{foodRushTime.value}}:00</h3>
-            <h5 ng-show="currentOrder.isRestaurantOpen">{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
-            <h5 ng-hide="currentOrder.isRestaurantOpen">{{ 'whenToOrder' | translate }}</h5>
+            <h5 ng-if="isRestaurantOpen">{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
+            <h5 ng-if="!isRestaurantOpen">{{ 'whenToOrder' | translate }}</h5>
             <div class="item range range-assertive">
               5mn
               <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5" name="volume">
