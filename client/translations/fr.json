@@ -208,6 +208,8 @@
 
   "restaurants": "Restaurants",
   "aroundYou": "dans le coin",
+  "openFrom": "Ouvre à ",
+  "open": "Ouvert",
 
   "aboutYou": "À propos de toi",
   "aboutYouDetails": "Les informations serviront à t’identifier auprès du livreur",
