@@ -3,6 +3,7 @@ var angular = require('angular');
 require('angular-animate');
 require('angular-auto-validate');
 require('angular-cookies');
+require('angular-moment');
 require('angular-sanitize');
 require('angular-sprintf');
 require('angular-translate');
@@ -22,6 +23,7 @@ module.exports = function(namespace) {
   var fullname = namespace + '.' + modulename;
 
   var app = angular.module(fullname, [
+    'angularMoment',
     'ui.router',
     'ionic',
     'jcs-autoValidate',
