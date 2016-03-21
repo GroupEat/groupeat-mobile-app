@@ -4,7 +4,6 @@ var filtername = 'timeFormat';
 module.exports = function(app) {
 
   var deps = [
-  'amMoment'
   ];
 
   function filter() {
