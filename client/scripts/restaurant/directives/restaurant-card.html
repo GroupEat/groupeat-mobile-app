@@ -1,4 +1,7 @@
 <div class="restaurant-card" ng-style="{'background-image' : 'url('+data.pictureUrl+')'}">
+	<div ng-if="!data.isOpened" class="pre-order">
+		&nbsp &nbsp Précommande ! &nbsp &nbsp 
+	</div>
 	<div class="content">
 		<div class="max-discount discount-50">
 			<span>{{ 'upTo' | translate }}</span>
@@ -10,6 +13,12 @@
 			<ul class="rating">
 				<i ng-class="starClass($index)" ng-repeat="i in setArrayFromInt(5) track by $index"></i>
 	    </ul>
+		</div>
+		<div ng-if="!data.isOpened" class="opening-hours">
+			{{ 'openFrom' | translate }} {{ data.openingWindows.data[0].start | timeFormat }}
+		</div>
+		<div ng-if="data.isOpened" class="opening-hours">
+			{{ 'open' | translate }}
 		</div>
 	</div>
 </div>

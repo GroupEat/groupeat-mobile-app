@@ -63,3 +63,22 @@ $discount-30 : #F2BC21;
 		}
 	}
 }
+.opening-hours {
+	position: absolute !important;
+	bottom: -40px;
+	left: 0;
+	font-style: italic;
+}
+.pre-order {
+	z-index: 5;
+	position: absolute;
+	top: 7px;
+	left: 0px;
+	font-style: italic;
+	font-weight: bold;
+	background-color: rgba(#000, .7);
+	color: rgba(#FFF, .9);
+	padding: 4px;
+	border-top-right-radius: 3em 3em;
+	border-bottom-right-radius: 3em 3em;
+}
