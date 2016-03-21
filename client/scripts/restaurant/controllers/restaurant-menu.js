@@ -132,7 +132,10 @@ module.exports = function(app) {
     };
 
     $scope.openCart = function() {
-      Order.setFoodRushTime($scope.foodRushTime.value);
+      if($scope.restaurant.isOpened)
+        Order.setFoodRushTime($scope.foodRushTime.value);
+      else
+        Order.setPreOrderTime(moment($scope.rangeToTime($scope.preOrderTime.range)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
       $scope.modal.show();
     };
 
