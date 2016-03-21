@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   var deps = [
     app.namespace.common + '.Lodash',
+    '$filter',
     '$ionicModal',
     '$q',
     '$scope',
@@ -23,17 +24,20 @@ module.exports = function(app) {
     app.namespace.common + '.Scroller'
   ];
 
-  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller) {
+  function controller(_, $filter, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller) {
+    var $timeFormat = $filter('timeFormat');
     $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
     };
     $scope.foodRushTime = {};
+    $scope.preOrderTime = {};
     $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
     
     $scope.onReload = function() {
       $scope.currentOrder = Order.getCurrentOrder();
       $scope.foodRushTime.value = $scope.currentOrder.foodRushMax/2 + ($scope.currentOrder.foodRushMax%10)/2;
+      $scope.preOrderTime.range = 0;
       $scope.detailedProduct = null;
       Cart.setDiscountRate($scope.currentOrder.currentDiscount);
       $scope.cart = Cart;
@@ -45,6 +49,8 @@ module.exports = function(app) {
       })
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
+        $scope.setRangeMinMax()
+        console.log($scope.restaurant);
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
@@ -155,6 +161,22 @@ module.exports = function(app) {
         $state.go('app.group-orders');
       });
     };
+
+    $scope.timeToRange = function (time) {
+      return moment(time).format('H') * 100 + moment(time).format('mm') * 50/30;
+    };
+
+    $scope.rangeToTime = function(range) {
+      return moment($scope.restaurant.openingWindows.data[0].start).set({'hour': (range - (range % 100)) / 100, 'minute': range % 100 * 30/50}); 
+    };
+
+    $scope.setRangeMinMax = function() {
+      var minRange = $scope.timeToRange($scope.restaurant.openingWindows.data[0].start);
+      minRange = minRange + (50 - minRange % 50);
+      document.getElementById(1).max = $scope.timeToRange($scope.restaurant.openingWindows.data[0].end);
+      document.getElementById(1).min = minRange;
+      $scope.preOrderTime.range = minRange;
+    }
 
     $scope.$on('$ionicView.afterEnter', function() {
       $scope.initialState = $state.current.name;
