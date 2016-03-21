@@ -49,7 +49,7 @@ module.exports = function(app) {
       })
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
-        $scope.setRangeMinMax()
+        $scope.setRangeMinMax();
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
