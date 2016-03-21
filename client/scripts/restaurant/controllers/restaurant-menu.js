@@ -50,7 +50,6 @@ module.exports = function(app) {
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
         $scope.setRangeMinMax()
-        console.log($scope.restaurant);
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
@@ -110,7 +109,7 @@ module.exports = function(app) {
     };
 
     $scope.getDiscountPrice = function() {
-      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100) ;
+      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100);
     };
 
     $scope.toggleGroup = function(group) {
