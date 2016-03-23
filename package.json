@@ -1,7 +1,7 @@
 {
   "name": "groupeat_mobile_app",
   "description": "groupeat_mobile_app",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "license": "UNLICENSED",
   "scripts": {
     "test": "gulp test",
