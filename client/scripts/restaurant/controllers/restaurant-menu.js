@@ -7,7 +7,6 @@ module.exports = function(app) {
 
   var deps = [
     app.namespace.common + '.Lodash',
-    '$filter',
     '$ionicModal',
     '$q',
     '$scope',
@@ -25,10 +24,7 @@ module.exports = function(app) {
     app.namespace.common + '.TimeConverter'
   ];
 
-  function controller(_, $filter, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
-    var $timeToRange = $filter('timeToRange');
-    var $rangeToTime = $filter('rangeToTime');
-
+  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
     $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
@@ -142,10 +138,8 @@ module.exports = function(app) {
     $scope.openCart = function() {
       if($scope.restaurant.isOpened)
         Order.setFoodRushTime($scope.foodRushTime.value);
-      else {
-        console.log(moment($rangeToTime($scope.restaurant.openingWindows.data[0].start, $scope.preOrderTime.range)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
-        Order.setPreOrderTime(moment($rangeToTime($scope.preOrderTime.range)($scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
-      }
+      else
+        Order.setPreOrderTime(moment(TimeConverter.rangeToTime($scope.preOrderTime.range, $scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
       $scope.modal.show();
     };
 
@@ -167,9 +161,9 @@ module.exports = function(app) {
     };
 
     $scope.setRangeMinMax = function() {
-      var minRange = $timeToRange($scope.restaurant.openingWindows.data[0].start);
+      var minRange = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].start);
       minRange = minRange + (50 - minRange % 50);
-      document.getElementById(1).max = $timeToRange($scope.restaurant.openingWindows.data[0].end);
+      document.getElementById(1).max = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].end);
       document.getElementById(1).min = minRange;
       $scope.preOrderTime.range = minRange;
     };

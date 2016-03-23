@@ -4,11 +4,12 @@ var filtername = 'rangeToTime';
 module.exports = function(app) {
 
   var deps = [
+  	app.name + '.TimeConverter'
   ];
 
-  function filter(date) {
+  function filter(TimeConverter) {
     return function(input, date) {
-      return moment(date).set({'hour': (input - (input % 100)) / 100, 'minute': input % 100 * 30/50});
+      return TimeConverter.rangeToTime(input, date);
     };
   }
 
