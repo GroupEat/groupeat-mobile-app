@@ -20,20 +20,23 @@ module.exports = function(app) {
     app.namespace.common + '.Popup',
     app.name + '.Product',
     app.name + '.Restaurant',
-    app.namespace.common + '.Scroller'
+    app.namespace.common + '.Scroller',
+    app.namespace.common + '.TimeConverter'
   ];
 
-  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller) {
+  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
     $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
     };
     $scope.foodRushTime = {};
+    $scope.preOrderTime = {};
     $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
     
     $scope.onReload = function() {
       $scope.currentOrder = Order.getCurrentOrder();
       $scope.foodRushTime.value = $scope.currentOrder.foodRushMax/2 + ($scope.currentOrder.foodRushMax%10)/2;
+      $scope.preOrderTime.range = 0;
       $scope.detailedProduct = null;
       Cart.setDiscountRate($scope.currentOrder.currentDiscount);
       $scope.cart = Cart;
@@ -45,6 +48,7 @@ module.exports = function(app) {
       })
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
+        $scope.setRangeMinMax();
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
@@ -104,7 +108,7 @@ module.exports = function(app) {
     };
 
     $scope.getDiscountPrice = function() {
-      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100) ;
+      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100);
     };
 
     $scope.toggleGroup = function(group) {
@@ -132,7 +136,10 @@ module.exports = function(app) {
     };
 
     $scope.openCart = function() {
-      Order.setFoodRushTime($scope.foodRushTime.value);
+      if($scope.restaurant.isOpened)
+        Order.setFoodRushTime($scope.foodRushTime.value);
+      else
+        Order.setPreOrderTime(moment(TimeConverter.rangeToTime($scope.preOrderTime.range, $scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
       $scope.modal.show();
     };
 
@@ -151,6 +158,14 @@ module.exports = function(app) {
         }
         $state.go('app.group-orders');
       });
+    };
+
+    $scope.setRangeMinMax = function() {
+      var minRange = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].start);
+      minRange = minRange + (50 - minRange % 50);
+      document.getElementById(1).max = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].end);
+      document.getElementById(1).min = minRange;
+      $scope.preOrderTime.range = minRange;
     };
 
     $scope.$on('$ionicView.afterEnter', function() {

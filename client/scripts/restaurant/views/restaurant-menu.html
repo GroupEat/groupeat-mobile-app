@@ -40,14 +40,23 @@
             <h4>-{{ currentOrder.currentDiscount | number : 0 }}<small>%</small></h4>
             <p class="small-title">{{ 'discountOnAllProduct' | translate }}</p>
           </div>
-          <div class="food-rush" ng-show="isNewOrder.value">
+          <div class="food-rush" ng-show="isNewOrder.value && restaurant.isOpened">
             <h3 class="time-value">{{foodRushTime.value}}:00</h3>
             <h5 ng-if="isRestaurantOpen">{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
             <h5 ng-if="!isRestaurantOpen">{{ 'whenToOrder' | translate }}</h5>
             <div class="item range range-assertive">
               5mn
-              <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5" name="volume">
+              <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5">
               {{ currentOrder.foodRushMax }}mn
+            </div>
+          </div>
+          <div class="food-rush" ng-if="isNewOrder.value && !restaurant.isOpened">
+            <h3 ng-if="preOrderTime.range" class="time-value">{{ preOrderTime.range | rangeToTime | timeFormat }}</h3>
+            <h5>{{ 'whenToOrder' | translate }}</h5>
+            <div class="item range range-assertive">
+              {{ restaurant.openingWindows.data[0].start | timeFormat }}
+              <input id="1" type="range" ng-model="preOrderTime.range" step="50">
+              {{ restaurant.openingWindows.data[0].end | timeFormat }}
             </div>
           </div>
         </div>

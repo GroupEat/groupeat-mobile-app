@@ -12,9 +12,9 @@ module.exports = function(app) {
   ];
 
   function service(_, $resource, $q, apiEndpoint, Popup) {
-    var resource = $resource(apiEndpoint + '/restaurants/:id');
+    var resource = $resource(apiEndpoint + '/restaurants/:id?include=openingWindows');
     var listResource = $resource(apiEndpoint + '/restaurants?around=1&latitude=:latitude&longitude=:longitude&include=openingWindows');
-    var listResourceOpened = $resource(apiEndpoint + '/restaurants?opened=1&around=1&latitude=:latitude&longitude=:longitude');
+    var listResourceOpened = $resource(apiEndpoint + '/restaurants?opened=1&around=1&latitude=:latitude&longitude=:longitude&include=openingWindows');
     var
     /**
     * @ngdoc function

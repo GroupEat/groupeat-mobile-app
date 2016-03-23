@@ -14,5 +14,6 @@ module.exports = function(app) {
     require('./network')(app);
     require('./popup')(app);
     require('./scroller')(app);
+    require('./time-converter')(app);
     // inject:end
 };
