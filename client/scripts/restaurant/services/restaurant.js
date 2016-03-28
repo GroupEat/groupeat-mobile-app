@@ -31,7 +31,15 @@ module.exports = function(app) {
       var defer = $q.defer();
       listResource.get({latitude: latitude, longitude: longitude}).$promise
       .then(function (response) {
-        defer.resolve(response.data);
+        var restaurants = _.chain(response.data)
+        .filter(function(restaurant) {
+          return restaurant.openingWindows.data.length;
+        })
+        .sortBy(function(restaurant) {
+          return restaurant.openingWindows.data[0].start;
+        })
+        .value();
+        defer.resolve(restaurants);
       })
       .catch(function () {
         defer.reject();
