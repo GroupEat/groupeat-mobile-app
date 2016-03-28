@@ -18,7 +18,7 @@ var webpackShare = function(shouldWatch, constants, done) {
     var version = helper.readJsonFile('./package.json').version;
     var dest = constants.distFolders[args.env];
     dest = dest + '/www/' + constants.script.dest;
-    var debug = args.env === 'dev';
+    var debug = args.env === 'dev' || args.env === 'local';
     var target = constants.targetName;
     var bundleName = constants.bundleName || 'bundle.js';
     var releaseName = target + '-v' + version;

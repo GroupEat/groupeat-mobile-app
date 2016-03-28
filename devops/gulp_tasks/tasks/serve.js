@@ -25,7 +25,7 @@ gulp.task('browsersyncstart', false, function(done) {
       files: [dest + '/index.html', dest + '/' + constants.script.dest + '/' + constants.bundleName, dest + '/' + constants.style.dest + '/' + constants.style.destName],
       tunnel: constants.serve.localtunnel,
       server: {
-          baseDir: args.env !== 'dev' ? [dest, constants.exorcist.dest] : dest,
+          baseDir: args.env === 'dev' || args.env === 'local' ? dest : [dest, constants.exorcist.dest],
           routes: {},
           middleware: [
               function(req, res, next) {
