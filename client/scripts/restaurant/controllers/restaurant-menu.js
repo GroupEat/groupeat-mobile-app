@@ -30,13 +30,13 @@ module.exports = function(app) {
       value: null
     };
     $scope.foodRushTime = {};
-    $scope.preOrderTime = {};
+    $scope.endingAt = {};
     $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
-    
+
     $scope.onReload = function() {
       $scope.currentOrder = Order.getCurrentOrder();
       $scope.foodRushTime.value = $scope.currentOrder.foodRushMax/2 + ($scope.currentOrder.foodRushMax%10)/2;
-      $scope.preOrderTime.range = 0;
+      $scope.endingAt.range = 0;
       $scope.detailedProduct = null;
       Cart.setDiscountRate($scope.currentOrder.currentDiscount);
       $scope.cart = Cart;
@@ -139,7 +139,7 @@ module.exports = function(app) {
       if($scope.restaurant.isOpened)
         Order.setFoodRushTime($scope.foodRushTime.value);
       else
-        Order.setPreOrderTime(moment(TimeConverter.rangeToTime($scope.preOrderTime.range, $scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
+        Order.setEndingAt(moment(TimeConverter.rangeToTime($scope.endingAt.range, $scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
       $scope.modal.show();
     };
 
@@ -165,7 +165,7 @@ module.exports = function(app) {
       minRange = minRange + (50 - minRange % 50);
       document.getElementById(1).max = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].end);
       document.getElementById(1).min = minRange;
-      $scope.preOrderTime.range = minRange;
+      $scope.endingAt.range = minRange;
     };
 
     $scope.$on('$ionicView.afterEnter', function() {

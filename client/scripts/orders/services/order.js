@@ -30,7 +30,7 @@ module.exports = function(app) {
     requestBody = {
       'id': null,
       'foodRushDurationInMinutes': null,
-      'preOrderTime': null,
+      'endingAt': null,
       'productFormats': {},
       'deliveryAddress': {
         'street': null,
@@ -62,8 +62,8 @@ module.exports = function(app) {
     setFoodRushTime = function(value) {
       requestBody.foodRushDurationInMinutes = value;
     },
-    setPreOrderTime = function(value) {
-      requestBody.preOrderTime = value;
+    setEndingAt = function(value) {
+      requestBody.endingAt = value;
     },
     setProductFormats = function(value) {
       requestBody.productFormats = value;
@@ -179,7 +179,7 @@ module.exports = function(app) {
       requestBody = {
         'id': null,
         'foodRushDurationInMinutes': null,
-        'preOrderTime': null,
+        'endingAt': null,
         'productFormats': {},
         'deliveryAddress': {
           'street': null,
@@ -309,7 +309,7 @@ module.exports = function(app) {
       setLatitude: setLatitude,
       setLongitude: setLongitude,
       setComment: setComment,
-      setPreOrderTime: setPreOrderTime,
+      setEndingAt: setEndingAt,
       resetCurrentOrder: resetCurrentOrder,
       setCurrentOrder: setCurrentOrder,
       save: save,

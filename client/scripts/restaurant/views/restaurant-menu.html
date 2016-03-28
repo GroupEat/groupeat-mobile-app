@@ -51,11 +51,11 @@
             </div>
           </div>
           <div class="food-rush" ng-if="isNewOrder.value && !restaurant.isOpened">
-            <h3 ng-if="preOrderTime.range" class="time-value">{{ preOrderTime.range | rangeToTime | timeFormat }}</h3>
+            <h3 ng-if="endingAt.range" class="time-value">{{ endingAt.range | rangeToTime | timeFormat }}</h3>
             <h5>{{ 'whenToOrder' | translate }}</h5>
             <div class="item range range-assertive">
               {{ restaurant.openingWindows.data[0].start | timeFormat }}
-              <input id="1" type="range" ng-model="preOrderTime.range" step="50">
+              <input id="1" type="range" ng-model="endingAt.range" step="50">
               {{ restaurant.openingWindows.data[0].end | timeFormat }}
             </div>
           </div>
