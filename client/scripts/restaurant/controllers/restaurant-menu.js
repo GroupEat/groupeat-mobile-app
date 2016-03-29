@@ -48,7 +48,9 @@ module.exports = function(app) {
       })
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
-        $scope.setRangeMinMax();
+        if ($scope.isNewOrder.value && !$scope.isRestaurantOpen) {
+          $scope.setRangeMinMax();
+        }
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
