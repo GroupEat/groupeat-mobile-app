@@ -165,6 +165,8 @@ module.exports = function(app) {
     $scope.setRangeMinMax = function() {
       var minRange = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].start);
       minRange = minRange + (50 - minRange % 50);
+      if(minRange % 50 == 0)
+        minRange = minRange - 50;
       document.getElementById(1).max = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].end);
       document.getElementById(1).min = minRange;
       $scope.endingAt.range = minRange;
