@@ -47,30 +47,31 @@ module.exports = function(app) {
     };
 
     $scope.onRestaurantTouch = function(restaurant) {
+      var isOpen;
       Restaurant.getOnlyOpenedFromCoordinates($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude)
       .then(function(openedRestaurants){
-        var isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
+        isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
           return openRestaurant.id == restaurant.id;
         }));
-        Customer.checkActivatedAccount()
-        .then(function() {
-          return CustomerInformationChecker.check();
-        })
-        .then(function () {
-          return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
-        })
-        .then(function (groupOrders) {
-          return Restaurant.checkGroupOrders(restaurant.id, groupOrders);
-        })
-        .then(function(existingGroupOrder) {
-          if (existingGroupOrder) {
-            Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.remainingCapacity, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice);
-          }
-          else {
-            Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt);
-          }
-          $state.go('app.restaurant-menu', {isRestaurantOpen: isOpen, restaurantId: restaurant.id});
-          });
+        return Customer.checkActivatedAccount();
+      })
+      .then(function() {
+        return CustomerInformationChecker.check();
+      })
+      .then(function () {
+        return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
+      })
+      .then(function (groupOrders) {
+        return Restaurant.checkGroupOrders(restaurant.id, groupOrders);
+      })
+      .then(function(existingGroupOrder) {
+        if (existingGroupOrder) {
+          Order.setCurrentOrder(existingGroupOrder.id, existingGroupOrder.endingAt, existingGroupOrder.discountRate, existingGroupOrder.remainingCapacity, existingGroupOrder.restaurant.data.discountPolicy, existingGroupOrder.totalRawPrice);
+        }
+        else {
+          Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt);
+        }
+        $state.go('app.restaurant-menu', {isRestaurantOpen: isOpen, restaurantId: restaurant.id});
       });
     };
 
