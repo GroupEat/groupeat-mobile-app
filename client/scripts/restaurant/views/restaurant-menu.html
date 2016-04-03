@@ -25,7 +25,8 @@
     <ion-nav-buttons side="secondary">
       <button class="button button-clear button-timer" ng-if="currentOrder.endingAt">
         <i class="ion-ios-timer"></i>
-        <timer end-time="currentOrder.endingAt" interval="1000" finish-callback="callbackTimer()"> {{mminutes}}:{{sseconds}}</timer>
+        <ge-timer end-time="{{currentOrder.endingAt}}" callback-timer="callbackTimer">
+        </ge-timer>
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
