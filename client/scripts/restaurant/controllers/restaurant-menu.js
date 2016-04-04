@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   var deps = [
     app.namespace.common + '.Lodash',
+    '$ionicHistory',
     '$ionicModal',
     '$q',
     '$scope',
@@ -24,7 +25,7 @@ module.exports = function(app) {
     app.namespace.common + '.TimeConverter'
   ];
 
-  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
+  function controller(_, $ionicHistory, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
     $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
@@ -91,7 +92,7 @@ module.exports = function(app) {
     $scope.onLeaveRestaurant = function() {
       if (_.isEmpty($scope.cart.getProducts())) {
         Order.resetCurrentOrder();
-        $state.go('app.group-orders');
+        $ionicHistory.goBack();
       }
       else {
         Popup.confirm('leaveOrder', 'cartWillBeDestroyed')
@@ -99,7 +100,7 @@ module.exports = function(app) {
           if(res) {
             Cart.reset();
             Order.resetCurrentOrder();
-            $state.go('app.group-orders');
+            $ionicHistory.goBack();
           }
         });
       }
@@ -158,7 +159,7 @@ module.exports = function(app) {
         {
           $scope.closeCart();
         }
-        $state.go('app.group-orders');
+        $ionicHistory.goBack();
       });
     };
 
