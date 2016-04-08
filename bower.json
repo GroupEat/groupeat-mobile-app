@@ -1,6 +1,6 @@
 {
   "name": "groupeat_mobile_app",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "ignore": [
     "**/.*",
     "node_modules",
