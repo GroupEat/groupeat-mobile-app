@@ -33,6 +33,7 @@ module.exports = function(namespace) {
 
   // inject:folders start
   require('./controllers')(app);
+  require('./directives')(app);
   require('./filters')(app);
   require('./services')(app);
   // inject:folders end
