@@ -11,7 +11,7 @@ module.exports = function(app) {
   var directive = function(CustomerStorage) {
     return {
       restrict: 'E',
-      template: require('./delivery-address.html'),
+      template: '{{ deliveryAddress.residency | translate }}',
       link: function(scope) {
         scope.deliveryAddress = CustomerStorage.getAddress();
       }
