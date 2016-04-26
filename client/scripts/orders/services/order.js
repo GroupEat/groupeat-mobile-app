@@ -24,12 +24,13 @@ module.exports = function(app) {
       'remainingCapacity': null,
       'discountPolicy': null,
       'groupOrderTotalPrice': 0,
-      'foodRushMax': 60,
+      'foodRushMax': 60
     },
 
     requestBody = {
       'id': null,
       'foodRushDurationInMinutes': null,
+      'endingAt': null,
       'productFormats': {},
       'deliveryAddress': {
         'street': null,
@@ -60,6 +61,9 @@ module.exports = function(app) {
     },
     setFoodRushTime = function(value) {
       requestBody.foodRushDurationInMinutes = value;
+    },
+    setEndingAt = function(value) {
+      requestBody.endingAt = value;
     },
     setProductFormats = function(value) {
       requestBody.productFormats = value;
@@ -175,6 +179,7 @@ module.exports = function(app) {
       requestBody = {
         'id': null,
         'foodRushDurationInMinutes': null,
+        'endingAt': null,
         'productFormats': {},
         'deliveryAddress': {
           'street': null,
@@ -304,6 +309,7 @@ module.exports = function(app) {
       setLatitude: setLatitude,
       setLongitude: setLongitude,
       setComment: setComment,
+      setEndingAt: setEndingAt,
       resetCurrentOrder: resetCurrentOrder,
       setCurrentOrder: setCurrentOrder,
       save: save,

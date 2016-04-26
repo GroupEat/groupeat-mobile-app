@@ -8,17 +8,50 @@ module.exports = function(app) {
     '$resource',
     '$q',
     'apiEndpoint',
+    'moment',
     app.namespace.common + '.Popup'
   ];
 
-  function service(_, $resource, $q, apiEndpoint, Popup) {
-    var resource = $resource(apiEndpoint + '/restaurants/:id');
-    var listResource = $resource(apiEndpoint + '/restaurants?opened=1&around=1&latitude=:latitude&longitude=:longitude');
-
+  function service(_, $resource, $q, apiEndpoint, moment, Popup) {
+    var resource = $resource(apiEndpoint + '/restaurants/:id?include=openingWindows');
+    var listResource = $resource(apiEndpoint + '/restaurants?around=1&latitude=:latitude&longitude=:longitude&include=openingWindows');
+    var listResourceOpened = $resource(apiEndpoint + '/restaurants?opened=1&around=1&latitude=:latitude&longitude=:longitude&include=openingWindows');
     var
     /**
     * @ngdoc function
     * @name Restaurant#getFromCoordinates
+    * @methodOf Restaurant
+    *
+    * @description
+    * Returns a promise resolved with the list of restaurants if the server responds properly
+    * Else the promise is rejected
+    * https://groupeat.fr/docs
+    *
+    */
+    getFromCoordinates = function (latitude, longitude) {
+      var defer = $q.defer();
+      listResource.get({latitude: latitude, longitude: longitude}).$promise
+      .then(function (response) {
+        var restaurants = _.chain(response.data)
+        .filter(function(restaurant) {
+          return restaurant.openingWindows.data.length
+          && moment(restaurant.openingWindows.data[0].start).isSame(moment(), 'day');
+        })
+        .sortBy(function(restaurant) {
+          return restaurant.openingWindows.data[0].start;
+        })
+        .value();
+        defer.resolve(restaurants);
+      })
+      .catch(function () {
+        defer.reject();
+      });
+      return defer.promise;
+    },
+
+    /**
+    * @ngdoc function
+    * @name Restaurant#getOnlyOpenedFromCoordinates
     * @methodOf Restaurant
     *
     * @description
@@ -27,9 +60,9 @@ module.exports = function(app) {
     * https://groupeat.fr/docs
     *
     */
-    getFromCoordinates = function (latitude, longitude) {
+    getOnlyOpenedFromCoordinates = function (latitude, longitude) {
       var defer = $q.defer();
-      listResource.get({latitude: latitude, longitude: longitude}).$promise
+      listResourceOpened.get({latitude: latitude, longitude: longitude}).$promise
       .then(function (response) {
         defer.resolve(response.data);
       })
@@ -92,7 +125,8 @@ module.exports = function(app) {
     return {
       checkGroupOrders: checkGroupOrders,
       get: get,
-      getFromCoordinates : getFromCoordinates
+      getFromCoordinates : getFromCoordinates,
+      getOnlyOpenedFromCoordinates : getOnlyOpenedFromCoordinates
     };
 
   }

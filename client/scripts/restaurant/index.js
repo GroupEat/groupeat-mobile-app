@@ -53,7 +53,7 @@ module.exports = function(namespace) {
       }
     })
     .state('app.restaurant-menu', {
-    url: '/restaurant/:restaurantId/menu',
+    url: '/restaurant/:restaurantId&{isRestaurantOpen:bool}/menu',
     views: {
       app: {
         template: require('./views/restaurant-menu.html'),

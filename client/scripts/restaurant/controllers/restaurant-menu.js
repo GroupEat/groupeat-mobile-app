@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   var deps = [
     app.namespace.common + '.Lodash',
+    '$ionicHistory',
     '$ionicModal',
     '$q',
     '$scope',
@@ -20,19 +21,23 @@ module.exports = function(app) {
     app.namespace.common + '.Popup',
     app.name + '.Product',
     app.name + '.Restaurant',
-    app.namespace.common + '.Scroller'
+    app.namespace.common + '.Scroller',
+    app.namespace.common + '.TimeConverter'
   ];
 
-  function controller(_, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller) {
+  function controller(_, $ionicHistory, $ionicModal, $q, $scope, $state, $stateParams, $timeout, Cart, ControllerPromiseHandler, Network, Order, Popup, Product, Restaurant, Scroller, TimeConverter) {
     $scope.shownGroup = [];
     $scope.isNewOrder = {
       value: null
     };
     $scope.foodRushTime = {};
+    $scope.endingAt = {};
+    $scope.isRestaurantOpen = $stateParams.isRestaurantOpen;
 
     $scope.onReload = function() {
       $scope.currentOrder = Order.getCurrentOrder();
       $scope.foodRushTime.value = $scope.currentOrder.foodRushMax/2 + ($scope.currentOrder.foodRushMax%10)/2;
+      $scope.endingAt.range = 0;
       $scope.detailedProduct = null;
       Cart.setDiscountRate($scope.currentOrder.currentDiscount);
       $scope.cart = Cart;
@@ -44,6 +49,9 @@ module.exports = function(app) {
       })
       .then(function(restaurant) {
         $scope.restaurant = restaurant;
+        if ($scope.isNewOrder.value && !$scope.isRestaurantOpen) {
+          $scope.setRangeMinMax();
+        }
         return Product.get($stateParams.restaurantId);
       })
       .then(function(products) {
@@ -84,7 +92,7 @@ module.exports = function(app) {
     $scope.onLeaveRestaurant = function() {
       if (_.isEmpty($scope.cart.getProducts())) {
         Order.resetCurrentOrder();
-        $state.go('app.group-orders');
+        $ionicHistory.goBack();
       }
       else {
         Popup.confirm('leaveOrder', 'cartWillBeDestroyed')
@@ -92,7 +100,7 @@ module.exports = function(app) {
           if(res) {
             Cart.reset();
             Order.resetCurrentOrder();
-            $state.go('app.group-orders');
+            $ionicHistory.goBack();
           }
         });
       }
@@ -103,7 +111,7 @@ module.exports = function(app) {
     };
 
     $scope.getDiscountPrice = function() {
-      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100) ;
+      return $scope.cart.getTotalPrice() * (1 - Order.getCurrentDiscount()/100);
     };
 
     $scope.toggleGroup = function(group) {
@@ -131,7 +139,10 @@ module.exports = function(app) {
     };
 
     $scope.openCart = function() {
-      Order.setFoodRushTime($scope.foodRushTime.value);
+      if($scope.restaurant.isOpened)
+        Order.setFoodRushTime($scope.foodRushTime.value);
+      else
+        Order.setEndingAt(moment(TimeConverter.rangeToTime($scope.endingAt.range, $scope.restaurant.openingWindows.data[0].start)).format("YYYY[-]MM[-]DD HH[:]mm[:]ss"));
       $scope.modal.show();
     };
 
@@ -148,8 +159,20 @@ module.exports = function(app) {
         {
           $scope.closeCart();
         }
-        $state.go('app.group-orders');
+        $ionicHistory.goBack();
       });
+    };
+
+    $scope.setRangeMinMax = function() {
+      var minRange = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].start);
+      var halfRange = 50;
+      minRange = minRange + minRange % halfRange;
+      if (minRange % halfRange !== 0) {
+        minRange = minRange - halfRange;
+      }
+      document.getElementById(1).max = TimeConverter.timeToRange($scope.restaurant.openingWindows.data[0].end);
+      document.getElementById(1).min = minRange;
+      $scope.endingAt.range = minRange;
     };
 
     $scope.$on('$ionicView.afterEnter', function() {

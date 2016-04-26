@@ -25,7 +25,8 @@
     <ion-nav-buttons side="secondary">
       <button class="button button-clear button-timer" ng-if="currentOrder.endingAt">
         <i class="ion-ios-timer"></i>
-        <timer end-time="currentOrder.endingAt" interval="1000" finish-callback="callbackTimer()"> {{mminutes}}:{{sseconds}}</timer>
+        <ge-timer end-time="{{currentOrder.endingAt}}" callback-timer="callbackTimer">
+        </ge-timer>
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
@@ -40,13 +41,23 @@
             <h4>-{{ currentOrder.currentDiscount | number : 0 }}<small>%</small></h4>
             <p class="small-title">{{ 'discountOnAllProduct' | translate }}</p>
           </div>
-          <div class="food-rush" ng-show="isNewOrder.value">
+          <div class="food-rush" ng-show="isNewOrder.value && restaurant.isOpened">
             <h3 class="time-value">{{foodRushTime.value}}:00</h3>
-            <h5>{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
+            <h5 ng-if="isRestaurantOpen">{{ 'howLongFoodRush' | translate }} <b>Food Rush</b> ?</h5>
+            <h5 ng-if="!isRestaurantOpen">{{ 'whenToOrder' | translate }}</h5>
             <div class="item range range-assertive">
               5mn
-              <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5" name="volume">
+              <input type="range" min="5" max="{{currentOrder.foodRushMax}}" ng-model="foodRushTime.value" step="5">
               {{ currentOrder.foodRushMax }}mn
+            </div>
+          </div>
+          <div class="food-rush" ng-if="isNewOrder.value && !restaurant.isOpened">
+            <h3 ng-if="endingAt.range" class="time-value">{{ endingAt.range | rangeToTime | timeFormat }}</h3>
+            <h5>{{ 'whenToOrder' | translate }}</h5>
+            <div class="item range range-assertive">
+              {{ restaurant.openingWindows.data[0].start | timeFormat }}
+              <input id="1" type="range" ng-model="endingAt.range" step="50">
+              {{ restaurant.openingWindows.data[0].end | timeFormat }}
             </div>
           </div>
         </div>
@@ -124,7 +135,7 @@
       <div class="col">
         <div class="summup">
           <div class="clearfix">
-            <div>
+            <div class="pull-right">
               <strike ng-show="isDiscountToShow()" class="color-red">{{ cart.getTotalPrice() | number : 2 }}€</strike> <b>{{ cart.getTotalPrice()*(100 - currentOrder.currentDiscount)/100 | number : 2}}</b>€
             </div>
           </div>

@@ -47,7 +47,14 @@ module.exports = function(app) {
     };
 
     $scope.onRestaurantTouch = function(restaurant) {
-      Customer.checkActivatedAccount()
+      var isOpen;
+      Restaurant.getOnlyOpenedFromCoordinates($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude)
+      .then(function(openedRestaurants){
+        isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
+          return openRestaurant.id == restaurant.id;
+        }));
+        return Customer.checkActivatedAccount();
+      })
       .then(function() {
         return CustomerInformationChecker.check();
       })
@@ -64,7 +71,7 @@ module.exports = function(app) {
         else {
           Order.setCurrentOrder(null, null, 0, restaurant.deliveryCapacity, restaurant.discountPolicy, 0, restaurant.closingAt);
         }
-        $state.go('app.restaurant-menu', {restaurantId: restaurant.id});
+        $state.go('app.restaurant-menu', {isRestaurantOpen: isOpen, restaurantId: restaurant.id});
       });
     };
 
