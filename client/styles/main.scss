@@ -28,6 +28,7 @@
 @import "components/backgrounds";
 @import "components/buttons";
 @import "components/create-order-footer";
+@import "components/delivery-address";
 @import "components/intro-slides";
 @import "components/message-backdrop";
 @import "components/order-card";
@@ -41,7 +42,6 @@
 /**
  * PAGES
  */
-
  @import "pages/group-orders";
  @import "pages/restaurant-menu";
  @import "pages/cart";

@@ -15,10 +15,7 @@
       <button class="button button-icon icon ion-ios-gear" ui-sref="app.settings"></button>
     </ion-nav-buttons>
     <ion-nav-title>
-      <div class="title has-sub-title">
-        {{ 'group-orders' | translate }}
-        <small>{{groupOrders.length}}&nbsp;<ng-pluralize count="groupOrders.length" when="{'0': 'commande', '1': 'commande', 'other': 'commandes'}"></ng-pluralize>&nbsp;{{ 'aroundYou' | translate}}</small>
-      </div>
+      <ge-delivery-address></ge-delivery-address>
     </ion-nav-title>
     <ion-nav-buttons side="secondary" >
       <button class="button button-icon icon ion-bag" ui-sref="app.orders"></button>
