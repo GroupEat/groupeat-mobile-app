@@ -32,6 +32,7 @@ var app = angular.module(namespace, [
   'timer',
   'ui.mask',
   // inject:modules start
+  require('./address')(namespace).name,
   require('./authentication')(namespace).name,
   require('./common')(namespace).name,
   require('./customer')(namespace).name,

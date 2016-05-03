@@ -1,0 +1,8 @@
+<input ng-model="address" type="text" placeholder="{{ 'address' | translate }}">
+<ul class="list">
+    <li class="item"
+    ng-repeat="result in results" style="color: black !important"
+    on-tap="selectAddress(result)">
+      {{ result.formatted_address }}
+    </li>
+</ul>

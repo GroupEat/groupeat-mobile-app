@@ -27,7 +27,7 @@ module.exports = function(app) {
         return Address.get(customerId);
       })
       .then(function(address) {
-        CustomerStorage.setAddress(address);
+        CustomerStorage.setOldAddress(address);
         return CustomerSettings.get(customerId);
       })
       .then(function(customerSettings) {
