@@ -109,7 +109,7 @@ module.exports = function(app) {
           CustomerStorage.setSettings(data[2]);
           if (data.length === 4) {
             IonicUser.set(data[3]);
-            CustomerStorage.setAddress(data[3]);
+            CustomerStorage.setOldAddress(data[3]);
           }
           $scope.isProcessingRequest = false;
           return Popup.title('customerEdited');

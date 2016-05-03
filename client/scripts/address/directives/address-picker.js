@@ -5,14 +5,15 @@ var directivename = 'geAddressPicker';
 module.exports = function(app) {
 
   var directiveDeps = [
+    app.namespace.customer + '.CustomerStorage',
     app.name + '.Geocoder'
   ];
 
-  var directive = function(Geocoder) {
+  var directive = function(CustomerStorage, Geocoder) {
     return {
       restrict: 'E',
       scope: {
-        modal: '='
+        onAddressSelect: '&'
       },
       template: require('./address-picker.html'),
       link: function(scope) {
@@ -25,7 +26,8 @@ module.exports = function(app) {
           }
         });
         scope.selectAddress = function(address) {
-          scope.modal.hide();
+          CustomerStorage.setForwardGeocodedAddress(address);
+          scope.onAddressSelect();
         };
       }
     };

@@ -45,7 +45,7 @@ module.exports = function(app) {
       })
       .then(function(address) {
         IonicUser.set(address);
-        CustomerStorage.setAddress(address);
+        CustomerStorage.setOldAddress(address);
         $scope.hasSignedUp();
       })
       .catch(function(errorMessage) {

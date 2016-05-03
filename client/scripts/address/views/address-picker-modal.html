@@ -3,6 +3,6 @@
     <button on-tap="modal.hide()" class="button button-icon icon ion-ios-close-empty button-back"></button>
   </ion-header-bar>
   <ion-content>
-    <ge-address-picker modal="modal"></ge-address-picker>
+    <ge-address-picker on-address-select="onAddressSelect()"></ge-address-picker>
   </ion-content>
 </ion-modal-view>
