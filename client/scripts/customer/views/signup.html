@@ -1,140 +1,46 @@
 <ion-view hide-nav-bar="true">
 
-	<ion-slide-box show-pager="false" disable-scroll="true" id="auth" class="full-height">
-		<ion-slide>
-			<div class="content">
-				<div class="titles">
-					<h3>{{ 'aboutYou' | translate }} !</h3>
-					<p>{{ 'aboutYouDetails' | translate }}.</p>
-				</div>
-				<form ng-submit="slideTo(1)">
-					<div class="form">
-						<div class="row">
-							<div class="col">
-								<div class="group-input group-two">
-									<div class="input">
-										<input type="text" placeholder="{{ 'firstName' | translate }}" ng-model="user.firstName">
-									</div>
-									<div class="input">
-										<input type="text" placeholder="{{ 'lastName' | translate }}" ng-model="user.lastName">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="btn-group">
-						<div class="row">
-							<div class="col">
-								<button type="submit" ng-click="slideTo(1)" ng-disabled="!user.firstName || !user.lastName" class="btn btn-bloc btn-lg btn-green">
-									{{ 'nextStep' | translate }} <i class="ion-ios-arrow-thin-right"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
+	<div disable-scroll="true" id="auth" class="full-height">
+		<div class="content">
+			<div class="titles">
+				<h3>{{ 'helloYou' | translate:'{"firstName": firstName}' }} ?</h3>
+				<p>{{ 'helloYouDetails' | translate }}.</p>
 			</div>
-		</ion-slide>
-
-		<ion-slide>
-			<div class="content">
-				<div class="titles">
-					<h3>{{ 'helloYou' | translate:'{"firstName": firstName}' }} ?</h3>
-					<p>{{ 'helloYouDetails' | translate }}.</p>
-				</div>
-				<form ng-submit="slideTo(2)">
-					<div class="form">
-            <div class="row">
-              <div class="col">
-                <div class="input input-bordered input-tel">
-                  <input ng-model="user.phoneNumber" name="phoneNumber" type="tel"
-                    ui-mask="99-99-99-99-99" placeholder="{{ 'phoneNumber' | translate }}" ui-mask-placeholder>
-                </div>
+			<form ng-submit="confirmSignup()">
+				<div class="form">
+          <div class="row">
+            <div class="col">
+              <div class="input input-bordered input-tel">
+                <input ng-model="user.phoneNumber" name="phoneNumber" type="tel"
+                  ui-mask="99-99-99-99-99" placeholder="{{ 'phoneNumber' | translate }}" ui-mask-placeholder>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <p class="info-comment">
-                  * {{ 'noSpamNoCommercials' | translate }}.
-                </p>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p class="info-comment">
+                * {{ 'noSpamNoCommercials' | translate }}.
+              </p>
             </div>
-					</div>
-					<div class="btn-group">
-						<div class="row">
-							<div class="col col-25">
-								<button type='button' on-tap="slideTo(0)" class="btn btn-bloc btn-lg btn-icon btn-grey">
-									<i class="ion-ios-arrow-thin-left"></i>
-								</button>
-							</div>
-							<div class="col">
-								<button type="submit" ng-disabled="!user.phoneNumber" ng-click="slideTo(2)" class="btn btn-bloc btn-lg btn-green">
-									Étape suivante <i class="ion-ios-arrow-thin-right"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</ion-slide>
-
-
-
-		<ion-slide>
-			<div class="content">
-				<div class="titles">
-					<h3>Je vous la mets où ?</h3>
-					<p>L'adresse ou le livreur déposera tes commandes.</p>
+          </div>
 				</div>
-				<form ng-submit="confirmSignup()">
-					<div class="form">
-						<div class="row">
-							<div class="col">
-								<div class="group-input group-two">
-									<div class="input input-select">
-										<select ng-model="user.residency">
-											<option ng-repeat="residency in residencies" value="{{ residency }}">{{ residency | translate }}</option>
-										</select>
-									</div>
-									<div class="input">
-										<input type="text" placeholder="Complément d'adresse" ng-model="user.addressSupplement">
-									</div>
-								</div>
-							</div>
+				<div class="btn-group">
+					<div class="row">
+						<div class="col">
+							<button type="submit" ng-disabled="!user.phoneNumber" ng-click="confirmSignup()" class="btn btn-bloc btn-lg btn-green">
+								{{ 'register' | translate }} <i class="ion-ios-arrow-thin-right"></i>
+							</button>
 						</div>
 					</div>
-					<div class="btn-group">
-						<div class="row">
-							<div class="col col-25">
-								<button type='button' on-tap="slideTo(1)" class="btn btn-bloc btn-lg btn-icon btn-grey">
-									<i class="ion-ios-arrow-thin-left"></i>
-								</button>
-							</div>
-							<div class="col">
-								<a ng-click="confirmSignup()" ng-disabled="!user.residency" class="btn btn-bloc btn-lg btn-green">
-									Confirmer <i class="ion-checkmark"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</ion-slide>
-	</ion-slide-box>
-
-	<div class="progress hide-on-keyboard-open" ng-class="{'is-slide-2' : slideIndex === 1, 'is-slide-3' : slideIndex === 2}">
-		<div class="groupin">
-			<img src="images/groupin.png" alt="">
-		</div>
-		<div class="progress-bar">
-			<span class="active"></span>
-			<span ng-class="{'active' : slideIndex > 0}"></span>
-			<span ng-class="{'active' : slideIndex > 1}"></span>
-			<div class="progress-track"></div>
+				</div>
+			</form>
 		</div>
 	</div>
 
-	<div class="later hide-on-keyboard-open" ng-class="{'is-hidden' : slideIndex > 0}">
-		<a on-tap="hasSignedUp()">Compléter mes informations <b>plus tard.</b></a>
+	<div class="signup-logo-container hide-on-keyboard-open">
+    <div class="logo">
+      <img src="images/logo-groupeat.png" alt="">
+    </div>
 	</div>
 
 </ion-view>
