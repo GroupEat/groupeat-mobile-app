@@ -8,20 +8,37 @@ module.exports = function(app) {
   ];
 
   function service($q) {
-
+    var autocompleter = new google.maps.places.AutocompleteService({
+      componentRestrictions: {
+        country: 'fr'
+      }
+    });
     var geocoder = new google.maps.Geocoder();
 
     var
-    geocode = function(address) {
+    autocomplete = function(input) {
       var deferred = $q.defer();
-      geocoder.geocode({
-        address: address,
-        componentRestrictions: {
-          country: 'FR'
-        }
-      }, function(results, status) {
+      if (input) {
+        autocompleter.getPlacePredictions({input: input}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            deferred.resolve(results || []);
+          } else {
+            deferred.reject(status);
+          }
+        });
+      } else {
+        deferred.resolve([]);
+      }
+      return deferred;
+    },
+
+    placeToAddress = function(placeId) {
+      var deferred = $q.defer();
+      geocoder.geocode({placeId: placeId}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          deferred.resolve(results);
+          const place = results[0];
+
+          debugger;
         } else {
           deferred.reject(status);
         }
@@ -65,7 +82,8 @@ module.exports = function(app) {
 
     return {
       formatAddress: formatAddress,
-      geocode: geocode
+      autocomplete: autocomplete,
+      placeToAddress: placeToAddress
     };
 
   }

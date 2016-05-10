@@ -19,16 +19,17 @@ module.exports = function(app) {
       link: function(scope) {
         scope.$watch('address', function(newValue) {
           if (newValue && newValue.length > 3) {
-            Geocoder.geocode(newValue)
+            Geocoder.autocomplete(newValue)
             .then(function(results) {
               scope.results = results;
             });
           }
         });
-        scope.selectAddress = function(address) {
-          var formattedAddress = Geocoder.formatAddress(address);
-          CustomerStorage.setForwardGeocodedAddress(formattedAddress);
-          scope.onAddressSelect();
+        scope.selectAddress = function(place) {
+          Geocoder.placeToAddress(place).then(function(formattedAddress) {
+            CustomerStorage.setForwardGeocodedAddress(formattedAddress);
+            scope.onAddressSelect();
+          });
         };
       }
     };
