@@ -8,18 +8,90 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-  <div class="bar bar-subheader bar-tab" ng-class="{'second-selected' : slideIndex == 1}">
-    <button ng-repeat="tab in tabs" ng-class="{'active' : slideIndex == tab.id}" on-tap="slideTo({{ tab.id }})">
-      {{ tab.title | translate }}
-    </button>
-  </div>
+  <ion-content overflow-scroll="false">
 
-  <ion-content class="has-subheader" overflow-scroll="false">
-    <ion-slide-box show-pager="false">
-      <ion-slide ng-repeat="tab in tabs">
-        <ng-include src="tab.url"/>
-      </ion-slide>
-    </ion-slide-box>
+    <form name="form.settings" ng-submit-force="true" novalidate>
+
+      <div class="list">
+
+        <div class="item item-divider">
+          {{ 'phoneNumber' | translate }} :
+        </div>
+
+        <input ng-model="customerIdentity.phoneNumber" name="phoneNumber" type="tel"
+          ui-mask="99-99-99-99-99" placeholder="{{ 'phoneNumber' | translate }}" ui-mask-placeholder>
+
+        <div class="item item-divider">
+          {{ 'pushSettings' | translate }} :
+        </div>
+
+        <div class="item item-toggle">
+          {{ 'enable' | translate}}
+          <label class="toggle">
+            <input ng-model="customerSettings.notificationsEnabled" name="notificationsEnabled" type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+
+        <div ng-show="customerSettings.notificationsEnabled">
+
+          <div class="item item-divider">
+            {{ 'afterMakingAnOrder' | translate }} :
+          </div>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              {{ 'notifyMe' | translate }} :
+            </div>
+            <select ng-model="customerSettings.daysWithoutNotifying" name="daysWithoutNotifying">
+              <option
+              ng-repeat="day in daysWithoutNotifyingOptions"
+              ng-pluralize
+              ng-init="dayLabel='day'; daysLabel='days'"
+              count="day"
+              when="{0: '{} {{dayLabel | translate}}',
+                     1: '{} {{dayLabel | translate}}',
+                     other: '{} {{ daysLabel | translate }}'}"
+              value="{{day}}"
+              ng-selected="day==customerSettings.daysWithoutNotifying"
+              >{{day}}</option>
+            </select>
+          </label>
+
+          <div class="item item-divider">
+            {{ 'doNotNotifyMe' | translate }} :
+          </div>
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              {{ 'after' | translate }} :</p>
+            </div>
+            <select ng-model="customerSettings.noNotificationAfter" name="noNotificationAfter">
+              <option ng-repeat="hour in noNotificationAfterOptions" value="{{hour}}" ng-selected="hour === customerSettings.noNotificationAfter">{{ hour | timeLabel }}</option>
+            </select>
+          </label>
+
+        </div>
+
+        <div class="item item-divider">
+          {{ 'editPassword' | translate }}
+        </div>
+
+        <input ng-model="customerIdentity.oldPassword" name="oldPassword" type="password" placeholder="{{ 'oldPassword' | translate }}" ng-minlength="6">
+        <div ng-messages="customerEditForm.oldPassword.$error">
+          <div ng-message="min">{{ 'minShortErrorKey' | translate }}</div>
+        </div>
+        <input ng-model="customerIdentity.newPassword" name="newPassword" type="password" placeholder="{{ 'newPassword' | translate }}" ng-minlength="6">
+        <div ng-messages="customerEditForm.newPassword.$error">
+          <div ng-message="min">{{ 'minShortErrorKey' | translate }}</div>
+        </div>
+
+      </div>
+
+    </form>
+
   </ion-content>
 
 </ion-view>

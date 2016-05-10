@@ -1,21 +1,14 @@
 'use strict';
 var controllername = 'SettingsCtrl';
 
-require('../views/settings-profile.html');
-require('../views/settings-notifications.html');
-
 module.exports = function(app) {
   var fullname = app.name + '.' + controllername;
   /*jshint validthis: true */
 
   var deps = [
     app.namespace.common + '.Lodash',
-    '$ionicSlideBoxDelegate',
     '$q',
-    '$rootScope',
     '$scope',
-    '$state',
-    app.namespace.customer + '.Address',
     app.namespace.authentication + '.Authentication',
     app.namespace.authentication + '.Credentials',
     app.namespace.customer + '.Customer',
@@ -28,47 +21,20 @@ module.exports = function(app) {
     app.namespace.common + '.Popup',
   ];
 
-  function controller(_, $ionicSlideBoxDelegate, $q, $rootScope, $scope, $state, Address, Authentication, Credentials, Customer, CustomerSettings, CustomerStorage, ElementModifier, IonicUser, Network, PhoneFormat, Popup) {
+  function controller(_, $q, $scope, Authentication, Credentials, Customer, CustomerSettings, CustomerStorage, ElementModifier, IonicUser, Network, PhoneFormat, Popup) {
     /*
     Models
     */
     $scope.customerIdentity = {};
-    $scope.customerAddress = {};
     $scope.customerSettings = {};
     $scope.form = {};
     $scope.isProcessingRequest = false;
 
-    /*
-    Settings list
-    */
-    $scope.slideIndex = 0;
-    $scope.tabs = [
-      {
-        id: 0,
-        title: 'editProfile',
-        url: 'settings-profile.html'
-      },
-      {
-        id: 1,
-        title: 'pushSettings',
-        url: 'settings-notifications.html'
-      }
-    ];
-
     $scope.onReload = function() {
       $scope.isProcessingRequest = true;
       $scope.customerIdentity = CustomerStorage.getIdentity();
-      $scope.customerAddress = CustomerStorage.getAddress();
       $scope.customerSettings = CustomerStorage.getSettings();
       $scope.isProcessingRequest = false;
-    };
-
-    /*
-    Switching tab
-    */
-    $scope.slideTo = function(slideId) {
-      $ionicSlideBoxDelegate.slide(slideId);
-      $scope.slideIndex = slideId;
     };
 
     /*
@@ -80,7 +46,7 @@ module.exports = function(app) {
         var customerId = Credentials.get().id;
         Network.hasConnectivity()
         .then(function() {
-          return ElementModifier.validate($scope.form.customerEdit);
+          return ElementModifier.validate($scope.form.settings);
         })
         .then(function() {
           var authenticationParams = _.pick($scope.customerIdentity, ['email', 'oldPassword', 'newPassword']);
@@ -89,12 +55,6 @@ module.exports = function(app) {
             Authentication.updatePassword(authenticationParams),
             CustomerSettings.update(customerId, $scope.customerSettings)
           ];
-          var addressParams = Address.getAddressFromResidencyInformation($scope.customerAddress.residency);
-          if (addressParams)
-          {
-            addressParams = _.merge(addressParams, {details: $scope.customerAddress.details});
-            promises.push(Address.update(customerId, addressParams));
-          }
           return $q.all(promises);
         })
         .then(function(data) {
@@ -107,10 +67,6 @@ module.exports = function(app) {
           CustomerStorage.setIdentity(customer);
           IonicUser.set(data[2]);
           CustomerStorage.setSettings(data[2]);
-          if (data.length === 4) {
-            IonicUser.set(data[3]);
-            CustomerStorage.setOldAddress(data[3]);
-          }
           $scope.isProcessingRequest = false;
           return Popup.title('customerEdited');
         })
@@ -126,7 +82,6 @@ module.exports = function(app) {
     $scope.$on('$ionicView.afterEnter', function() {
       $scope.daysWithoutNotifyingOptions = CustomerSettings.getDaysWithoutNotifying();
       $scope.noNotificationAfterOptions = CustomerSettings.getNoNotificationAfterHours();
-      $scope.residencies = Address.getResidencies();
       $scope.onReload();
     });
   }
