@@ -22,6 +22,10 @@ module.exports = function(app) {
         scope.$on('$destroy', function() {
           scope.modal.remove();
         });
+        scope.onAddressSelect = function() {
+          scope.deliveryAddress = CustomerStorage.getAddress();
+          scope.modal.hide();
+        };
       }
     };
   };
