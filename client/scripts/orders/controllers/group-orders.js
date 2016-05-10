@@ -13,7 +13,6 @@ module.exports = function(app) {
     '$state',
     '$q',
     app.namespace.common + '.ControllerPromiseHandler',
-    app.namespace.customer + '.Customer',
     app.namespace.customer + '.CustomerInformationChecker',
     app.namespace.common + '.Geolocation',
     app.name + '.GroupOrder',
@@ -21,7 +20,7 @@ module.exports = function(app) {
     app.name + '.Order'
   ];
 
-  function controller(_, $ionicPlatform, $rootScope, $scope, $state, $q, ControllerPromiseHandler, Customer, CustomerInformationChecker, Geolocation, GroupOrder, Network, Order) {
+  function controller(_, $ionicPlatform, $rootScope, $scope, $state, $q, ControllerPromiseHandler, CustomerInformationChecker, Geolocation, GroupOrder, Network, Order) {
     $scope.groupOrders = [];
 
     $scope.onReload = function() {
@@ -46,10 +45,7 @@ module.exports = function(app) {
     };
 
     $scope.onJoinOrderTouch = function(groupOrder) {
-      Customer.checkActivatedAccount()
-      .then(function() {
-        return CustomerInformationChecker.check();
-      })
+      CustomerInformationChecker.check()
       .then(function() {
         Order.setCurrentOrder(groupOrder.id, groupOrder.endingAt, groupOrder.discountRate, groupOrder.remainingCapacity, groupOrder.restaurant.data.discountPolicy, groupOrder.totalRawPrice);
         $state.go('app.restaurant-menu', {restaurantId: groupOrder.restaurant.data.id});
