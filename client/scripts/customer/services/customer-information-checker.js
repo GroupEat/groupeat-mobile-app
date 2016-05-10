@@ -121,8 +121,6 @@ module.exports = function(app) {
     */
     generateMissingProperties = function(identity, address) {
       var mandatoryIdentityProperties = [
-        'firstName',
-        'lastName',
         'phoneNumber'
       ];
       var missingProperties = [];
@@ -132,11 +130,6 @@ module.exports = function(app) {
           missingProperties.push(mandatoryProperty);
         }
       });
-      // Address is missing if it is has no provided residency
-      if (!address || !address.residency) {
-        missingProperties.push('address');
-      }
-
       return missingProperties;
     };
 
