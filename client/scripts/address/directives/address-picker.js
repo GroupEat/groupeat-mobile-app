@@ -27,7 +27,7 @@ module.exports = function(app) {
         });
         scope.selectAddress = function(address) {
           var formattedAddress = Geocoder.formatAddress(address);
-          CustomerStorage.setForwardGeocodedAddress(formattedAddress);
+          CustomerStorage.setAddress(formattedAddress);
           scope.onAddressSelect();
         };
       }
