@@ -106,45 +106,12 @@ module.exports = function(app) {
         defer.reject(BackendUtils.errorMsgFromBackend(errorResponse));
       });
       return defer.promise;
-    },
-
-    /**
-    * @ngdoc function
-    * @name Customer#checkActivatedAccount
-    * @methodOf Customer
-    *
-    * @description Returns a promise informing wether or not the customer has already activated his/her account
-    */
-    checkActivatedAccount = function() {
-      var deferred = $q.defer();
-      if (CustomerStorage.getActivated()) {
-        deferred.resolve();
-      }
-      else {
-        var customerId = Credentials.get().id;
-        get(customerId)
-        .then(function(customer) {
-          if (!customer.activated)
-          {
-            deferred.reject();
-            Popup.error('nonActivatedAccountDetails');
-          }
-          else
-          {
-            CustomerStorage.setActivated(true);
-            deferred.resolve();
-          }
-        });
-      }
-
-      return deferred.promise;
     };
 
     return {
       get: get,
       save: save,
       update: update,
-      checkActivatedAccount: checkActivatedAccount,
     };
 
   }

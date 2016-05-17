@@ -154,15 +154,7 @@ describe(app.name, function() {
 
       describe('On joining an order', function() {
 
-        it('should check if the customer account is activated', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.defer().promise);
-          this.$scope.onJoinOrderTouch();
-          this.$scope.$digest();
-          this.Customer.checkActivatedAccount.should.have.been.called;
-        });
-
-        it('should check for missing information if the customer account is activated', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when());
+        it('should check for missing information', function() {
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.defer().promise);
           this.$scope.onJoinOrderTouch();
           this.$scope.$digest();
@@ -177,7 +169,6 @@ describe(app.name, function() {
               }
             }
           }
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
           this.sandbox.spy(this.Order, 'setCurrentOrder');
           this.sandbox.stub(this.$state, 'go');

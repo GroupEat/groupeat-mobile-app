@@ -72,16 +72,7 @@ describe(app.name, function() {
           };
         });
 
-        it('should check if the customer account is activated', function(){
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.defer().promise);
-          this.$scope.onRestaurantTouch(1);
-          this.$httpBackend.flush();
-          this.$scope.$digest();
-          this.Customer.checkActivatedAccount.should.have.been.called;
-        });
-
         it('should check for missing information is the customer account is activated', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when({}).promise);
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.defer().promise);
           this.$scope.onRestaurantTouch(1);
           this.$httpBackend.flush();
@@ -91,7 +82,6 @@ describe(app.name, function() {
         });
 
         xit('should call GroupOrder#get if customer information are available', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.defer().promise);
           this.$scope.onRestaurantTouch(1);
@@ -101,7 +91,6 @@ describe(app.name, function() {
         });
 
         it('should call Restaurant#checkGroupOrders when the group orders were fetched', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
           var groupOrders = [];
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(groupOrders));
@@ -116,7 +105,6 @@ describe(app.name, function() {
         });
 
         it('should change the state to settings if all previous chains were resolved', function() {
-          this.sandbox.stub(this.Customer, 'checkActivatedAccount').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when({}));
           this.sandbox.stub(this.Restaurant, 'checkGroupOrders').returns(this.$q.when());

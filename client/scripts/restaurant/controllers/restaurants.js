@@ -14,14 +14,13 @@ module.exports = function(app) {
     app.namespace.common + '.ControllerPromiseHandler',
     app.namespace.common + '.Geolocation',
     app.namespace.orders + '.GroupOrder',
-    app.namespace.customer + '.Customer',
     app.namespace.customer + '.CustomerInformationChecker',
     app.namespace.common + '.Network',
     app.namespace.orders + '.Order',
     app.name + '.Restaurant'
   ];
 
-  function controller(_, $q, $rootScope, $scope, $state, ControllerPromiseHandler, Geolocation, GroupOrder, Customer, CustomerInformationChecker, Network, Order, Restaurant) {
+  function controller(_, $q, $rootScope, $scope, $state, ControllerPromiseHandler, Geolocation, GroupOrder, CustomerInformationChecker, Network, Order, Restaurant) {
     $scope.restaurants = [];
 
     $scope.onReload = function() {
@@ -53,9 +52,6 @@ module.exports = function(app) {
         isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
           return openRestaurant.id == restaurant.id;
         }));
-        return Customer.checkActivatedAccount();
-      })
-      .then(function() {
         return CustomerInformationChecker.check();
       })
       .then(function () {
