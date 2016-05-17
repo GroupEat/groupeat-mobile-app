@@ -215,5 +215,7 @@
   "helloYouDetails": "Le livreur pourra te contacter à ce numéro",
   "noSpamNoCommercials": "Jamais de spams, jamais de pubs",
 
-  "updateSuccesful": "Tu viens de récupérer une mise à jour ! Redémarre l'appli pour bénéficier de nos dernières nouveautés !"
+  "updateSuccesful": "Tu viens de récupérer une mise à jour ! Redémarre l'appli pour bénéficier de nos dernières nouveautés !",
+
+  "pickAnAddress": "Choisis une adresse"
 }
