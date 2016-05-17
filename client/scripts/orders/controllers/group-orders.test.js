@@ -23,7 +23,7 @@ describe(app.name, function() {
         this.ControllerPromiseHandler = $injector.get(app.namespace.common+'.ControllerPromiseHandler');
         this.Customer = $injector.get(app.namespace.customer+'.Customer');
         this.CustomerInformationChecker = $injector.get(app.namespace.customer+'.CustomerInformationChecker');
-        this.Geolocation = $injector.get(app.namespace.common+'.Geolocation');
+        this.CustomerStorage = $injector.get(app.namespace.customer+'.CustomerStorage');
         this.GroupOrder = $injector.get(app.name+'.GroupOrder');
         this.Network = $injector.get(app.namespace.common+'.Network');
         this.Order = $injector.get(app.name+'.Order');
@@ -33,16 +33,14 @@ describe(app.name, function() {
           'ControllerPromiseHandler': this.ControllerPromiseHandler,
           'Customer': this.Customer,
           'CustomerInformationChecker': this.CustomerInformationChecker,
-          'Geolocation': this.Geolocation,
+          'CustomerStorage': this.CustomerStorage,
           'GroupOrder': this.GroupOrder,
           'Network': this.Network,
           'Order': this.Order
         });
         this.positionMock = {
-          coords: {
-            latitude: 48,
-            longitude: 2
-          }
+          latitude: 48,
+          longitude: 2
         };
         $injector.get('$httpBackend').whenGET(/^translations\/.*/).respond('{}');
       }));
@@ -80,38 +78,19 @@ describe(app.name, function() {
           this.ControllerPromiseHandler.handle.should.have.been.calledWithMatch(expectedPromise, 'initial');
         });
 
-        it('should check user current position', function() {
-          this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.defer().promise);
-          this.$scope.onReload();
-          this.$scope.$digest();
-          this.Geolocation.getGeolocation.should.have.been.called;
-        });
-
-        it('should call ControllerPromiseHandler.handle with a promise rejected with noGeolocation if there is no geolocation', function() {
-          var errorKey = 'noGeolocation';
-          var expectedPromise = this.$q.reject(errorKey);
-          this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.reject(errorKey));
-          this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
-          this.$scope.onReload();
-          this.$scope.$digest();
-          this.ControllerPromiseHandler.handle.should.have.been.calledWithMatch(expectedPromise, 'initial');
-        });
-
         it('should check get the group orders around the customer\'s position', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(this.positionMock));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.defer().promise);
           this.$scope.onReload();
           this.$scope.$digest();
-          this.GroupOrder.get.should.have.been.calledWithExactly(this.positionMock.coords.latitude, this.positionMock.coords.longitude);
+          this.GroupOrder.get.should.have.been.calledWithExactly(this.positionMock.latitude, this.positionMock.longitude);
         });
 
         it('should call ControllerPromiseHandler.handle with a rejected promise if it could not load group orders', function() {
           var expectedPromise = this.$q.reject();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(this.positionMock));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.reject());
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
@@ -122,7 +101,7 @@ describe(app.name, function() {
         it('should call ControllerPromiseHandler.handle with a promise rejected with noGroupOrders if it loaded no group orders', function() {
           var expectedPromise = this.$q.reject('noGroupOrders');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(this.positionMock));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when([]));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
@@ -133,7 +112,7 @@ describe(app.name, function() {
         it('should get in the scope the groupOrders if there are more than one of them', function() {
           var expectedGroupOrders = ['first', 'second']
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}))
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(this.positionMock));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(expectedGroupOrders));
           this.$scope.onReload();
           this.$scope.$digest();
@@ -143,7 +122,7 @@ describe(app.name, function() {
         it('should call ControllerPromiseHandler.handle with a resolved promise if it loaded some group orders', function() {
           var expectedPromise = this.$q.when();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(this.positionMock));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
           this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(['groupOrder']));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();

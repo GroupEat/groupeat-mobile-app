@@ -12,6 +12,9 @@ module.exports = function(app) {
   var directive = function($ionicModal, CustomerStorage) {
     return {
       restrict: 'E',
+      scope: {
+        onAddressSelect: '&'
+      },
       template: require('./delivery-address.html'),
       link: function(scope) {
         scope.deliveryAddress = CustomerStorage.getAddress();
@@ -22,9 +25,10 @@ module.exports = function(app) {
         scope.$on('$destroy', function() {
           scope.modal.remove();
         });
-        scope.onAddressSelect = function() {
+        scope.selectAddress = function() {
           scope.deliveryAddress = CustomerStorage.getAddress();
           scope.modal.hide();
+          scope.onAddressSelect();
         };
       }
     };

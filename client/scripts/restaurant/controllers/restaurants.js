@@ -12,31 +12,27 @@ module.exports = function(app) {
     '$scope',
     '$state',
     app.namespace.common + '.ControllerPromiseHandler',
-    app.namespace.common + '.Geolocation',
-    app.namespace.orders + '.GroupOrder',
     app.namespace.customer + '.CustomerInformationChecker',
+    app.namespace.customer + '.CustomerStorage',
+    app.namespace.orders + '.GroupOrder',
     app.namespace.common + '.Network',
     app.namespace.orders + '.Order',
     app.name + '.Restaurant'
   ];
 
-  function controller(_, $q, $rootScope, $scope, $state, ControllerPromiseHandler, Geolocation, GroupOrder, CustomerInformationChecker, Network, Order, Restaurant) {
+  function controller(_, $q, $rootScope, $scope, $state, ControllerPromiseHandler, CustomerInformationChecker, CustomerStorage, GroupOrder, Network, Order, Restaurant) {
     $scope.restaurants = [];
 
     $scope.onReload = function() {
       var promise = Network.hasConnectivity()
       .then(function() {
-        return Geolocation.getGeolocation();
-      })
-      .then(function(currentPosition) {
-        $scope.userCurrentPosition = currentPosition;
-        return Restaurant.getFromCoordinates(currentPosition.coords.latitude, currentPosition.coords.longitude);
+        $scope.address = CustomerStorage.getAddress();
+        return Restaurant.getFromCoordinates($scope.address.latitude, $scope.address.longitude);
       })
       .then(function(restaurants) {
+        $scope.restaurants = restaurants;
         if (_.isEmpty(restaurants)) {
           return $q.reject('noRestaurants');
-        } else {
-          $scope.restaurants = restaurants;
         }
       });
       ControllerPromiseHandler.handle(promise, $scope.initialState)
@@ -47,7 +43,7 @@ module.exports = function(app) {
 
     $scope.onRestaurantTouch = function(restaurant) {
       var isOpen;
-      Restaurant.getOnlyOpenedFromCoordinates($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude)
+      Restaurant.getOnlyOpenedFromCoordinates($scope.address.latitude, $scope.address.longitude)
       .then(function(openedRestaurants){
         isOpen = !_.isEmpty(_.find(openedRestaurants, function(openRestaurant){
           return openRestaurant.id == restaurant.id;
@@ -55,7 +51,7 @@ module.exports = function(app) {
         return CustomerInformationChecker.check();
       })
       .then(function () {
-        return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
+        return GroupOrder.get($scope.address.latitude, $scope.address.longitude);
       })
       .then(function (groupOrders) {
         return Restaurant.checkGroupOrders(restaurant.id, groupOrders);
