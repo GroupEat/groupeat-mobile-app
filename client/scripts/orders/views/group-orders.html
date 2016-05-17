@@ -15,7 +15,7 @@
       <button class="button button-icon icon ion-ios-gear" ui-sref="app.settings"></button>
     </ion-nav-buttons>
     <ion-nav-title>
-      <ge-delivery-address></ge-delivery-address>
+      <ge-delivery-address on-address-select="onReload()"></ge-delivery-address>
     </ion-nav-title>
     <ion-nav-buttons side="secondary" >
       <button class="button button-icon icon ion-bag" ui-sref="app.orders"></button>

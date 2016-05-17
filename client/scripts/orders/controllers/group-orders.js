@@ -14,23 +14,20 @@ module.exports = function(app) {
     '$q',
     app.namespace.common + '.ControllerPromiseHandler',
     app.namespace.customer + '.CustomerInformationChecker',
-    app.namespace.common + '.Geolocation',
+    app.namespace.customer + '.CustomerStorage',
     app.name + '.GroupOrder',
     app.namespace.common + '.Network',
     app.name + '.Order'
   ];
 
-  function controller(_, $ionicPlatform, $rootScope, $scope, $state, $q, ControllerPromiseHandler, CustomerInformationChecker, Geolocation, GroupOrder, Network, Order) {
+  function controller(_, $ionicPlatform, $rootScope, $scope, $state, $q, ControllerPromiseHandler, CustomerInformationChecker, CustomerStorage, GroupOrder, Network, Order) {
     $scope.groupOrders = [];
 
     $scope.onReload = function() {
       var promise = Network.hasConnectivity()
       .then(function() {
-        return Geolocation.getGeolocation();
-      })
-      .then(function(currentPosition) {
-        $scope.userCurrentPosition = currentPosition;
-        return GroupOrder.get($scope.userCurrentPosition.coords.latitude, $scope.userCurrentPosition.coords.longitude);
+        var address = CustomerStorage.getAddress();
+        return GroupOrder.get(address.latitude, address.longitude);
       })
       .then(function(groupOrders) {
         $scope.groupOrders = groupOrders;
