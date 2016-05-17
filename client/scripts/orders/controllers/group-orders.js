@@ -27,7 +27,7 @@ module.exports = function(app) {
       var promise = Network.hasConnectivity()
       .then(function() {
         var address = CustomerStorage.getAddress();
-        return GroupOrder.get(address.latitude, address.longitude);
+        return GroupOrder.getFromAddress(address);
       })
       .then(function(groupOrders) {
         $scope.groupOrders = groupOrders;

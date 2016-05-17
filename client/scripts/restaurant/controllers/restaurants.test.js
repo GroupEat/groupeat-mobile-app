@@ -81,17 +81,17 @@ describe(app.name, function() {
 
         xit('should call GroupOrder#get if customer information are available', function() {
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.defer().promise);
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.defer().promise);
           this.$scope.onRestaurantTouch(1);
           this.$httpBackend.flush();
           this.$scope.$digest();
-          this.GroupOrder.get.should.have.been.called;
+          this.GroupOrder.getFromAddress.should.have.been.called;
         });
 
         it('should call Restaurant#checkGroupOrders when the group orders were fetched', function() {
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
           var groupOrders = [];
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(groupOrders));
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.when(groupOrders));
           this.sandbox.stub(this.Restaurant, 'checkGroupOrders').returns(this.$q.defer().promise);
           var restaurant = {
             id: 1
@@ -104,7 +104,7 @@ describe(app.name, function() {
 
         it('should change the state to settings if all previous chains were resolved', function() {
           this.sandbox.stub(this.CustomerInformationChecker, 'check').returns(this.$q.when({}));
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when({}));
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.when({}));
           this.sandbox.stub(this.Restaurant, 'checkGroupOrders').returns(this.$q.when());
           this.sandbox.stub(this.$state, 'go');
 

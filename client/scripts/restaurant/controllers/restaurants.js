@@ -51,7 +51,7 @@ module.exports = function(app) {
         return CustomerInformationChecker.check();
       })
       .then(function () {
-        return GroupOrder.get($scope.address.latitude, $scope.address.longitude);
+        return GroupOrder.getFromAddress($scope.address);
       })
       .then(function (groupOrders) {
         return Restaurant.checkGroupOrders(restaurant.id, groupOrders);

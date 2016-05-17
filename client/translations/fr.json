@@ -153,6 +153,8 @@
   "reload": "Recharger",
   "newOrder": "Nouvelle Commande",
 
+  "noAddress": "Où es-tu ?",
+  "noAddressDetails": "Choisis une adresse de livraison pour que GroupEat sache quels restaurants peuvent te livrer",
   "noGeolocation": "Echec de localisation",
   "noGeolocationDetails": "Autorise Groupeat à accéder à tes données de géolocalisation dans tes réglages téléphone pour profiter de nos offres !",
 
