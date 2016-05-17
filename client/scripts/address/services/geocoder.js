@@ -21,7 +21,10 @@ module.exports = function(app) {
         }
       }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          deferred.resolve(results);
+          var filteredResults = _.filter(results, function(result){
+            return _getAddressComponent(result, 'route');
+          })
+          deferred.resolve(filteredResults);
         } else {
           deferred.reject(status);
         }
