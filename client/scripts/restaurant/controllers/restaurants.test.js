@@ -164,17 +164,17 @@ describe(app.name, function() {
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.reject());
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.reject());
           this.$scope.onReload();
           this.$scope.$digest();
-          this.Restaurant.getFromCoordinates.should.have.been.calledWithExactly(1, 1);
+          this.Restaurant.getFromAddress.should.have.been.calledWithExactly(address);
           this.ControllerPromiseHandler.handle.should.have.been.calledWithMatch(expectedPromise, 'initial');
         });
 
         it('should eventually broadcast scroll.refreshComplete if the server cannot get the list of restaurants', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.reject());
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.reject());
           this.$scope.onReload();
           this.$scope.$digest();
           this.$scope.$broadcast.should.have.been.calledWithExactly('scroll.refreshComplete');
@@ -184,7 +184,7 @@ describe(app.name, function() {
           var expectedPromise = this.$q.reject('noRestaurants');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when([]));
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.when([]));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
 
           this.$scope.onReload();
@@ -196,7 +196,7 @@ describe(app.name, function() {
           var expectedPromise = this.$q.when();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(['restaurant']));
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.when(['restaurant']));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
           this.$scope.$digest();
@@ -207,7 +207,7 @@ describe(app.name, function() {
           var restaurants = ['firstRestaurant', 'secondRestaurant'];
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(restaurants));
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.when(restaurants));
           this.$scope.onReload();
           this.$scope.$digest();
           this.$scope.restaurants.should.equal(restaurants);
@@ -216,7 +216,7 @@ describe(app.name, function() {
         it('should eventually broadcast scroll.refreshComplete if the server returns a list of restaurants', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
-          this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(['restaurant']));
+          this.sandbox.stub(this.Restaurant, 'getFromAddress').returns(this.$q.when(['restaurant']));
           this.$scope.onReload();
           this.$scope.$digest();
           this.$scope.$broadcast.should.have.been.calledWithExactly('scroll.refreshComplete');
