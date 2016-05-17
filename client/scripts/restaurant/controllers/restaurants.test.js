@@ -24,7 +24,7 @@ describe(app.name, function() {
         this.ControllerPromiseHandler = $injector.get(app.namespace.common+'.ControllerPromiseHandler');
         this.Customer = $injector.get(app.namespace.customer+'.Customer');
         this.CustomerInformationChecker = $injector.get(app.namespace.customer+'.CustomerInformationChecker');
-        this.Geolocation = $injector.get(app.namespace.common+'.Geolocation');
+        this.CustomerStorage = $injector.get(app.namespace.customer+'.CustomerStorage');
         this.GroupOrder = $injector.get(app.namespace.orders+'.GroupOrder');
         this.Network = $injector.get(app.namespace.common+'.Network');
         this._ = $injector.get(app.namespace.common+'.Lodash');
@@ -38,7 +38,7 @@ describe(app.name, function() {
           'ControllerPromiseHandler': this.ControllerPromiseHandler,
           'Customer': this.Customer,
           'CustomerInformationChecker': this.CustomerInformationChecker,
-          'Geolocation': this.Geolocation,
+          'CustomerStorage': this.CustomerStorage,
           'GroupOrder': this.GroupOrder,
           'Network': this.Network,
           '_': this._,
@@ -64,11 +64,9 @@ describe(app.name, function() {
 
       describe('RestaurantsCtrl#onRestaurantTouch', function(){
         beforeEach(function(){
-          this.$scope.userCurrentPosition = {
-            coords: {
-              latitude: 1,
-              longitude: 1
-            }
+          this.$scope.address = {
+            latitude: 1,
+            longitude: 1
           };
         });
 
@@ -130,11 +128,9 @@ describe(app.name, function() {
 
       describe('RestaurantsCtrl#onReload', function() {
 
-        var currentPosition = {
-          coords: {
+        var address = {
             latitude: 1,
             longitude: 1
-          }
         };
 
         beforeEach(function(){
@@ -163,29 +159,11 @@ describe(app.name, function() {
           this.$scope.$broadcast.should.have.been.calledWithExactly('scroll.refreshComplete');
         });
 
-        it('should show a lack of geolocation permission message backdrop if the current position cannot be aquired', function() {
-          var errorKey = 'noGeolocation';
-          var expectedPromise = this.$q.reject(errorKey);
-          this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.reject(errorKey));
-          this.$scope.onReload();
-          this.$scope.$digest();
-          this.ControllerPromiseHandler.handle.should.have.been.calledWithMatch(expectedPromise, 'initial');
-        });
-
-        it('should eventually broadcast scroll.refreshComplete if the current position cannot be aquired', function() {
-          this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.reject('noGeolocation'));
-          this.$scope.onReload();
-          this.$scope.$digest();
-          this.$scope.$broadcast.should.have.been.calledWithExactly('scroll.refreshComplete');
-        });
-
         it('should call ControllerPromiseHandler.handle with a rejected promise if the server cannot get the list of restaurants', function() {
           var expectedPromise = this.$q.reject();
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.reject());
           this.$scope.onReload();
           this.$scope.$digest();
@@ -195,7 +173,7 @@ describe(app.name, function() {
 
         it('should eventually broadcast scroll.refreshComplete if the server cannot get the list of restaurants', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.reject());
           this.$scope.onReload();
           this.$scope.$digest();
@@ -205,7 +183,7 @@ describe(app.name, function() {
         it('should call ControllerPromiseHandler.handle with a promise rejected with noRestaurants when no restaurants are returned by the server', function() {
           var expectedPromise = this.$q.reject('noRestaurants');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when([]));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
 
@@ -217,7 +195,7 @@ describe(app.name, function() {
         it('should call ControllerPromiseHandler.handle with a resolved promise if at least one restaurant is returned by the server', function() {
           var expectedPromise = this.$q.when();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(['restaurant']));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
@@ -228,7 +206,7 @@ describe(app.name, function() {
         it('should load restaurants in the scope if at least one is returned by the server', function() {
           var restaurants = ['firstRestaurant', 'secondRestaurant'];
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(restaurants));
           this.$scope.onReload();
           this.$scope.$digest();
@@ -237,7 +215,7 @@ describe(app.name, function() {
 
         it('should eventually broadcast scroll.refreshComplete if the server returns a list of restaurants', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
-          this.sandbox.stub(this.Geolocation, 'getGeolocation').returns(this.$q.when(currentPosition));
+          this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(address);
           this.sandbox.stub(this.Restaurant, 'getFromCoordinates').returns(this.$q.when(['restaurant']));
           this.$scope.onReload();
           this.$scope.$digest();
