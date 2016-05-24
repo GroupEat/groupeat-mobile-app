@@ -84,7 +84,6 @@
   "confirmOrder": "Valider ma Commande",
   "total": "Total",
   "insteadOf": "Au lieu de",
-  "myAddress": "Mon adresse",
   "newAddress": "Nouvelle adresse",
   "otherAddresses": "Autres adresses",
   "predefinedAddress": "Lieu commun",
@@ -187,7 +186,6 @@
 
   "yummy": "Miam",
   "orderSaved": "Commande enregistrée",
-  "whereDoYouWantToBeDelivered": "Où souhaites-tu être livré(e)",
   "youWillBeDeliveredAt": "Tu seras livré(e) à",
 
   "createAnOrder": "Crée une commande",

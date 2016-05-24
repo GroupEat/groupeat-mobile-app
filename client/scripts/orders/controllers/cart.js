@@ -14,20 +14,15 @@ module.exports = function(app) {
     app.name + '.Cart',
     app.namespace.customer + '.CustomerStorage',
     app.name + '.Order',
-    app.name + '.PredefinedAddresses',
     app.namespace.common + '.Popup'
   ];
 
-  function controller($ionicHistory, $ionicSlideBoxDelegate, $scope, $state, Address, Cart, CustomerStorage, Order, PredefinedAddresses, Popup) {
+  function controller($ionicHistory, $ionicSlideBoxDelegate, $scope, $state, Address, Cart, CustomerStorage, Order, Popup) {
     $scope.$on('modal.shown', function() {
       $scope.cart = Cart;
       $scope.comment = {value : ''};
       $scope.currentDiscount = Order.getCurrentDiscount();
       $scope.foodRushTime.value = Order.getFoodRushTime() || 0 ;
-      PredefinedAddresses.get()
-      .then(function(predifinedAddresses) {
-        $scope.predifinedAddresses = predifinedAddresses;
-      });
       $scope.address = CustomerStorage.getAddress();
     });
 
@@ -39,11 +34,6 @@ module.exports = function(app) {
       {title: 'Valider ma commande !', color: 'green'},
       {title: 'Valider mon adresse !', color: 'orange'}
     ];
-
-    $scope.addressMode = {
-      name: 'preset',
-      other: 0
-    };
 
     $scope.activeButton = $scope.confirmButtons[0];
 
@@ -65,8 +55,7 @@ module.exports = function(app) {
       } else {
         if(!$scope.isRequesting) {
           $scope.isRequesting = true;
-          var address = ($scope.addressMode.name === 'preset') ? $scope.address : $scope.predifinedAddresses[$scope.addressMode.other];
-          Order.setDeliveryAddress(address);
+          Order.setDeliveryAddress($scope.address);
           Order.setComment($scope.comment.value);
           var requestProducts = {};
           angular.forEach(Cart.getProducts(), function(product) {
