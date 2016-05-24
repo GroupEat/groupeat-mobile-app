@@ -153,6 +153,8 @@
   "reload": "Recharger",
   "newOrder": "Nouvelle Commande",
 
+  "noAddress": "Où es-tu ?",
+  "noAddressDetails": "Choisis une adresse de livraison pour que GroupEat sache quels restaurants peuvent te livrer",
   "noGeolocation": "Echec de localisation",
   "noGeolocationDetails": "Autorise Groupeat à accéder à tes données de géolocalisation dans tes réglages téléphone pour profiter de nos offres !",
 
@@ -215,5 +217,7 @@
   "helloYouDetails": "Le livreur pourra te contacter à ce numéro",
   "noSpamNoCommercials": "Jamais de spams, jamais de pubs",
 
-  "updateSuccesful": "Tu viens de récupérer une mise à jour ! Redémarre l'appli pour bénéficier de nos dernières nouveautés !"
+  "updateSuccesful": "Tu viens de récupérer une mise à jour ! Redémarre l'appli pour bénéficier de nos dernières nouveautés !",
+
+  "pickAnAddress": "Choisis une adresse"
 }

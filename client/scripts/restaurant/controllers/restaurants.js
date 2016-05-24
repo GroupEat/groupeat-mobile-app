@@ -27,7 +27,7 @@ module.exports = function(app) {
       var promise = Network.hasConnectivity()
       .then(function() {
         $scope.address = CustomerStorage.getAddress();
-        return Restaurant.getFromCoordinates($scope.address.latitude, $scope.address.longitude);
+        return Restaurant.getFromAddress($scope.address);
       })
       .then(function(restaurants) {
         $scope.restaurants = restaurants;
@@ -51,7 +51,7 @@ module.exports = function(app) {
         return CustomerInformationChecker.check();
       })
       .then(function () {
-        return GroupOrder.get($scope.address.latitude, $scope.address.longitude);
+        return GroupOrder.getFromAddress($scope.address);
       })
       .then(function (groupOrders) {
         return Restaurant.checkGroupOrders(restaurant.id, groupOrders);

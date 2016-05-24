@@ -15,14 +15,8 @@ module.exports = function(app) {
       localStorageService.set('activatedAccount', activated);
     },
 
-    setForwardGeocodedAddress = function(address) {
-      localStorageService.set('forwardGeocodedAddress', address);
-    },
-
-    setOldAddress = function(address) {
-      if(address) {
-        localStorageService.set('address', address);
-      }
+    setAddress = function(address) {
+      localStorageService.set('address', address);
     },
 
     setIdentity = function(identity) {
@@ -60,13 +54,7 @@ module.exports = function(app) {
     },
 
     getAddress = function() {
-      if (localStorageService.get('forwardGeocodedAddress')) {
-        return localStorageService.get('forwardGeocodedAddress');
-      } else if (localStorageService.get('address')) {
-        return localStorageService.get('address');
-      } else {
-        return {residency: "ENSTAParisTech"};
-      }
+      return localStorageService.get('address');
     },
 
     getIdentity = function() {
@@ -78,8 +66,7 @@ module.exports = function(app) {
     };
 
     return {
-      setForwardGeocodedAddress: setForwardGeocodedAddress,
-      setOldAddress: setOldAddress,
+      setAddress: setAddress,
       setActivated: setActivated,
       setIdentity: setIdentity,
       setSettings: setSettings,

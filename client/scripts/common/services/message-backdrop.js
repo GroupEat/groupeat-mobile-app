@@ -45,21 +45,35 @@ module.exports = function(app) {
     */
     backdropFromErrorKey = function(errorKey) {
       switch (errorKey) {
+        case 'noAddress':
+          return noAddress();
         case 'noNetwork':
-        return noNetwork();
+          return noNetwork();
         case 'noGeolocation':
-        return noGeolocation();
+          return noGeolocation();
         case 'noGroupOrders':
-        return noGroupOrders();
+          return noGroupOrders();
         case 'noRestaurants':
-        return noRestaurants();
+          return noRestaurants();
         case 'noOrders':
-        return noOrders();
+          return noOrders();
         case 'emptyMenu':
-        return emptyMenu();
+          return emptyMenu();
         default:
-        return genericFailure();
+          return genericFailure();
       }
+    },
+
+    /**
+    * @ngdoc function
+    * @name MessageBackdrop#noAddress
+    * @methodOf MessageBackdrop
+    *
+    * @return Returns a message backdrop object for lack of given address
+    *
+    */
+    noAddress = function() {
+      return backdrop('noAddress', 'ion-location');
     },
 
     /**

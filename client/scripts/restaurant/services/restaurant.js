@@ -19,7 +19,7 @@ module.exports = function(app) {
     var
     /**
     * @ngdoc function
-    * @name Restaurant#getFromCoordinates
+    * @name Restaurant#getFromAddress
     * @methodOf Restaurant
     *
     * @description
@@ -28,24 +28,29 @@ module.exports = function(app) {
     * https://groupeat.fr/docs
     *
     */
-    getFromCoordinates = function (latitude, longitude) {
+    getFromAddress = function (address) {
       var defer = $q.defer();
-      listResource.get({latitude: latitude, longitude: longitude}).$promise
-      .then(function (response) {
-        var restaurants = _.chain(response.data)
-        .filter(function(restaurant) {
-          return restaurant.openingWindows.data.length
-          && moment(restaurant.openingWindows.data[0].start).isSame(moment(), 'day');
+      if (!address || !address.latitude || !address.longitude) {
+        defer.reject('noAddress');
+      } else {
+        listResource.get({latitude: address.latitude, longitude: address.longitude}).$promise
+        .then(function (response) {
+          var restaurants = _.chain(response.data)
+          .filter(function(restaurant) {
+            return restaurant.openingWindows.data.length
+            && moment(restaurant.openingWindows.data[0].start).isSame(moment(), 'day');
+          })
+          .sortBy(function(restaurant) {
+            return restaurant.openingWindows.data[0].start;
+          })
+          .value();
+          defer.resolve(restaurants);
         })
-        .sortBy(function(restaurant) {
-          return restaurant.openingWindows.data[0].start;
-        })
-        .value();
-        defer.resolve(restaurants);
-      })
-      .catch(function () {
-        defer.reject();
-      });
+        .catch(function () {
+          defer.reject();
+        });
+      }
+
       return defer.promise;
     },
 
@@ -125,7 +130,7 @@ module.exports = function(app) {
     return {
       checkGroupOrders: checkGroupOrders,
       get: get,
-      getFromCoordinates : getFromCoordinates,
+      getFromAddress : getFromAddress,
       getOnlyOpenedFromCoordinates : getOnlyOpenedFromCoordinates
     };
 

@@ -14,7 +14,7 @@ module.exports = function(app) {
     var
     /**
     * @ngdoc function
-    * @name GroupOrder#get
+    * @name GroupOrder#getFromAddress
     * @methodOf GroupOrder
     *
     * @description
@@ -23,19 +23,24 @@ module.exports = function(app) {
     * https://groupeat.fr/docs
     *
     */
-    get = function (latitude, longitude) {
+    getFromAddress = function (address) {
       var defer = $q.defer();
-      resource.get({
-        latitude: latitude,
-        longitude: longitude
-      }).$promise.then(function (response) {
-        defer.resolve(response.data);
-      }).catch(function () {
-        defer.reject();
-      });
+      if (!address || !address.latitude || !address.longitude) {
+        defer.reject('noAddress');
+      } else {
+        resource.get({
+          latitude: address.latitude,
+          longitude: address.longitude
+        }).$promise.then(function (response) {
+          defer.resolve(response.data);
+        }).catch(function () {
+          defer.reject();
+        });
+      }
+
       return defer.promise;
     };
-    return { get: get };
+    return { getFromAddress: getFromAddress };
 
   }
   service.$inject = dependencies;

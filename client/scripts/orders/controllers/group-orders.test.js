@@ -81,17 +81,17 @@ describe(app.name, function() {
         it('should check get the group orders around the customer\'s position', function() {
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.defer().promise);
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.defer().promise);
           this.$scope.onReload();
           this.$scope.$digest();
-          this.GroupOrder.get.should.have.been.calledWithExactly(this.positionMock.latitude, this.positionMock.longitude);
+          this.GroupOrder.getFromAddress.should.have.been.calledWithExactly(this.positionMock);
         });
 
         it('should call ControllerPromiseHandler.handle with a rejected promise if it could not load group orders', function() {
           var expectedPromise = this.$q.reject();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.reject());
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.reject());
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
           this.$scope.$digest();
@@ -102,7 +102,7 @@ describe(app.name, function() {
           var expectedPromise = this.$q.reject('noGroupOrders');
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when([]));
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.when([]));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
           this.$scope.$digest();
@@ -113,7 +113,7 @@ describe(app.name, function() {
           var expectedGroupOrders = ['first', 'second']
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}))
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(expectedGroupOrders));
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.when(expectedGroupOrders));
           this.$scope.onReload();
           this.$scope.$digest();
           this.$scope.groupOrders.should.deep.equal(expectedGroupOrders);
@@ -123,7 +123,7 @@ describe(app.name, function() {
           var expectedPromise = this.$q.when();
           this.sandbox.stub(this.Network, 'hasConnectivity').returns(this.$q.when({}));
           this.sandbox.stub(this.CustomerStorage, 'getAddress').returns(this.positionMock);
-          this.sandbox.stub(this.GroupOrder, 'get').returns(this.$q.when(['groupOrder']));
+          this.sandbox.stub(this.GroupOrder, 'getFromAddress').returns(this.$q.when(['groupOrder']));
           this.sandbox.spy(this.ControllerPromiseHandler, 'handle');
           this.$scope.onReload();
           this.$scope.$digest();
