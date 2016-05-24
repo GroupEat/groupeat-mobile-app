@@ -23,29 +23,29 @@
 
         <div class="shipping-address">
           <ion-list>
-            <label class="item item-radio" ng-class="{'checked' : address.name == 'preset'}">
-              <input type="radio" value="preset" ng-model="address.name" name="address">
+            <label class="item item-radio" ng-class="{'checked' : addressMode.name == 'preset'}">
+              <input type="radio" value="preset" ng-model="addressMode.name" name="addressMode">
               <div class="item-content">
                 {{ 'myAddress' | translate }}
               </div>
               <i class="radio-icon ion-checkmark"></i>
             </label>
 
-            <label class="item item-radio" ng-class="{'checked' : address.name == 'other'}">
-              <input type="radio" value="other" ng-model="address.name" name="address">
+            <label class="item item-radio" ng-class="{'checked' : addressMode.name == 'other'}">
+              <input type="radio" value="other" ng-model="addressMode.name" name="addressMode">
               <div class="item-content">
                 {{ 'otherAddresses' | translate }}
               </div>
               <i class="radio-icon ion-checkmark"></i>
             </label>
 
-            <div class="item-sub" ng-class="{'is-active' : address.name == 'other'}">
+            <div class="item-sub" ng-class="{'is-active' : addressMode.name == 'other'}">
               <label ng-repeat="predifinedAddress in predifinedAddresses track by $index"
               class="item-accordion item item-radio"
               ng-class="
-              {'checked': address.other == $index,
-              'is-active' : address.name == 'other'}">
-              <input type="radio" value="{{$index}}" ng-model="address.other" name="other">
+              {'checked': addressMode.other == $index,
+              'is-active' : addressMode.name == 'other'}">
+              <input type="radio" value="{{$index}}" ng-model="addressMode.other" name="other">
               <div class="item-content">
                 {{predifinedAddress.details}}
               </div>
@@ -58,11 +58,11 @@
 
       <div class="display-address">
         <p>{{ 'youWillBeDeliveredAt' | translate }} :
-          <b ng-if="address.name === 'preset'">
-            {{ presetAddress.residency | translate }} <small>{{presetAddress.details}}</small>
+          <b ng-if="addressMode.name === 'preset'">
+            {{ address.street | translate }} <small>{{address.details}}</small>
           </b>
-          <b ng-if="address.name !== 'preset'">
-            {{ predifinedAddresses[address.other].details }}
+          <b ng-if="addressMode.name !== 'preset'">
+            {{ predifinedAddresses[addressMode.other].details }}
           </b>
         </p>
       </div>

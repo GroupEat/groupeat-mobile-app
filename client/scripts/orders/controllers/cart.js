@@ -12,13 +12,13 @@ module.exports = function(app) {
     '$state',
     app.namespace.customer + '.Address',
     app.name + '.Cart',
-    app.namespace.authentication + '.Credentials',
+    app.namespace.customer + '.CustomerStorage',
     app.name + '.Order',
     app.name + '.PredefinedAddresses',
     app.namespace.common + '.Popup'
   ];
 
-  function controller($ionicHistory, $ionicSlideBoxDelegate, $scope, $state, Address, Cart, Credentials, Order, PredefinedAddresses, Popup) {
+  function controller($ionicHistory, $ionicSlideBoxDelegate, $scope, $state, Address, Cart, CustomerStorage, Order, PredefinedAddresses, Popup) {
     $scope.$on('modal.shown', function() {
       $scope.cart = Cart;
       $scope.comment = {value : ''};
@@ -28,10 +28,7 @@ module.exports = function(app) {
       .then(function(predifinedAddresses) {
         $scope.predifinedAddresses = predifinedAddresses;
       });
-      Address.get(Credentials.get().id)
-      .then(function(address) {
-        $scope.presetAddress = address;
-      });
+      $scope.address = CustomerStorage.getAddress();
     });
 
     $scope.slideIndex = 0;
@@ -43,7 +40,7 @@ module.exports = function(app) {
       {title: 'Valider mon adresse !', color: 'orange'}
     ];
 
-    $scope.address = {
+    $scope.addressMode = {
       name: 'preset',
       other: 0
     };
@@ -68,18 +65,8 @@ module.exports = function(app) {
       } else {
         if(!$scope.isRequesting) {
           $scope.isRequesting = true;
-          if($scope.address.name === 'preset') {
-            var requestDetails = Address.getAddressFromResidencyInformation($scope.presetAddress.residency);
-            Order.setStreet(requestDetails.street);
-            Order.setLatitude(requestDetails.latitude);
-            Order.setLongitude(requestDetails.longitude);
-            Order.setDetails($scope.presetAddress.details);
-          } else {
-            Order.setStreet($scope.predifinedAddresses[$scope.address.other].street);
-            Order.setLatitude($scope.predifinedAddresses[$scope.address.other].latitude);
-            Order.setLongitude($scope.predifinedAddresses[$scope.address.other].longitude);
-            Order.setDetails($scope.predifinedAddresses[$scope.address.other].details);
-          }
+          var address = ($scope.addressMode.name === 'preset') ? $scope.address : $scope.predifinedAddresses[$scope.addressMode.other];
+          Order.setDeliveryAddress(address);
           Order.setComment($scope.comment.value);
           var requestProducts = {};
           angular.forEach(Cart.getProducts(), function(product) {
