@@ -32,12 +32,7 @@ module.exports = function(app) {
       'foodRushDurationInMinutes': null,
       'endingAt': null,
       'productFormats': {},
-      'deliveryAddress': {
-        'street': null,
-        'details': null,
-        'latitude': null,
-        'longitude': null
-      },
+      'deliveryAddress': null,
       'comment': null
     },
 
@@ -68,17 +63,11 @@ module.exports = function(app) {
     setProductFormats = function(value) {
       requestBody.productFormats = value;
     },
-    setStreet = function(value) {
-      requestBody.deliveryAddress.street = value;
+    setDeliveryAddress = function(deliveryAddress) {
+      requestBody.deliveryAddress = deliveryAddress;
     },
     setDetails = function(value) {
       requestBody.deliveryAddress.details = value;
-    },
-    setLatitude = function(value) {
-      requestBody.deliveryAddress.latitude = value;
-    },
-    setLongitude = function(value) {
-      requestBody.deliveryAddress.longitude = value;
     },
 
     setComment = function(value) {
@@ -181,12 +170,7 @@ module.exports = function(app) {
         'foodRushDurationInMinutes': null,
         'endingAt': null,
         'productFormats': {},
-        'deliveryAddress': {
-          'street': null,
-          'details': null,
-          'latitude': null,
-          'longitude': null
-        },
+        'deliveryAddress': null,
         'comment': null
       };
     },
@@ -304,10 +288,8 @@ module.exports = function(app) {
       setGroupOrderId: setGroupOrderId,
       setFoodRushTime: setFoodRushTime,
       setProductFormats: setProductFormats,
-      setStreet: setStreet,
+      setDeliveryAddress: setDeliveryAddress,
       setDetails: setDetails,
-      setLatitude: setLatitude,
-      setLongitude: setLongitude,
       setComment: setComment,
       setEndingAt: setEndingAt,
       resetCurrentOrder: resetCurrentOrder,
