@@ -84,10 +84,7 @@
   "confirmOrder": "Valider ma Commande",
   "total": "Total",
   "insteadOf": "Au lieu de",
-  "myAddress": "Mon adresse",
   "newAddress": "Nouvelle adresse",
-  "otherAddresses": "Autres adresses",
-  "predefinedAddress": "Lieu commun",
   "emptyCart": "Le panier est vide.",
   "howLongFoodRush" : "Quelle durée souhaites-tu pour le",
   "whenToOrder": "A quelle heure souhaites-tu passer ta commande ?",
@@ -187,7 +184,6 @@
 
   "yummy": "Miam",
   "orderSaved": "Commande enregistrée",
-  "whereDoYouWantToBeDelivered": "Où souhaites-tu être livré(e)",
   "youWillBeDeliveredAt": "Tu seras livré(e) à",
 
   "createAnOrder": "Crée une commande",
