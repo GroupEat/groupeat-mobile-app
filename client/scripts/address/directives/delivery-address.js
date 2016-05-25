@@ -27,6 +27,9 @@ module.exports = function(app) {
         });
         scope.selectAddress = function() {
           scope.deliveryAddress = CustomerStorage.getAddress();
+        };
+        scope.saveSelectedAddress = function() {
+          scope.modal.hide();
           scope.onAddressSelect();
         };
       }
