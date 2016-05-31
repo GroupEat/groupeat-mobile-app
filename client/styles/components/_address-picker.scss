@@ -9,3 +9,7 @@ input[type="text"].address-picker__input {
   border-bottom: solid 1px $blue;
   text-overflow: ellipsis;
 }
+
+.address-picker__item {
+  padding-left: 20px;
+}

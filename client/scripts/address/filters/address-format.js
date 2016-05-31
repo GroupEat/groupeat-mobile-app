@@ -3,10 +3,13 @@ var filtername = 'addressFormat';
 
 module.exports = function(app) {
 
-  var deps = [];
+  var deps = [
+    app.name + '.Geocoder'
+  ];
 
-  function filter() {
+  function filter(Geocoder) {
     return function(input) {
+      var address = Geocoder.formatAddress(input);
       return input.street;
     };
   }
