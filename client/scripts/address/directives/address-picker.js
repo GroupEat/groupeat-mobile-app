@@ -15,13 +15,14 @@ module.exports = function(app) {
     return {
       restrict: 'E',
       scope: {
+        selectedAddress: '=',
         onAddressSelect: '&'
       },
       template: require('./address-picker.html'),
       link: function(scope) {
 
         function matchSelectedAddress(address) {
-          return _.has(scope.selectedAddress, 'street') && scope.address === $filter('addressFormat')( scope.selectedAddress);
+          return _.has(scope.selectedAddress, 'street') && scope.address === scope.selectedAddress.street;
         }
 
         function clearResults() {
@@ -37,9 +38,8 @@ module.exports = function(app) {
           }
         });
         scope.selectAddress = function(address) {
-          scope.selectedAddress = Geocoder.formatAddress(address);
-          scope.address = $filter('addressFormat')(scope.selectedAddress);
-          CustomerStorage.setAddress(scope.selectedAddress);
+          _.assign(scope.selectedAddress, Geocoder.formatAddress(address));
+          scope.address = scope.selectedAddress.street;
           clearResults();
           scope.onAddressSelect();
         };

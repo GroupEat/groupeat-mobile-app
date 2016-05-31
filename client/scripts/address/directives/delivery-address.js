@@ -25,10 +25,9 @@ module.exports = function(app) {
         scope.$on('$destroy', function() {
           scope.modal.remove();
         });
-        scope.selectAddress = function() {
-          scope.deliveryAddress = CustomerStorage.getAddress();
-        };
+
         scope.saveSelectedAddress = function() {
+          CustomerStorage.setAddress(scope.deliveryAddress);
           scope.modal.hide();
           scope.onAddressSelect();
         };

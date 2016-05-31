@@ -7,7 +7,7 @@ module.exports = function(app) {
 
   function filter() {
     return function(input) {
-      return input.street + ', ' + input.postcode + ' ' + input.city + ', ' + input.country;
+      return input.street;
     };
   }
 

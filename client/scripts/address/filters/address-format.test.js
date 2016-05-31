@@ -25,12 +25,12 @@ describe(app.name, function() {
 
             it('should format the address', function() {
               var address = {
-                street: '4 Privet Drive',
+                street: '4 Aviato Drive',
                 postcode: 42000,
-                city: 'Little Whinging',
-                country: 'Great-Britain'
+                city: 'San Fransisco',
+                country: 'USA'
               };
-              var expectedAddress = '4 Privet Drive, 42000 Little Whinging, Great-Britain';
+              var expectedAddress = '4 Aviato Drive, 42000 San Fransisco, USA';
                 expect(this.filter(address)).to.equal(expectedAddress);
             });
 
