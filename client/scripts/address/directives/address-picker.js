@@ -5,13 +5,12 @@ var directivename = 'geAddressPicker';
 module.exports = function(app) {
 
   var directiveDeps = [
-    '$filter',
     app.namespace.common + '.Lodash',
     app.namespace.customer + '.CustomerStorage',
     app.name + '.Geocoder'
   ];
 
-  var directive = function($filter, _, CustomerStorage, Geocoder) {
+  var directive = function(_, CustomerStorage, Geocoder) {
     return {
       restrict: 'E',
       scope: {

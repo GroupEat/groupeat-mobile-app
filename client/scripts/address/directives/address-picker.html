@@ -4,7 +4,7 @@
 <ul class="list">
   <li class="item item-avatar address-picker__item" ng-repeat="result in results"
       on-tap="selectAddress(result)">
-    <h2>{{ result.address_components[0].long_name }}</h2>
-    <p>{{ result.address_components[5].long_name }}, {{ result.address_components[1].long_name }}</p>
+    <h2>{{ result | addressFormat:'street' }}</h2>
+    <p>{{ result | addressFormat:'postcode city, country' }}</p>
   </li>
 </ul>

@@ -4,13 +4,21 @@ var filtername = 'addressFormat';
 module.exports = function(app) {
 
   var deps = [
-    app.name + '.Geocoder'
+    app.namespace.common + '.Lodash',
+    app.name + '.Geocoder',
   ];
 
-  function filter(Geocoder) {
-    return function(input) {
+  function filter(_, Geocoder) {
+    return function(input, format) {
       var address = Geocoder.formatAddress(input);
-      return input.street;
+      if (!format) {
+        return address.street;
+      }
+      _.forEach(address, function(value, field){
+        format = format.replace(field, value);
+      });
+      return format;
+
     };
   }
 
