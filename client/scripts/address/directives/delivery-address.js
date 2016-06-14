@@ -6,10 +6,11 @@ module.exports = function(app) {
 
   var directiveDeps = [
     '$ionicModal',
+    app.namespace.common + '.Lodash',
     app.namespace.customer + '.CustomerStorage'
   ];
 
-  var directive = function($ionicModal, CustomerStorage) {
+  var directive = function($ionicModal, _, CustomerStorage) {
     return {
       restrict: 'E',
       scope: {
@@ -18,6 +19,7 @@ module.exports = function(app) {
       template: require('./delivery-address.html'),
       link: function(scope) {
         scope.deliveryAddress = CustomerStorage.getAddress();
+        scope.selectedAddress = {};
         scope.modal = $ionicModal.fromTemplate(require('../../address/views/address-picker-modal.html'), {
           scope: scope,
           animation: 'slide-in-up'
@@ -27,7 +29,8 @@ module.exports = function(app) {
         });
 
         scope.saveSelectedAddress = function() {
-          CustomerStorage.setAddress(scope.deliveryAddress);
+          scope.deliveryAddress = _.clone(scope.selectedAddress);
+          CustomerStorage.setAddress(scope.selectedAddress);
           scope.modal.hide();
           scope.onAddressSelect();
         };
