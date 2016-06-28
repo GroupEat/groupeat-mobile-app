@@ -6,11 +6,12 @@ module.exports = function(app) {
 
   var directiveDeps = [
     app.namespace.common + '.Lodash',
+    app.name + '.Autocompleter',
     app.namespace.customer + '.CustomerStorage',
     app.name + '.Geocoder'
   ];
 
-  var directive = function(_, CustomerStorage, Geocoder) {
+  var directive = function(_, Autocompleter, CustomerStorage, Geocoder) {
     return {
       restrict: 'E',
       scope: {
@@ -30,17 +31,21 @@ module.exports = function(app) {
 
         scope.$watch('address', function(newValue) {
           if (newValue && newValue.length > 3 && !matchSelectedAddress(newValue)) {
-            Geocoder.geocode(newValue)
+            Autocompleter.getResults(newValue)
             .then(function(results) {
               scope.results = results;
             });
           }
         });
-        scope.selectAddress = function(address) {
-          _.assign(scope.selectedAddress, Geocoder.formatAddress(address));
-          scope.address = scope.selectedAddress.street;
-          clearResults();
-          scope.onAddressSelect();
+
+        scope.pick = function(result) {
+          Geocoder.getAddress(result)
+          .then(function(address) {
+            _.assign(scope.selectedAddress, address);
+            scope.address = scope.selectedAddress.street;
+            clearResults();
+            scope.onAddressSelect();
+          });
         };
       }
     };
