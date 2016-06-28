@@ -1,10 +1,13 @@
 <ion-modal-view>
-  <ion-header-bar class='bar-transparent'>
-    <button on-tap="modal.hide()" class="button button-icon">
-      <i class="icon ion-ios-close-empty"></i>
+  <ion-header-bar class='bar-transparent address-picker__header'>
+    <button class="button button-clear button-primary" ng-click="modal.hide()">
+      <i class="icon ion-android-close"></i>
+    </button>
+    <button class="button button-clear button-primary" ng-click="saveSelectedAddress()">
+      <i class="icon ion-android-done"></i>
     </button>
   </ion-header-bar>
   <ion-content>
-    <ge-address-picker on-address-select="selectAddress()"></ge-address-picker>
+    <ge-address-picker selected-address="selectedAddress" on-address-select="selectAddress()"></ge-address-picker>
   </ion-content>
 </ion-modal-view>

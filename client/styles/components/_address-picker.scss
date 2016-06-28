@@ -1,3 +1,15 @@
+.address-picker__header {
+  background-color: white;
+}
+
 input[type="text"].address-picker__input {
+  height: 50px;
+  width: 100%;
+  padding: 0 20px;
+  border-bottom: solid 1px $blue;
+  text-overflow: ellipsis;
+}
+
+.address-picker__item {
   padding-left: 20px;
 }
