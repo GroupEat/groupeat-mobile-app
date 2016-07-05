@@ -1,10 +1,9 @@
 <input ng-model="address" type="text"
-       class="address-picker__input"
-       placeholder="{{ 'address' | translate }}">
+   class="address-picker__input"
+   placeholder="{{ 'address' | translate }}">
 <ul class="list">
   <li class="item item-avatar address-picker__item" ng-repeat="result in results"
-      on-tap="selectAddress(result)">
-    <h2>{{ result | addressFormat:'street' }}</h2>
-    <p>{{ result | addressFormat:'postcode city, country' }}</p>
+      on-tap="pick(result)">
+    <h2>{{ result.description }}</h2>
   </li>
 </ul>

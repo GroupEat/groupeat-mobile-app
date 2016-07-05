@@ -12,24 +12,25 @@ module.exports = function(app) {
     var geocoder = new google.maps.Geocoder();
 
     var
-    geocode = function(address) {
+    geocode = function(rawAddress) {
       var deferred = $q.defer();
       geocoder.geocode({
-        address: address,
-        componentRestrictions: {
-          country: 'FR'
-        }
+        placeId: rawAddress.place_id,
       }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          var filteredResults = _.filter(results, function(result){
-            return _getAddressComponent(result, 'route');
-          })
-          deferred.resolve(filteredResults);
+        if (status === google.maps.GeocoderStatus.OK) {
+          deferred.resolve(results[0]);
         } else {
           deferred.reject(status);
         }
       });
       return deferred.promise;
+    },
+
+    getAddress = function(result) {
+      return geocode(result)
+      .then(function(rawAddress) {
+        return formatAddress(rawAddress);
+      });
     },
 
     _getAddressComponent = function(address, componentKey) {
@@ -68,9 +69,9 @@ module.exports = function(app) {
 
     return {
       formatAddress: formatAddress,
-      geocode: geocode
+      geocode: geocode,
+      getAddress: getAddress
     };
-
   }
   service.$inject = dependencies;
   app.factory(app.name + '.' + servicename, service);
