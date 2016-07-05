@@ -16,7 +16,7 @@ module.exports = function(app) {
       autocompleter.getPlacePredictions({
         input: input
       }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status === google.maps.GeocoderStatus.OK) {
           deferred.resolve(results);
         } else {
           deferred.reject(status);

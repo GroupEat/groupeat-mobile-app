@@ -17,7 +17,7 @@ module.exports = function(app) {
       geocoder.geocode({
         placeId: rawAddress.place_id,
       }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status === google.maps.GeocoderStatus.OK) {
           deferred.resolve(results[0]);
         } else {
           deferred.reject(status);
