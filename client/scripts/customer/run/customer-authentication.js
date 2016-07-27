@@ -24,10 +24,6 @@ module.exports = function(app) {
       .then(function(customer) {
         CustomerStorage.setIdentity(customer);
         CustomerStorage.setActivated(customer.activated);
-        return Address.get(customerId);
-      })
-      .then(function(address) {
-        CustomerStorage.setOldAddress(address);
         return CustomerSettings.get(customerId);
       })
       .then(function(customerSettings) {
